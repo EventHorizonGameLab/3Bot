@@ -902,7 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holder: {fileID: 1906954380}
   fillBar: {fileID: 84430759}
-  fillDuration: 5
+  fillDuration: 1
   colorChangeThreshold: 0.8
 --- !u!1 &1231316635
 GameObject:
