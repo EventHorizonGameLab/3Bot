@@ -1,17 +1,16 @@
 using UnityEngine;
 
-
 namespace PlayerSM
 {
     public class ShootingState : IPlayerState
     {
         private PlayerController _player;
-        private ParticleSystem _gun1;
+        private GunSettings _gun;
 
         public ShootingState(PlayerController player)
         {
             _player = player;
-            _gun1 = _player.GetComponentInChildren<ParticleSystem>();
+            _gun = _player.GetComponentInChildren<GunSettings>();
         }
 
         public void Enter()
@@ -44,26 +43,17 @@ namespace PlayerSM
                 // Lancia il Raycast e controlla se colpisce un punto valido
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
-                    // Imposta la destinazione dell'agent al punto di impatto
-                    _gun1.transform.LookAt(hit.point);
-                    _gun1.Emit(1);
+                    if(_gun.Is2D) hit.point = new Vector3(hit.point.x, _gun.transform.position.y, hit.point.z);
+
+                    _gun.transform.LookAt(hit.point);
+                    _gun.Shoot();
                 }
             }
         }
 
-        private void Shoot2()
+        private void Hack() //to be implemented
         {
-            if (Input.GetMouseButtonDown(1))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                // Lancia il Raycast e controlla se colpisce un punto valido
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    // Imposta la destinazione dell'agent al punto di impatto
-                    
-                }
-            }
+            Debug.Log("Hacking...");
         }
     }
 }
