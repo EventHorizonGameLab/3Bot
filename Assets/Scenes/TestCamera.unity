@@ -5381,13 +5381,11 @@ MonoBehaviour:
   _reloadTime: 0
   _damage: 10
   _is2D: 1
-  causesDamageOverTime: 0
+  causesDamageOverTime: 1
   _damageOverTime:
     damagePerInterval: 2
     damageDuration: 5
     interval: 1
-  _debug: 0
-  _currentAmmo: 0
 --- !u!114 &296110326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6045,7 +6043,7 @@ GameObject:
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &377141064
 Transform:
   m_ObjectHideFlags: 0
@@ -7435,7 +7433,6 @@ MonoBehaviour:
   _isPlayer: 1
   _friendlyFire: 0
   _isInvincible: 0
-  _currentHealth: 0
 --- !u!1 &854495053
 GameObject:
   m_ObjectHideFlags: 0
@@ -7763,7 +7760,7 @@ GameObject:
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1050195505
 Transform:
   m_ObjectHideFlags: 0
@@ -14037,7 +14034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1473746174
 Transform:
   m_ObjectHideFlags: 0
@@ -14863,7 +14860,6 @@ MonoBehaviour:
   _isPlayer: 0
   _friendlyFire: 0
   _isInvincible: 0
-  _currentHealth: 0
 --- !u!65 &1813891018
 BoxCollider:
   m_ObjectHideFlags: 0

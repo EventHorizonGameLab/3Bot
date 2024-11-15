@@ -6,15 +6,15 @@ using Sirenix.OdinInspector;
 [RequireComponent(typeof(ParticleSystem))]
 public class GunSettings : MonoBehaviour
 {
-    [Header("Settings")]
+    [Title("Settings")]
     [SerializeField, Tooltip("Max ammo"), Min(1)] private int _maxAmmo;
     [SerializeField, Tooltip("Fire rate"), Min(0f)] private float _fireRate;
     [SerializeField, Tooltip("Reload time"), Min(0f)] private float _reloadTime;
     [SerializeField, Tooltip("Damage"), Min(0)] private int _damage;
 
-    [SerializeField] private bool _is2D = false;
+    [SerializeField, Tooltip("Flag indicating if the gun is 2D")] private bool _is2D = false;
 
-    [Header("Damage Over Time Settings")]
+    [Title("Damage Over Time Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun causes damage over time.")] private bool causesDamageOverTime;
     [SerializeField, ShowIf("causesDamageOverTime")] private DamageOverTime _damageOverTime; // qui è stato usato
 
@@ -31,9 +31,12 @@ public class GunSettings : MonoBehaviour
         public float interval = 0f;
     }
 
-    [Header("Debug")]
-    [SerializeField] private bool _debug = true;
-    [SerializeField, Tooltip("Current ammo")] private int _currentAmmo;
+    [Title("Debug")]
+    [ShowInInspector] private bool _debug = true;
+    [Tooltip("Current ammo"), ShowInInspector] 
+    public int CurrentAmmo => _currentAmmo;
+
+    private int _currentAmmo;
 
     public event Action<int> OnAmmoChanged;
 

@@ -1,12 +1,13 @@
 using Cinemachine;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace CameraCustom
 {
     [RequireComponent(typeof(BoxCollider))]
     public class ChangeCamera : MonoBehaviour
     {
-        [SerializeField] private GameObject _camera;
+        [SerializeField, Required] private GameObject _camera;
 
         private BoxCollider _collider;
 

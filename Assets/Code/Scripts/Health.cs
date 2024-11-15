@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Sirenix.OdinInspector;
 using static GunSettings;
 
 [RequireComponent(typeof(Collider))]
@@ -8,7 +9,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private int _maxHealth = 100;
 
-    [Header("Flags")]
+    [Title("Flags")]
     [SerializeField] private bool _isPlayer = false;
     [SerializeField] private bool _friendlyFire = false;
     [SerializeField] private bool _isInvincible = false;
@@ -16,8 +17,12 @@ public class Health : MonoBehaviour
     public event Action<int> OnHealthChange;  // Player UI
     public event Action OnDeath;              // Player Death
 
-    [Header("Debug")]
-    [SerializeField] private int _currentHealth;
+    //[Header("Debug")]
+    [Title("Debug")]
+    [ShowInInspector]
+    public int CurrentHealth => this._currentHealth;
+
+    private int _currentHealth;
 
     private void Start()
     {
