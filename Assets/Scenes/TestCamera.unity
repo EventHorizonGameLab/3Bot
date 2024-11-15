@@ -5379,12 +5379,13 @@ MonoBehaviour:
   _maxAmmo: 10
   _fireRate: 0.5
   _reloadTime: 0
-  _damage: 1
+  _damage: 10
   _is2D: 1
+  causesDamageOverTime: 0
   _damageOverTime:
-    causesDamageOverTime: 0
-    damagePerInterval: 0
-    damageDuration: 0
+    damagePerInterval: 2
+    damageDuration: 5
+    interval: 1
   _debug: 0
   _currentAmmo: 0
 --- !u!114 &296110326
@@ -14858,7 +14859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e531876074fcbcb4dbfdd3ecc274e774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 5
+  _maxHealth: 100
   _isPlayer: 0
   _friendlyFire: 0
   _isInvincible: 0

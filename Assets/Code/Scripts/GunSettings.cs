@@ -14,19 +14,20 @@ public class GunSettings : MonoBehaviour
     [SerializeField] private bool _is2D = false;
 
     [Header("Damage Over Time Settings")]
+    [SerializeField, Tooltip("Flag indicating if the gun causes damage over time.")] private bool causesDamageOverTime;
     [SerializeField] private DamageOverTime _damageOverTime;
 
     [System.Serializable]
     public class DamageOverTime
     {
-        [Tooltip("Flag indicating if the gun causes damage over time.")]
-        public bool causesDamageOverTime;
+        [Tooltip("The damage inflicted every interval."), Min(0)]
+        public int damagePerInterval = 0;
 
-        [Tooltip("The damage inflicted every interval.")]
-        public int damagePerInterval;
+        [Tooltip("The duration (in seconds) for which the damage is applied."), Min(0)]
+        public float damageDuration = 0f;
 
-        [Tooltip("The duration (in seconds) for which the damage is applied.")]
-        public float damageDuration;
+        [Tooltip("Delay between each damage"), Min(0)]
+        public float interval = 0f;
     }
 
     [Header("Debug")]
@@ -99,6 +100,8 @@ public class GunSettings : MonoBehaviour
     }
 
     public int Damage => _damage;
+
+    public bool CausesDamageOverTime => causesDamageOverTime;
 
     public DamageOverTime GetDamageOverTime() => _damageOverTime;
 
