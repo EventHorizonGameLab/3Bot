@@ -11,6 +11,7 @@ public class GunSettings : MonoBehaviour
     [SerializeField, Tooltip("Fire rate"), Min(0f)] private float _fireRate;
     [SerializeField, Tooltip("Reload time"), Min(0f)] private float _reloadTime;
     [SerializeField, Tooltip("Damage"), Min(0)] private int _damage;
+    [SerializeField, Tooltip("Attack Type")] private AttackType _attackType = AttackType.Null;
 
     [SerializeField, Tooltip("Flag indicating if the gun is 2D")] private bool _is2D = false;
 
@@ -103,6 +104,8 @@ public class GunSettings : MonoBehaviour
         OnAmmoChanged?.Invoke(_currentAmmo);
     }
 
+    public AttackType AttackType => _attackType;
+
     public int Damage => _damage;
 
     public bool CausesDamageOverTime => causesDamageOverTime;
@@ -110,4 +113,18 @@ public class GunSettings : MonoBehaviour
     public DamageOverTime GetDamageOverTime() => _damageOverTime;
 
     public bool Is2D => _is2D;
+}
+
+public enum AttackType
+{
+    Null, //Default
+    Physical, //Hurt
+    Fire,
+    Ice,
+    Electric, //EMP Gun
+    Water,
+    Poison,
+    Light,
+    Dark,
+    Explosive //Grenade Launcher, Molot
 }
