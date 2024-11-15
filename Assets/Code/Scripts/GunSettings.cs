@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [RequireComponent(typeof(ParticleSystem))]
 public class GunSettings : MonoBehaviour
@@ -15,7 +16,7 @@ public class GunSettings : MonoBehaviour
 
     [Header("Damage Over Time Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun causes damage over time.")] private bool causesDamageOverTime;
-    [SerializeField] private DamageOverTime _damageOverTime;
+    [SerializeField, ShowIf("causesDamageOverTime")] private DamageOverTime _damageOverTime; // qui è stato usato
 
     [System.Serializable]
     public class DamageOverTime
