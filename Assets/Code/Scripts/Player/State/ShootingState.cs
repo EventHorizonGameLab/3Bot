@@ -23,10 +23,7 @@ namespace PlayerSM
 
         public void HandleInput()
         {
-            if (Input.GetKey(KeyCode.W)) // Esempio di input
-            {
-                Debug.Log("Moving Forward");
-            }
+
         }
 
         public void Update()

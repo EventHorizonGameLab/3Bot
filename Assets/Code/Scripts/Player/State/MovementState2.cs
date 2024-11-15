@@ -47,7 +47,7 @@ namespace PlayerSM
         public void HandleInput()
         {
             // Se il pulsante sinistro del mouse viene premuto, salva la coordinata
-            if (Input.GetMouseButtonDown(0) && !_isFollowingPath)
+            if (Input.GetMouseButtonUp(0) && !_isFollowingPath)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit hit))
@@ -58,14 +58,14 @@ namespace PlayerSM
             }
 
             // Se il pulsante destro del mouse viene premuto, inizia il movimento lungo il percorso
-            if (Input.GetMouseButtonDown(1) && _waypoints.Count > 0 && !_isFollowingPath)
+            if (Input.GetMouseButtonUp(1) && _waypoints.Count > 0 && !_isFollowingPath)
             {
                 _isFollowingPath = true;
                 MoveToNextWaypoint();
             }
 
             // Se il pulsante sinistro del mouse viene premuto mentre sta seguendo il percorso ed è fermo, resetta il percorso
-            if (Input.GetMouseButtonDown(0) && _isFollowingPath && _agent.isStopped)
+            if (Input.GetMouseButtonUp(0) && _isFollowingPath && _agent.isStopped)
             {
                 ClearLineRenderer();
                 _waypoints.Clear();
@@ -75,7 +75,7 @@ namespace PlayerSM
             }
 
             // Se il pulsante sinistro del mouse viene premuto mentre sta seguendo il percorso, resetta il percorso
-            if (Input.GetMouseButtonDown(0) && _isFollowingPath && !_agent.isStopped)
+            if (Input.GetMouseButtonUp(0) && _isFollowingPath && !_agent.isStopped)
             {
                 ClearLineRenderer();
                 _waypoints.Clear();
