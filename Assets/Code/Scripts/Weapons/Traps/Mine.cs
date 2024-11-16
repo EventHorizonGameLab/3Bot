@@ -9,10 +9,7 @@ namespace Game.Traps
         {
             if (_debug) Debug.Log($"Mine triggered by {other.name}");
 
-            if (IsVisible(other))
-            {
-                Explosion();
-            }
+            Explosion();
         }
     }
 }
