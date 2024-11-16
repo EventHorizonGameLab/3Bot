@@ -14293,7 +14293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9cdb02373a5cb40aa82a3cf4af7c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explosionPrefab: {fileID: 1018737016367816246, guid: 0c25183bd9614d64c82ae0cba14c6c0b,
+  _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 1000
   _explosionRadius: 4.21
