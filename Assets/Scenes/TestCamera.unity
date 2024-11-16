@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 48695092}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 296110324}
   - component: {fileID: 296110326}
   - component: {fileID: 296110327}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5382,7 +5382,7 @@ MonoBehaviour:
   _damage: 10
   _attackType: 4
   _is2D: 1
-  causesDamageOverTime: 0
+  causesDamageOverTime: 1
   _damageOverTime:
     damagePerInterval: 2
     damageDuration: 5
@@ -7485,7 +7485,7 @@ GameObject:
   - component: {fileID: 849806977}
   - component: {fileID: 849806982}
   - component: {fileID: 849806983}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: '- Player'
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -8471,7 +8471,7 @@ GameObject:
   - component: {fileID: 1208551978}
   - component: {fileID: 1208551980}
   - component: {fileID: 1208551979}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SubEmitter0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14979,7 +14979,7 @@ Transform:
   m_GameObject: {fileID: 1650725300}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 0.5, z: 1.75}
+  m_LocalPosition: {x: 3.52, y: 0.5, z: -1.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15207,7 +15207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1773059707}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15959,7 +15959,7 @@ GameObject:
   - component: {fileID: 1986656669}
   - component: {fileID: 1986656671}
   - component: {fileID: 1986656670}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
