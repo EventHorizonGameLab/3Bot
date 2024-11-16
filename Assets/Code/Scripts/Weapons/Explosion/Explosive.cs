@@ -1,6 +1,5 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 
 public class Explosive : MonoBehaviour
 {
@@ -8,69 +7,61 @@ public class Explosive : MonoBehaviour
     [SerializeField, Tooltip("Prefab of the explosion VFX effect")] private GameObject _explosionPrefab;
     [SerializeField, Tooltip("Force of the explosion"), Min(0)] private float _explosionForce = 10f;
     [SerializeField, Tooltip("Radius of the explosion"), Range(0, 10)] private float _explosionRadius = 5f;
-    [SerializeField, Tooltip("Force of the trigger"), Min(0)] private float _triggerForce = 0.5f;
-    [SerializeField] private bool _haveDetectionArea = true;
+    [SerializeField, Tooltip("Force required to trigger explosion"), Min(0)] private float _triggerForce = 0.5f;
+    [SerializeField, Tooltip("LayerMask for detecting obstacles")] private LayerMask _obstacleLayer;
+    [SerializeField, Tooltip("Enable detection area")] private bool _haveDetectionArea = true;
 
-    [ShowIf("_haveDetectionArea"), Title("Detection Settings")]
-    [ShowIf("_haveDetectionArea"), SerializeField, Tooltip("Radius for detecting enemies"), PropertyRange(0, "_explosionRadius")] private float _detectionRadius = 6f;
-    [ShowIf("_haveDetectionArea"), SerializeField, Tooltip("LayerMask for detecting enemies")] private LayerMask _enemyLayer;
-    [ShowIf("_haveDetectionArea"), SerializeField, Tooltip("LayerMask for detecting obstacles")] private LayerMask _obstacleLayer;
+    [ShowIf(nameof(_haveDetectionArea)), Title("Detection Settings")]
+    [ShowIf(nameof(_haveDetectionArea)), SerializeField, Tooltip("Radius for detecting enemies"), PropertyRange(0, nameof(_explosionRadius))] private float _detectionRadius = 6f;
+    [ShowIf(nameof(_haveDetectionArea)), SerializeField, Tooltip("LayerMask for detecting objects")] private LayerMask _detectionLayer;
 
     [Title("Debug")]
-    [SerializeField] private bool _debug;
-    [SerializeField] private bool _showGizmos;
-
-    private Collider[] _detectedEnemies;
+    [SerializeField, Tooltip("Enable debug logs")] private bool _debug;
+    [SerializeField, Tooltip("Show debug gizmos")] private bool _showGizmos;
 
     private void Update()
     {
-        DetectEnemies();
+        if (_haveDetectionArea) DetectionArea();
     }
 
     /// <summary>
-    /// Continuously detects enemies in the detection area, considering obstacles.
+    /// Detects enemies in the detection area, considering visibility.
     /// </summary>
-    private void DetectEnemies()
+    private void DetectionArea()
     {
-        if(!_haveDetectionArea) return;
+        if (_debug) Debug.Log($"Detection Radius: {_detectionRadius}");
 
-        Explosion();
+        if (Physics.OverlapSphere(transform.position, _detectionRadius, _detectionLayer).Length > 0)
+        {
+            Explosion();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_debug) Debug.Log(collision.impulse.magnitude);
+        if (_debug) Debug.Log($"Collision Impulse: {collision.impulse.magnitude}");
 
-        if (collision.impulse.magnitude < _triggerForce) return;
-
-        Explosion(false);
+        if (collision.impulse.magnitude >= _triggerForce) Explosion();
     }
 
-    private void Explosion(bool detectionArea = true)
+    /// <summary>
+    /// Triggers the explosion effect, applying force and damage to nearby objects.
+    /// </summary>
+    private void Explosion()
     {
-        bool trigger = true;
-
-        foreach (var obj in Physics.OverlapSphere(transform.position, _detectionRadius, _haveDetectionArea ? _enemyLayer : ~0))
+        foreach (var obj in Physics.OverlapSphere(transform.position, _explosionRadius))
         {
-            if (IsVisible(obj))
-            {
-                if (obj.TryGetComponent(out Rigidbody rb))
-                {
-                    rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
-                }
+            if (!IsVisible(obj)) continue;
 
-                if (obj.TryGetComponent(out IExplosionAffected explosionAffected))
-                {
-                    explosionAffected.OnExplosion(transform.position, _explosionForce);
-                }
+            if (obj.TryGetComponent(out Rigidbody rb))
+                rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
 
-                trigger = false;
-            }
+            if (obj.TryGetComponent(out IExplosionAffected explosionAffected))
+                explosionAffected.OnExplosion(transform.position, _explosionForce);
         }
 
-        if (detectionArea && trigger) return;
-
-        if (_explosionPrefab != null) Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        if (_explosionPrefab != null)
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }
@@ -85,6 +76,8 @@ public class Explosive : MonoBehaviour
         Vector3 directionToTarget = target.bounds.center - transform.position;
         float distanceToTarget = directionToTarget.magnitude;
 
+        if (_debug) Debug.DrawRay(transform.position, directionToTarget, Color.red, 1f);
+
         return !Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _obstacleLayer);
     }
 
@@ -92,12 +85,15 @@ public class Explosive : MonoBehaviour
     {
         if (!_showGizmos) return;
 
+        // Draw explosion radius
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _explosionRadius);
 
-        if (!_haveDetectionArea) return;
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _detectionRadius);
+        // Draw detection area
+        if (_haveDetectionArea)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, _detectionRadius);
+        }
     }
 }

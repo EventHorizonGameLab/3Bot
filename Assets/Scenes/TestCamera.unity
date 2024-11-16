@@ -14264,7 +14264,7 @@ CapsuleCollider:
   m_Radius: 0.25
   m_Height: 0.6
   m_Direction: 1
-  m_Center: {x: 0, y: 0.3, z: 0}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!4 &1452656068
 Transform:
   m_ObjectHideFlags: 0
@@ -14274,7 +14274,7 @@ Transform:
   m_GameObject: {fileID: 1452656066}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 2.19, z: 1.45}
+  m_LocalPosition: {x: -0.01, y: 1.39, z: 1.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14298,15 +14298,15 @@ MonoBehaviour:
   _explosionForce: 1000
   _explosionRadius: 4.21
   _triggerForce: 0.5
-  _haveDetectionArea: 0
-  _detectionRadius: 2.86
-  _enemyLayer:
-    serializedVersion: 2
-    m_Bits: 128
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 119
-  _debug: 0
+  _haveDetectionArea: 0
+  _detectionRadius: 2.86
+  _detectionLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _debug: 1
   _showGizmos: 1
 --- !u!54 &1452656070
 Rigidbody:
@@ -14871,7 +14871,7 @@ MonoBehaviour:
     damageMultiplier: 2
   - attackType: 9
     damageMultiplier: -2
-  _debug: 0
+  _debug: 1
 --- !u!54 &1650725302
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15431,7 +15431,7 @@ MonoBehaviour:
   vulnerabilities:
   - attackType: 4
     damageMultiplier: 2
-  _debug: 0
+  _debug: 1
 --- !u!65 &1813891018
 BoxCollider:
   m_ObjectHideFlags: 0
