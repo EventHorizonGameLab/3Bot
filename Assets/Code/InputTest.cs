@@ -4,26 +4,45 @@ using UnityEngine;
 
 public class InputTest : MonoBehaviour
 {
-    
+
     Camera cam;
+    RaycastHit hit;
+    Ray ray;
 
     private void Awake()
     {
-        
         cam = Camera.main;
+        ray = cam.ScreenPointToRay(Input.mousePosition);
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+
+
             if (Physics.Raycast(ray, out hit))
             {
-                QTE_MiniGame.OnMiniGame?.Invoke(cam, hit.transform);
+                if (hit.transform.gameObject.TryGetComponent(out IMiniGame enemy))
+                {
+                    QTE_MiniGame.OnBarMiniGame?.Invoke(cam, hit.transform, enemy);
+                }
+
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform.gameObject.TryGetComponent(out IMiniGame door))
+                {
+                    QTE_MiniGame.OnPasswordMiniGame?.Invoke(door.Password, door);
+                }
+
             }
         }
     }
+
+
+
 }

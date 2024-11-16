@@ -6,33 +6,36 @@ using UnityEngine.UI;
 
 public class QTE_MiniGame : MonoBehaviour
 {
-    public static Action<Camera, Transform> OnMiniGame;
+    public static Action<Camera, Transform, IMiniGame> OnBarMiniGame;
+    public static Action<string, IMiniGame> OnPasswordMiniGame;
 
-    [SerializeField] GameObject holder;
+    [SerializeField] GameObject barHolder;
     [SerializeField] Image fillBar;
     [SerializeField] float fillDuration = 5f;
-    [Range(0f, 1f)] public float colorChangeThreshold = 0.8f;
+    [SerializeField] GameObject pswHolder;
+    [Range(0f, 1f)] [SerializeField] float colorChangeThreshold = 0.8f;
 
-
+    IMiniGame miniGameObject;
     private float fillTime = 0f;
     private bool isIncreasing = true;
     private bool isGreen = false;
+    
 
     private void Awake()
     {
-        holder.SetActive(false);
+        barHolder.SetActive(false);
     }
 
     void OnEnable()
     {
-        OnMiniGame += StartMinigame;
+        OnBarMiniGame += StartBarMiniGame;
     }
 
         
 
     private void OnDisable()
     {
-        OnMiniGame -= StartMinigame;
+        OnBarMiniGame -= StartBarMiniGame;
     }
 
     void FixedUpdate()
@@ -74,32 +77,55 @@ public class QTE_MiniGame : MonoBehaviour
 
     private void Update() // TODO: eliminare ed integrare nella State Machine
     {
-        if (Input.GetMouseButtonDown(1) && holder.activeInHierarchy)
+        if (Input.GetMouseButtonDown(1) && barHolder.activeInHierarchy)
         {
             if (isGreen)
             {
                 Debug.Log("QTE VINTO");
-                holder.gameObject.SetActive(false);
+                //TODO: play del suono di vittoria
+                barHolder.gameObject.SetActive(false);
             }
             else
             {
                 Debug.Log("QTE PERSO");
+                // TODO:player del suono di fallimento
             }
+
         }
 
     }
 
-    void StartMinigame(Camera cam, Transform target)
+    void StartBarMiniGame(Camera cam, Transform target, IMiniGame enemy)
     {
         var screenPosition = cam.WorldToScreenPoint(target.position);
-        holder.transform.position = screenPosition;
-        holder.gameObject.SetActive(true);
+        barHolder.transform.position = screenPosition;
+        barHolder.gameObject.SetActive(true);
 
         fillBar.fillAmount = 0f;
         fillBar.color = Color.red;
         fillTime = 0f;
         isIncreasing = true;
         isGreen = false;
+    }
+
+    void StartPasswordMiniGame(string password, IMiniGame door)
+    {
+
+    }
+
+    bool CheckPassword()
+    {
+        return false; // controllare psw
+    }
+
+    void OpenDoor()
+    {
+        if(CheckPassword()) { miniGameObject.MinigameWon(); }
+    }
+
+    void ChangeNumberOnButtonClick()
+    {
+
     }
 
     
