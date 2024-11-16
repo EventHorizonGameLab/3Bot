@@ -491,7 +491,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289104500}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2050753, y: 0.32309556, z: -0.071936525, w: 0.9210747}
+  m_LocalRotation: {x: 0.1759403, y: 0.42027822, z: -0.08343397, w: 0.8862562}
   m_LocalPosition: {x: -4, y: 3, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4400,7 +4400,7 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 55
+      m_Bits: 119
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -6341,7 +6341,7 @@ MonoBehaviour:
   _maxHealth: 100
   _isPlayer: 0
   _friendlyFire: 0
-  _isInvincible: 0
+  _isInvincible: 1
   vulnerabilities:
   - attackType: 4
     damageMultiplier: 2
@@ -7573,7 +7573,7 @@ Transform:
   m_GameObject: {fileID: 849806976}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.62, y: 0, z: -0.407}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7608,7 +7608,7 @@ MonoBehaviour:
   _maxHealth: 100
   _isPlayer: 1
   _friendlyFire: 0
-  _isInvincible: 1
+  _isInvincible: 0
   vulnerabilities: []
   _debug: 0
 --- !u!1 &854495053
@@ -7799,7 +7799,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &959025863
 Transform:
   m_ObjectHideFlags: 0
@@ -14274,7 +14274,7 @@ Transform:
   m_GameObject: {fileID: 1452656066}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.8, y: 0, z: -0.766}
+  m_LocalPosition: {x: -0.01, y: 2.19, z: 1.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14298,7 +14298,7 @@ MonoBehaviour:
   _explosionForce: 1000
   _explosionRadius: 4.21
   _triggerForce: 0.5
-  _haveDetectionArea: 1
+  _haveDetectionArea: 0
   _detectionRadius: 2.86
   _enemyLayer:
     serializedVersion: 2
@@ -15000,7 +15000,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1692286350
 Transform:
   m_ObjectHideFlags: 0
@@ -15385,7 +15385,7 @@ Transform:
   m_GameObject: {fileID: 1811158004}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.15, y: 0.25, z: -1.215}
+  m_LocalPosition: {x: 9.96, y: 0.25, z: -1.4185001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15427,7 +15427,7 @@ MonoBehaviour:
   _maxHealth: 100
   _isPlayer: 0
   _friendlyFire: 0
-  _isInvincible: 0
+  _isInvincible: 1
   vulnerabilities:
   - attackType: 4
     damageMultiplier: 2

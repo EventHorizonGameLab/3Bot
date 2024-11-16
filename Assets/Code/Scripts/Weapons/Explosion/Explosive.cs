@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 
 public class Explosive : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class Explosive : MonoBehaviour
     {
         bool trigger = true;
 
-        foreach (var obj in Physics.OverlapSphere(transform.position, _detectionRadius, _enemyLayer))
+        foreach (var obj in Physics.OverlapSphere(transform.position, _detectionRadius, _haveDetectionArea ? _enemyLayer : ~0))
         {
             if (IsVisible(obj))
             {

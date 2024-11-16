@@ -134,6 +134,10 @@ public class Health : MonoBehaviour, IExplosionAffected
 
     public void OnExplosion(Vector3 explosionPosition, float explosionForce)
     {
+        if (_debug) Debug.Log($"OnExplosion: {explosionPosition}, {explosionForce}");
+
+        if (_isInvincible) return;
+
         ApplyDamage((int)explosionForce, AttackType.Explosive);
     }
 }
