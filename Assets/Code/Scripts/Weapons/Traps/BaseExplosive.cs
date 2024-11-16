@@ -28,8 +28,8 @@ namespace Game.Traps
                 if (obj.TryGetComponent(out Rigidbody rb))
                     rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
 
-                if (obj.TryGetComponent(out IExplosionAffected explosionAffected))
-                    explosionAffected.OnExplosion(transform.position, _explosionDamage);
+                if (obj.TryGetComponent(out ITakeDamage explosionAffected))
+                    explosionAffected.TakeDamage(_explosionDamage, AttackType.Explosive);
             }
 
             if (_explosionPrefab != null)

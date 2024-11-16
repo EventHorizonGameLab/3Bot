@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using static GunSettings;
 
 [RequireComponent(typeof(Collider))]
-public class Health : MonoBehaviour, IExplosionAffected
+public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
 {
     [SerializeField] private int _maxHealth = 100;
 
@@ -28,6 +28,12 @@ public class Health : MonoBehaviour, IExplosionAffected
     [Title("Debug")]
     [SerializeField] private bool _debug = false;
     [ShowInInspector, ReadOnly] private int _currentHealth;
+    [Button("Reset Health")]
+    private void ResetHealth()
+    {
+        _currentHealth = _maxHealth;
+        gameObject.SetActive(true);
+    }
 
     /// <summary>
     /// Event triggered when health changes.
@@ -132,6 +138,7 @@ public class Health : MonoBehaviour, IExplosionAffected
         }
     }
 
+    [Obsolete("Use TakeDamage instead")]
     public void OnExplosion(Vector3 explosionPosition, float explosionForce)
     {
         if (_debug) Debug.Log($"OnExplosion: {explosionPosition}, {explosionForce}");
@@ -139,5 +146,10 @@ public class Health : MonoBehaviour, IExplosionAffected
         if (_isInvincible) return;
 
         ApplyDamage((int)explosionForce, AttackType.Explosive);
+    }
+
+    public void TakeDamage(float damage, AttackType type)
+    {
+        ApplyDamage((int)damage, type);
     }
 }
