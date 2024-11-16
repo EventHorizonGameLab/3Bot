@@ -5479,6 +5479,7 @@ MonoBehaviour:
   _fireRate: 0.5
   _reloadTime: 0
   _damage: 10
+  _hasInfiniteAmmo: 1
   _attackType: 4
   _is2D: 1
   causesDamageOverTime: 1

@@ -4,13 +4,14 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 [RequireComponent(typeof(ParticleSystem))]
-public class GunSettings : MonoBehaviour
+public class GunSettings : MonoBehaviour, IReloadable
 {
     [Title("Settings")]
     [SerializeField, Tooltip("Max ammo"), Min(1)] private int _maxAmmo;
     [SerializeField, Tooltip("Fire rate"), Min(0f)] private float _fireRate;
     [SerializeField, Tooltip("Reload time"), Min(0f)] private float _reloadTime;
     [SerializeField, Tooltip("Damage"), Min(0)] private int _damage;
+    [SerializeField, Tooltip("Flag indicating if the gun has infinite ammo")] private bool _hasInfiniteAmmo = true;
     [SerializeField, Tooltip("Attack Type")] private AttackType _attackType = AttackType.Null;
 
     [SerializeField, Tooltip("Flag indicating if the gun is 2D")] private bool _is2D = false;
@@ -37,6 +38,12 @@ public class GunSettings : MonoBehaviour
     [Tooltip("Current ammo"), ShowInInspector] 
     public int CurrentAmmo => _currentAmmo;
 
+    [Button("Reload")]
+    public void ReloadButton()
+    {
+        _currentAmmo = _maxAmmo;
+    }
+
     private int _currentAmmo;
 
     public event Action<int> OnAmmoChanged;
@@ -57,6 +64,8 @@ public class GunSettings : MonoBehaviour
     public void Shoot()
     {
         if (_debug) Debug.Log("Shoot Command Received");
+
+        if(_currentAmmo <= 0) return;
 
         _timeSinceLastShot += Time.deltaTime * _offset;
 
@@ -81,6 +90,8 @@ public class GunSettings : MonoBehaviour
 
     public void Reload()
     {
+        if (!_hasInfiniteAmmo) return;
+
         if (_timeSinceReloadStarted >= _reloadTime)
         {
             _timeSinceReloadStarted = 0f;
