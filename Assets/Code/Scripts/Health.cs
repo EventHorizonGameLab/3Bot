@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using static GunSettings;
 
 [RequireComponent(typeof(Collider))]
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IExplosionAffected
 {
     [SerializeField] private int _maxHealth = 100;
 
@@ -130,5 +130,10 @@ public class Health : MonoBehaviour
 
             elapsedTime += data.interval;
         }
+    }
+
+    public void OnExplosion(Vector3 explosionPosition, float explosionForce)
+    {
+        ApplyDamage((int)explosionForce, AttackType.Explosive);
     }
 }
