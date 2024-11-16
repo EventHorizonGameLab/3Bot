@@ -1,20 +1,20 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class SegwayPitchControl : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private float rotationAmplitude = 10f;  // Massima inclinazione
-    [SerializeField] private Transform body;  // Riferimento al corpo del GameObject
-    [SerializeField] private float smoothingFactor = 5f;  // Velocità di interpolazione
-    [SerializeField] private bool invertPitchEffect = false;  // Inverte l'effetto di inclinazione
+    [Title("Settings")]
+    [SerializeField, Tooltip("The amplitude of the pitch rotation"), Min(0)] private float rotationAmplitude = 10f;
+    [SerializeField, Required, Tooltip("The Mesh of the Player")] private Transform body;
+    [SerializeField, Tooltip("The smoothing factor of the pitch rotation"), Range(0, 30)] private float smoothingFactor = 5f;
+    [SerializeField] private bool invertPitchEffect = false;
 
     private NavMeshAgent agent;
     private float previousVelocity = 0f;
 
     private void Start()
     {
-        // Ottieni il componente NavMeshAgent
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -25,34 +25,27 @@ public class SegwayPitchControl : MonoBehaviour
 
     private void MotionVFX()
     {
-        // Calcola la velocità corrente del navmesh agent
         float velocity = agent.velocity.magnitude;
 
-        // Arrotonda la velocità per evitare oscillazioni a causa di piccoli cambiamenti
         float velocityRound = Mathf.Round(velocity * 100f) / 100f;
 
-        // Calcola la variazione di velocità (acceleration/deceleration)
         float speed = (velocityRound - previousVelocity) / Time.deltaTime;
 
-        // Imposta l'angolo di inclinazione in base alla velocità
         float rotationAngle = 0f;
 
-        if (speed > 0) // Se si sta accelerando
+        if (speed > 0)
         {
             rotationAngle = invertPitchEffect ? rotationAmplitude : -rotationAmplitude;
         }
-        else if (speed < 0) // Se si sta decelerando
+        else if (speed < 0)
         {
             rotationAngle = invertPitchEffect ? -rotationAmplitude : rotationAmplitude;
         }
 
-        // Aggiorna la velocità precedente
         previousVelocity = velocityRound;
 
-        // Crea una rotazione target sull'asse X (beccheggio)
         Quaternion targetRotation = Quaternion.Euler(rotationAngle, 0f, 0f);
 
-        // Interpola la rotazione locale per rendere l'effetto più fluido
         body.localRotation = Quaternion.Lerp(body.localRotation, targetRotation, smoothingFactor * Time.deltaTime);
     }
 }
