@@ -1,7 +1,5 @@
 using PlayerSM;
 using Sirenix.OdinInspector;
-using System.Net;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -39,94 +37,83 @@ public class GunAimingLine : MonoBehaviour
 
     private void Update()
     {
-        if (lineRenderer.enabled) DrawLine();
+        if (lineRenderer.enabled)
+        {
+            DrawLine();
+        }
     }
+
     private void DrawLine()
     {
         Vector3 startPoint = _gunTip.position;
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        Vector3 endPoint;
+        if (_debug)
+            Debug.DrawRay(Camera.main.transform.position, mouseRay.direction * _maxDistance * 2, Color.red);
 
-        if (_debug) Debug.DrawRay(Camera.main.transform.position, mouseRay.direction * _maxDistance * 2, Color.red);
+        // Perform the first raycast
+        RaycastHit firstHit;
+        Vector3 endPoint = (Physics.Raycast(mouseRay, out firstHit, _maxDistance, ~excludeLayers))
+            ? CalculateImpactPoint(startPoint, firstHit.point)
+            : GetRayIntersectionWithPlane(mouseRay, _gunTip.position.y);
 
-        if (Physics.Raycast(mouseRay, out RaycastHit firstHit, _maxDistance, ~excludeLayers))
-        {
-            Vector3 direction = (firstHit.point - startPoint).normalized;
+        // Now cast the second ray in the calculated direction or no-impact point
+        Ray secondRay = new(startPoint, (endPoint - startPoint).normalized);
+        if (_drawGizmo)
+            Debug.DrawRay(startPoint, secondRay.direction * _maxDistance, Color.cyan);
 
-            if (_is2D) direction.y = 0;
-
-            Ray secondRay = new(startPoint, direction);
-
-            if (_drawGizmo) Debug.DrawRay(startPoint, direction * _maxDistance, Color.cyan);
-
-            if (Physics.Raycast(secondRay, out RaycastHit secondHit, _maxDistance, ~excludeLayers))
-            {
-                endPoint = secondHit.point;
-            }
-            else
-            {
-                endPoint = NoImpact(startPoint, direction);
-            }
-        }
-        else
-        {
-            endPoint = GetRayIntersectionWithPlane(mouseRay, _gunTip.position.y);
-
-            Vector3 direction = endPoint - startPoint;
-            direction.Normalize();
-
-            direction  = startPoint + direction * _maxDistance;
-
-            Ray secondRay = new(startPoint, direction);
-            if (Physics.Raycast(secondRay, out RaycastHit secondHit, _maxDistance, ~excludeLayers))
-            {
-                endPoint = secondHit.point;
-            }
-            else
-            {
-                endPoint = direction;
-            }
-        }
-
-        if (_drawGizmo) Debug.DrawRay(endPoint, new(endPoint.x, -_maxDistance, endPoint.z), Color.green);
-
-        lineRenderer.SetPosition(0, startPoint);
-        lineRenderer.SetPosition(1, endPoint);
-    }
-
-    Vector3 NoImpact(Vector3 startPoint, Vector3 direction)
-    {
-        Vector3 endPoint;
-
-        if (_is2D) direction.y = 0;
-
-        Ray secondRay = new(startPoint, direction);
-        if (Physics.Raycast(secondRay, out RaycastHit secondHit, _maxDistance, ~excludeLayers))
+        RaycastHit secondHit;
+        if (Physics.Raycast(secondRay, out secondHit, _maxDistance, ~excludeLayers))
         {
             endPoint = secondHit.point;
         }
         else
         {
-            endPoint = startPoint + direction * _maxDistance;
+            endPoint = startPoint + secondRay.direction * _maxDistance;
         }
 
-        return endPoint;
+        if (_drawGizmo)
+            Debug.DrawRay(endPoint, new Vector3(endPoint.x, -_maxDistance, endPoint.z), Color.green);
+
+        lineRenderer.SetPosition(0, startPoint);
+        lineRenderer.SetPosition(1, endPoint);
     }
 
+    // Calculate impact point from the first ray
+    private Vector3 CalculateImpactPoint(Vector3 startPoint, Vector3 firstHitPoint)
+    {
+        Vector3 direction = (firstHitPoint - startPoint).normalized;
+        if (_is2D) direction.y = 0;
+        return NoImpact(startPoint, direction);
+    }
+
+    // If no impact, calculate the end point
+    private Vector3 NoImpact(Vector3 startPoint, Vector3 direction)
+    {
+        Ray secondRay = new(startPoint, direction);
+        RaycastHit secondHit;
+        if (Physics.Raycast(secondRay, out secondHit, _maxDistance, ~excludeLayers))
+        {
+            return secondHit.point;
+        }
+        else
+        {
+            return startPoint + direction * _maxDistance;
+        }
+    }
+
+    // Get intersection of the ray with a horizontal plane at the given height (y-coordinate)
     private Vector3 GetRayIntersectionWithPlane(Ray ray, float planeHeight)
     {
         if (Mathf.Approximately(ray.direction.y, 0f)) return Vector3.zero;
 
         float t = (planeHeight - ray.origin.y) / ray.direction.y;
-
         if (t < 0) return Vector3.zero;
 
-        Vector3 intersectionPoint = ray.origin + t * ray.direction;
-
-        return intersectionPoint;
+        return ray.origin + t * ray.direction;
     }
 
+    // Handle state change to enable/disable the LineRenderer
     private void CheckState(string state)
     {
         lineRenderer.enabled = state.ToLower().Contains("shoot");
