@@ -48,22 +48,19 @@ public class GunAimingLine : MonoBehaviour
         Vector3 startPoint = _gunTip.position;
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (_debug)
-            Debug.DrawRay(Camera.main.transform.position, mouseRay.direction * _maxDistance * 2, Color.red);
+        if (_debug) Debug.DrawRay(Camera.main.transform.position, mouseRay.direction * _maxDistance * 2, Color.red);
 
         // Perform the first raycast
-        RaycastHit firstHit;
-        Vector3 endPoint = (Physics.Raycast(mouseRay, out firstHit, _maxDistance, ~excludeLayers))
+        Vector3 endPoint = (Physics.Raycast(mouseRay, out RaycastHit firstHit, _maxDistance, ~excludeLayers))
             ? CalculateImpactPoint(startPoint, firstHit.point)
             : GetRayIntersectionWithPlane(mouseRay, _gunTip.position.y);
 
         // Now cast the second ray in the calculated direction or no-impact point
         Ray secondRay = new(startPoint, (endPoint - startPoint).normalized);
-        if (_drawGizmo)
-            Debug.DrawRay(startPoint, secondRay.direction * _maxDistance, Color.cyan);
 
-        RaycastHit secondHit;
-        if (Physics.Raycast(secondRay, out secondHit, _maxDistance, ~excludeLayers))
+        if (_drawGizmo) Debug.DrawRay(startPoint, secondRay.direction * _maxDistance, Color.cyan);
+
+        if (Physics.Raycast(secondRay, out RaycastHit secondHit, _maxDistance, ~excludeLayers))
         {
             endPoint = secondHit.point;
         }
@@ -72,8 +69,7 @@ public class GunAimingLine : MonoBehaviour
             endPoint = startPoint + secondRay.direction * _maxDistance;
         }
 
-        if (_drawGizmo)
-            Debug.DrawRay(endPoint, new Vector3(endPoint.x, -_maxDistance, endPoint.z), Color.green);
+        if (_drawGizmo) Debug.DrawRay(endPoint, new Vector3(endPoint.x, -_maxDistance, endPoint.z), Color.green);
 
         lineRenderer.SetPosition(0, startPoint);
         lineRenderer.SetPosition(1, endPoint);
@@ -91,8 +87,7 @@ public class GunAimingLine : MonoBehaviour
     private Vector3 NoImpact(Vector3 startPoint, Vector3 direction)
     {
         Ray secondRay = new(startPoint, direction);
-        RaycastHit secondHit;
-        if (Physics.Raycast(secondRay, out secondHit, _maxDistance, ~excludeLayers))
+        if (Physics.Raycast(secondRay, out RaycastHit secondHit, _maxDistance, ~excludeLayers))
         {
             return secondHit.point;
         }
