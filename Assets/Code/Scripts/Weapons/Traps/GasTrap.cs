@@ -16,6 +16,8 @@ namespace Game.Traps
 
         private float _timer = 0f;
 
+        private void Start() { }
+
         private void OnTriggerStay(Collider other)
         {
             if (_debug) Debug.Log($"Gas trap triggered by {other.name}");
