@@ -5495,16 +5495,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296110320}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48c9024428078484cb5310db0865eee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunTip: {fileID: 296110321}
+  _gunTip: {fileID: 296110321}
+  _maxDistance: 500
   excludeLayers:
     serializedVersion: 2
     m_Bits: 4
-  _is2D: 0
+  _is2D: 1
+  _debug: 1
+  _drawGizmo: 1
 --- !u!120 &296110327
 LineRenderer:
   serializedVersion: 2
@@ -5526,7 +5529,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5570,8 +5573,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0, b: 0, a: 1}
+      key1: {r: 0.2924528, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -6426,7 +6429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &467671807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7500,7 +7503,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -7537,7 +7540,7 @@ Transform:
   m_GameObject: {fileID: 739337860}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0, z: 1.45}
+  m_LocalPosition: {x: -0.01, y: 0.45, z: 1.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7567,7 +7570,7 @@ MonoBehaviour:
   _debug: 0
   _showGizmos: 1
   _triggerForce: 0.5
-  _haveDetectionArea: 0
+  _haveDetectionArea: 1
   _detectionRadius: 3.21
   _detectionLayer:
     serializedVersion: 2
@@ -8084,7 +8087,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 360
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -15744,7 +15747,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1650725301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16628,7 +16631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1813891017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17504,16 +17507,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room
       objectReference: {fileID: 0}
-    - target: {fileID: 2459166901788824135, guid: ae1190feac311e540858980c7e5fbb5e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967068134873783479, guid: ae1190feac311e540858980c7e5fbb5e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6311879731517077678, guid: ae1190feac311e540858980c7e5fbb5e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17562,16 +17555,6 @@ PrefabInstance:
     - target: {fileID: 6311879731517077678, guid: ae1190feac311e540858980c7e5fbb5e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6691681622559171193, guid: ae1190feac311e540858980c7e5fbb5e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7642149237080443418, guid: ae1190feac311e540858980c7e5fbb5e,
-        type: 3}
-      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
