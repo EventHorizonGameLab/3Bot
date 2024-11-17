@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,25 +14,36 @@ public class QTE_MiniGame : MonoBehaviour
     [SerializeField] Image fillBar;
     [SerializeField] float fillDuration = 5f;
     [SerializeField] GameObject pswHolder;
-    [Range(0f, 1f)] [SerializeField] float colorChangeThreshold = 0.8f;
+    [SerializeField] TMP_Text[] passwordField;
+    [Range(0f, 1f)][SerializeField] float colorChangeThreshold = 0.8f;
 
     IMiniGame miniGameObject;
+    string currentCombination = string.Empty;
     private float fillTime = 0f;
     private bool isIncreasing = true;
     private bool isGreen = false;
-    
+
 
     private void Awake()
     {
         barHolder.SetActive(false);
     }
 
+    private void Start()
+    {
+        foreach (TMP_Text text in passwordField)
+        {
+            text.text = "0";
+        }
+    }
+
+
     void OnEnable()
     {
         OnBarMiniGame += StartBarMiniGame;
     }
 
-        
+
 
     private void OnDisable()
     {
@@ -110,23 +122,35 @@ public class QTE_MiniGame : MonoBehaviour
 
     void StartPasswordMiniGame(string password, IMiniGame door)
     {
-
+        miniGameObject = door;
     }
 
     bool CheckPassword()
     {
-        return false; // controllare psw
+        string correctTest = "011";
+        if (currentCombination == correctTest) return true;
+        return false;
     }
 
-    void OpenDoor()
+    void TryOpenDoor()
     {
-        if(CheckPassword()) { miniGameObject.MinigameWon(); }
+        Debug.Log(currentCombination);
+        if (CheckPassword()) { Debug.Log("porta aperta"); } else Debug.Log("porta chiusa");
     }
 
-    void ChangeNumberOnButtonClick()
+    public void ChangeNumberOnButtonClick(TMP_Text numberOnButton)
     {
+        int currentNumber = int.Parse(numberOnButton.text);
+        currentNumber = (currentNumber + 1) % 10;
+        numberOnButton.text = currentNumber.ToString();
+        currentCombination = string.Empty;
+        foreach (TMP_Text number in passwordField)
+        {
+            currentCombination += number.text;
+        }
+        TryOpenDoor();
 
     }
 
-    
+
 }

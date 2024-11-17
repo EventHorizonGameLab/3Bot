@@ -761,7 +761,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 610515084}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1220996937}
+        m_TargetAssemblyTypeName: QTE_MiniGame, Assembly-CSharp
+        m_MethodName: ChangeNumberOnButtonClick
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 892723202}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &610515084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1398,10 +1410,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9078d98dd24aec24584e35bdcc894153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barHolder: {fileID: 0}
+  barHolder: {fileID: 1906954380}
   fillBar: {fileID: 84430759}
   fillDuration: 1
   pswHolder: {fileID: 0}
+  passwordField:
+  - {fileID: 1822724856}
+  - {fileID: 935592421}
+  - {fileID: 892723202}
   colorChangeThreshold: 0.8
 --- !u!1 &1231316635
 GameObject:
@@ -1659,7 +1675,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1438308382}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1220996937}
+        m_TargetAssemblyTypeName: QTE_MiniGame, Assembly-CSharp
+        m_MethodName: ChangeNumberOnButtonClick
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1822724856}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1438308382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1989,7 +2017,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1988843978}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1220996937}
+        m_TargetAssemblyTypeName: QTE_MiniGame, Assembly-CSharp
+        m_MethodName: ChangeNumberOnButtonClick
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 935592421}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1988843978
 MonoBehaviour:
   m_ObjectHideFlags: 0
