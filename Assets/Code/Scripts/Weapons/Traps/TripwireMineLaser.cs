@@ -16,8 +16,6 @@ public class TripwireMineLaser : MonoBehaviour
 
     private void Start()
     {
-        if (!Application.isPlaying) return;
-
         _lineRenderer = GetComponent<LineRenderer>();
         Laser();
     }
