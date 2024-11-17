@@ -18,6 +18,7 @@ public class GunAimingLine : MonoBehaviour
     [SerializeField] private bool _drawGizmo = false;
 
     private LineRenderer lineRenderer;
+    private Vector3 endPoint;
 
     private void Start()
     {
@@ -48,10 +49,10 @@ public class GunAimingLine : MonoBehaviour
         Vector3 startPoint = _gunTip.position;
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (_debug) Debug.DrawRay(Camera.main.transform.position, mouseRay.direction * _maxDistance * 2, Color.red);
+        if (_drawGizmo) Debug.DrawRay(Camera.main.transform.position, mouseRay.direction * _maxDistance * 2, Color.red);
 
         // Perform the first raycast
-        Vector3 endPoint = (Physics.Raycast(mouseRay, out RaycastHit firstHit, _maxDistance, ~excludeLayers))
+        endPoint = (Physics.Raycast(mouseRay, out RaycastHit firstHit, _maxDistance, ~excludeLayers))
             ? CalculateImpactPoint(startPoint, firstHit.point)
             : GetRayIntersectionWithPlane(mouseRay, _gunTip.position.y);
 
