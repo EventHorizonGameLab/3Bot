@@ -22,7 +22,7 @@ public class InputTest : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.TryGetComponent(out IMiniGame enemy))
+                if (hit.transform.gameObject.TryGetComponent(out IMiniGame enemy) && enemy.IsEnemy)
                 {
                     QTE_MiniGame.OnBarMiniGame?.Invoke(cam, hit.transform, enemy);
                 }
@@ -34,7 +34,7 @@ public class InputTest : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.TryGetComponent(out IMiniGame door))
+                if (hit.transform.gameObject.TryGetComponent(out IMiniGame door) && door.IsDoor)
                 {
                     QTE_MiniGame.OnPasswordMiniGame?.Invoke(door.Password, door);
                 }

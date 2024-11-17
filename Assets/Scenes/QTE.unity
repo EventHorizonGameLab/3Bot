@@ -510,6 +510,7 @@ GameObject:
   - component: {fileID: 359945985}
   - component: {fileID: 359945984}
   - component: {fileID: 359945983}
+  - component: {fileID: 359945987}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -603,6 +604,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &359945987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359945982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f61537dc5365542ae976b99b5cb311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemy: 0
+  isDoor: 1
+  password: 011
 --- !u!1 &548914352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,7 +1429,7 @@ MonoBehaviour:
   barHolder: {fileID: 1906954380}
   fillBar: {fileID: 84430759}
   fillDuration: 1
-  pswHolder: {fileID: 0}
+  pswHolder: {fileID: 1846492332}
   passwordField:
   - {fileID: 1822724856}
   - {fileID: 935592421}

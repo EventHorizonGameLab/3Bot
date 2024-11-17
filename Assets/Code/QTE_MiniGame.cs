@@ -27,20 +27,19 @@ public class QTE_MiniGame : MonoBehaviour
     private void Awake()
     {
         barHolder.SetActive(false);
+        pswHolder.SetActive(false);
     }
 
     private void Start()
     {
-        foreach (TMP_Text text in passwordField)
-        {
-            text.text = "0";
-        }
+        ResetPasswordField();
     }
 
 
     void OnEnable()
     {
         OnBarMiniGame += StartBarMiniGame;
+        OnPasswordMiniGame += StartPasswordMiniGame;
     }
 
 
@@ -48,6 +47,7 @@ public class QTE_MiniGame : MonoBehaviour
     private void OnDisable()
     {
         OnBarMiniGame -= StartBarMiniGame;
+        OnPasswordMiniGame -= StartPasswordMiniGame;
     }
 
     void FixedUpdate()
@@ -95,7 +95,9 @@ public class QTE_MiniGame : MonoBehaviour
             {
                 Debug.Log("QTE VINTO");
                 //TODO: play del suono di vittoria
-                barHolder.gameObject.SetActive(false);
+                barHolder.SetActive(false);
+                
+                miniGameObject = null;
             }
             else
             {
@@ -109,9 +111,10 @@ public class QTE_MiniGame : MonoBehaviour
 
     void StartBarMiniGame(Camera cam, Transform target, IMiniGame enemy)
     {
+        miniGameObject ??= enemy;
         var screenPosition = cam.WorldToScreenPoint(target.position);
         barHolder.transform.position = screenPosition;
-        barHolder.gameObject.SetActive(true);
+        barHolder.SetActive(true);
 
         fillBar.fillAmount = 0f;
         fillBar.color = Color.red;
@@ -122,21 +125,27 @@ public class QTE_MiniGame : MonoBehaviour
 
     void StartPasswordMiniGame(string password, IMiniGame door)
     {
-        miniGameObject = door;
+        miniGameObject ??= door;
+        pswHolder.gameObject.SetActive(true);
     }
 
     bool CheckPassword()
     {
-        string correctTest = "011";
-        if (currentCombination == correctTest) return true;
+        if (currentCombination == miniGameObject.Password) return true;
         return false;
     }
+        
 
     void TryOpenDoor()
     {
-        Debug.Log(currentCombination);
-        if (CheckPassword()) { Debug.Log("porta aperta"); } else Debug.Log("porta chiusa");
+        if (CheckPassword())
+        {
+            miniGameObject.MinigameWon();
+            miniGameObject = null;
+            pswHolder.SetActive(false);
+        }
     }
+
 
     public void ChangeNumberOnButtonClick(TMP_Text numberOnButton)
     {
@@ -150,6 +159,14 @@ public class QTE_MiniGame : MonoBehaviour
         }
         TryOpenDoor();
 
+    }
+
+    void ResetPasswordField()
+    {
+        foreach (TMP_Text text in passwordField)
+        {
+            text.text = "0";
+        }
     }
 
 
