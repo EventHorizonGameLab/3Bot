@@ -1,3 +1,4 @@
+using PlayerSM;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -87,7 +88,7 @@ public class QTE_MiniGame : MonoBehaviour
 
     }
 
-    private void Update() // TODO: eliminare ed integrare nella State Machine
+    private void Update()
     {
         if (Input.GetMouseButtonDown(1) && barHolder.activeInHierarchy)
         {
@@ -96,13 +97,14 @@ public class QTE_MiniGame : MonoBehaviour
                 Debug.Log("QTE VINTO");
                 //TODO: play del suono di vittoria
                 barHolder.SetActive(false);
-                
+                miniGameObject.MinigameWon();
                 miniGameObject = null;
+                HackingState.OnHackingEnded?.Invoke();
             }
             else
             {
                 Debug.Log("QTE PERSO");
-                // TODO:player del suono di fallimento
+                // TODO:play del suono di fallimento
             }
 
         }
