@@ -56,7 +56,7 @@ public class GunAimingLine : MonoBehaviour
             ? CalculateImpactPoint(startPoint, firstHit.point)
             : GetRayIntersectionWithPlane(mouseRay, _gunTip.position.y);
 
-        // Now cast the second ray in the calculated direction or no-impact point
+        // Now cast the second detectionRay in the calculated direction or no-impact point
         Ray secondRay = new(startPoint, (endPoint - startPoint).normalized);
 
         if (_drawGizmo) Debug.DrawRay(startPoint, secondRay.direction * _maxDistance, Color.cyan);
@@ -76,7 +76,7 @@ public class GunAimingLine : MonoBehaviour
         lineRenderer.SetPosition(1, endPoint);
     }
 
-    // Calculate impact point from the first ray
+    // Calculate impact point from the first detectionRay
     private Vector3 CalculateImpactPoint(Vector3 startPoint, Vector3 firstHitPoint)
     {
         Vector3 direction = (firstHitPoint - startPoint).normalized;
@@ -98,7 +98,7 @@ public class GunAimingLine : MonoBehaviour
         }
     }
 
-    // Get intersection of the ray with a horizontal plane at the given height (y-coordinate)
+    // Get intersection of the detectionRay with a horizontal plane at the given height (y-coordinate)
     private Vector3 GetRayIntersectionWithPlane(Ray ray, float planeHeight)
     {
         if (Mathf.Approximately(ray.direction.y, 0f)) return Vector3.zero;

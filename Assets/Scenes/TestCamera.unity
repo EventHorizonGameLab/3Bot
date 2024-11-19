@@ -5267,8 +5267,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4
   _is2D: 1
-  _debug: 1
-  _drawGizmo: 1
+  _debug: 0
+  _drawGizmo: 0
 --- !u!120 &296110327
 LineRenderer:
   serializedVersion: 2
@@ -15861,6 +15861,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 574771686}
     m_Modifications:
+    - target: {fileID: 1591586364357180158, guid: ae1190feac311e540858980c7e5fbb5e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2459166901788824135, guid: ae1190feac311e540858980c7e5fbb5e,
         type: 3}
       propertyPath: m_Name
@@ -15915,6 +15920,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376150665300865046, guid: ae1190feac311e540858980c7e5fbb5e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

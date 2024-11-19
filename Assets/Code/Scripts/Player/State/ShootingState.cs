@@ -12,7 +12,7 @@ namespace PlayerSM
 
         Camera cam;
         RaycastHit hit;
-        Ray ray;
+        Ray detectionRay;
         bool isHacking;
 
         public ShootingState(PlayerController player)
@@ -27,10 +27,9 @@ namespace PlayerSM
 
             isHacking = false;
             cam = Camera.main;
-            ray = cam.ScreenPointToRay(Input.mousePosition);
+            
 
             OnHackingEnded += EndHacking;
-
         }
 
         public void Exit()
@@ -41,12 +40,11 @@ namespace PlayerSM
 
         public void HandleInput()
         {
+            detectionRay = cam.ScreenPointToRay(Input.mousePosition);
+
             if (Input.GetMouseButtonDown(0))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                // Lancia il Raycast e controlla se colpisce un punto valido
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                if (Physics.Raycast(detectionRay, out RaycastHit hit))
                 {
                     if (_gun.Is2D) hit.point = new Vector3(hit.point.x, _gun.transform.position.y, hit.point.z);
 
@@ -58,7 +56,7 @@ namespace PlayerSM
             {
                 if (isHacking) return;
 
-                if (Physics.Raycast(ray, out hit) )
+                if (Physics.Raycast(detectionRay, out hit))
                 {
                     if (hit.transform.gameObject.TryGetComponent(out IMiniGame enemy) && enemy.IsEnemy)
                     {
@@ -67,12 +65,13 @@ namespace PlayerSM
                     }
                 }
             }
+
             Debug.Log(isHacking);
         }
 
         public void Update()
         {
-           
+
         }
 
         void EndHacking()
