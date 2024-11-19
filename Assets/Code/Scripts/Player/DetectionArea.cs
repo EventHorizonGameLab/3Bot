@@ -16,6 +16,8 @@ public class DetectionArea : MonoBehaviour
 
     private void Update()
     {
+        if(!this.enabled) return;
+
         Detection();
     }
 
@@ -53,7 +55,7 @@ public class DetectionArea : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!_showGizmos) return;
+        if (!_showGizmos || !this.enabled) return;
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, _detectionRadius);
