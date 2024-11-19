@@ -99,7 +99,7 @@ public class QTE_MiniGame : MonoBehaviour
                 barHolder.SetActive(false);
                 miniGameObject.MinigameWon();
                 miniGameObject = null;
-                HackingState.OnHackingEnded?.Invoke();
+                ShootingState.OnHackingEnded?.Invoke();
             }
             else
             {

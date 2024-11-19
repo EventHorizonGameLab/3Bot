@@ -28,9 +28,10 @@ namespace PlayerSM
             isHacking = false;
             cam = Camera.main;
             
-
             OnHackingEnded += EndHacking;
         }
+
+            
 
         public void Exit()
         {
@@ -60,8 +61,8 @@ namespace PlayerSM
                 {
                     if (hit.transform.gameObject.TryGetComponent(out IMiniGame enemy) && enemy.IsEnemy)
                     {
-                        QTE_MiniGame.OnBarMiniGame?.Invoke(cam, hit.transform, enemy);
                         isHacking = true;
+                        QTE_MiniGame.OnBarMiniGame?.Invoke(cam, hit.transform, enemy);
                     }
                 }
             }

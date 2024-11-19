@@ -20,6 +20,6 @@ public class TestEnemy : MonoBehaviour, IMiniGame
 
     public void MinigameWon()
     {
-       Destroy(gameObject);
+       gameObject.SetActive(false);
     }
 }
