@@ -33,9 +33,14 @@ namespace Game.Traps
             }
 
             if (_explosionPrefab != null)
-                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            {
+                GameObject obj =  ObjectPooler.Instance.Get(_explosionPrefab);
+                obj.transform.position = transform.position;
+            }
 
-            Destroy(gameObject);
+            Play();
+
+            Destroy(gameObject); // to change
         }
 
         /// <summary>

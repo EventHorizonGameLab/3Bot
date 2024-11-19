@@ -75,6 +75,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
         {
             _timeSinceLastShot = 0f;
             _gun.Emit(1);
+            Play();
             _currentAmmo--;
 
             if (_debug) Debug.Log("Shooting");
