@@ -77,7 +77,7 @@ namespace PlayerSM
                 Ray rayFromAgent = new Ray(_agent.transform.position, targetPosition - _agent.transform.position);
 
                 // Visualizza il Raycast nella scena
-                Debug.DrawRay(rayFromAgent.origin, rayFromAgent.direction * 10f, Color.red, 2f); // Ray rosso
+                //Debug.DrawRay(rayFromAgent.origin, rayFromAgent.direction * 10f, Color.red, 2f); // Ray rosso
             }
         }
 
