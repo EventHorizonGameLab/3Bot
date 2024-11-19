@@ -13,8 +13,8 @@ namespace Game.Traps
         [SerializeField, Tooltip("LayerMask for detecting obstacles")] protected LayerMask _obstacleLayer;
 
         [Title("Debug")]
-        [SerializeField, Tooltip("Enable debug logs"), PropertyOrder(1)] protected bool _debug = false;
-        [SerializeField, Tooltip("Show debug gizmos"), PropertyOrder(1)] protected bool _showGizmos = false;
+        [SerializeField, Tooltip("Enable debug logs"), PropertyOrder(2)] protected bool _debug = false;
+        [SerializeField, Tooltip("Show debug gizmos"), PropertyOrder(2)] protected bool _showGizmos = false;
 
         /// <summary>
         /// Handles the explosion, applying force and triggering effects for nearby objects.

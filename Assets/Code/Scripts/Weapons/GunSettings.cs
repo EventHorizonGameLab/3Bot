@@ -34,11 +34,11 @@ public class GunSettings : MonoBehaviour, IReloadable
     }
 
     [Title("Debug")]
-    [ShowInInspector] private bool _debug = true;
-    [Tooltip("Current ammo"), ShowInInspector] 
+    [ShowInInspector, PropertyOrder(2)] private bool _debug = true;
+    [Tooltip("Current ammo"), ShowInInspector, PropertyOrder(2)] 
     public int CurrentAmmo => _currentAmmo;
 
-    [Button("Reload")]
+    [Button("Reload"), PropertyOrder(2)]
     public void ReloadButton()
     {
         _currentAmmo = _maxAmmo;
