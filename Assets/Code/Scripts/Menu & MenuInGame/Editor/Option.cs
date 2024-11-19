@@ -12,6 +12,7 @@ public class GraphicsSettingsEditor : Editor
         typeof(FullScreenController),
         typeof(ColorBlindnessController),
         typeof(MixerController),
+        typeof(SpeakerMode),
         typeof(MouseSensibility),
         typeof(InvertY)
     };

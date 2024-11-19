@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 
 namespace Game.Traps
 {
-    public abstract class BaseExplosive : MonoBehaviour
+    public abstract class BaseExplosive : BaseAudioHandler
     {
         [Title("Settings")]
         [SerializeField, Tooltip("Prefab of the explosion VFX effect")] protected GameObject _explosionPrefab;

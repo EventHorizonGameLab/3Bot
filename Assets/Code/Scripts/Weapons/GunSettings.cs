@@ -4,7 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 [RequireComponent(typeof(ParticleSystem))]
-public class GunSettings : MonoBehaviour, IReloadable
+public class GunSettings : BaseAudioHandler, IReloadable
 {
     [Title("Settings")]
     [SerializeField, Tooltip("Max ammo"), Min(1)] private int _maxAmmo;
