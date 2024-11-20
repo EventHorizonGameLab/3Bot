@@ -14683,7 +14683,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 437686575324645900}
-  - component: {fileID: 5484065330078454316}
   m_Layer: 0
   m_Name: VFX Esplosion V.2
   m_TagString: Untagged
@@ -14710,19 +14709,6 @@ Transform:
   - {fileID: 8030521724215437991}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5484065330078454316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5174272382517532564}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d6df45f666e30a4b83e02a821576275, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 5
 --- !u!1 &8381312522605921632
 GameObject:
   m_ObjectHideFlags: 0
