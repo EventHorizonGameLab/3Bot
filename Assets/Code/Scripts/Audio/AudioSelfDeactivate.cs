@@ -12,7 +12,6 @@ public class AudioSelfDeactivate : MonoBehaviour
     private IEnumerator ReturnToPool(float duration)
     {
         yield return new WaitForSeconds(duration);
-        GetComponent<AudioSource>().clip = null;
         ObjectPooler.Instance.ReturnToPool(gameObject);
     }
 }
