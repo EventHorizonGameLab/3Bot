@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix;
 using Sirenix.OdinInspector;
 using System.Collections;
+using System;
 
 public class ObjectPooler : MonoBehaviour
 {
@@ -40,6 +40,7 @@ public class ObjectPooler : MonoBehaviour
     /// <summary>
     /// Get an object from the pool, or create a new one if the pool is empty.
     /// </summary>
+    [Obsolete("Use Get(string) instead")]
     public GameObject Get(GameObject prefab)
     {
         if (poolDictionary.ContainsKey(prefab) && poolDictionary[prefab].Count > 0)
@@ -56,6 +57,7 @@ public class ObjectPooler : MonoBehaviour
     /// <summary>
     /// Get an object from the pool, or create a new one if the pool is empty.
     /// </summary>
+    [Obsolete("Use Get(string, float) instead")]
     public GameObject Get(GameObject prefab, float delay)
     {
         GameObject obj;
@@ -77,30 +79,64 @@ public class ObjectPooler : MonoBehaviour
     }
 
     /// <summary>
+    /// Get an object from the pool, or create a new one if the pool is empty.
+    /// </summary>
+    public GameObject Get(string prefabName)
+    {
+        GameObject prefab = GetPrefabByName(prefabName);
+
+        if (poolDictionary.ContainsKey(prefab) && poolDictionary[prefab].Count > 0)
+        {
+            var obj = poolDictionary[prefab].Dequeue();
+            obj.SetActive(true);
+            return obj;
+        }
+
+        return CreateObject(prefab);
+    }
+
+    /// <summary>
+    /// Get an object from the pool, or create a new one if the pool is empty.
+    /// </summary>
+    public GameObject Get(string prefabName, float delay)
+    {
+        GameObject prefab = GetPrefabByName(prefabName);
+
+        GameObject obj = null;
+        if (poolDictionary.ContainsKey(prefab) && poolDictionary[prefab].Count > 0)
+        {
+            obj = poolDictionary[prefab].Dequeue();
+            obj.SetActive(true);
+        }
+
+        if (obj == null) obj = CreateObject(prefab);
+
+        StartCoroutine(DisableObject(obj, delay));
+
+        return obj;
+    }
+
+    /// <summary>
+    /// Searches for a prefab in the pool by its name and returns the GameObject prefab.
+    /// </summary>
+    public GameObject GetPrefabByName(string prefabName)
+    {
+        // Search for the prefab in the dictionary
+        foreach (var entry in poolDictionary)
+        {
+            if (entry.Key.name == prefabName)
+            {
+                return entry.Key; // Return the prefab GameObject
+            }
+        }
+
+        // If not found, you can either return null or create a new prefab (depending on the logic you want)
+        return null;
+    }
+
+    /// <summary>
     /// Return an object to its pool. This method doesn't require the prefab to be passed.
     /// </summary>
-    //public void ReturnToPool(GameObject obj)
-    //{
-    //    // Find the prefab from the object's name
-    //    GameObject prefab = obj;
-
-    //    foreach (var entry in poolDictionary)
-    //    {
-    //        // Check if the object belongs to any prefab in the pool
-    //        if (entry.Value.Contains(obj))
-    //        {
-    //            prefab = entry.Key;
-    //            break;
-    //        }
-    //    }
-
-    //    // Return the object to the corresponding pool
-    //    if (!poolDictionary.ContainsKey(prefab))
-    //        poolDictionary[prefab] = new Queue<GameObject>();
-
-    //    obj.SetActive(false);
-    //    poolDictionary[prefab].Enqueue(obj);
-    //}
     public void ReturnToPool(GameObject obj)
     {
         if (obj == null) return;

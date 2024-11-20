@@ -1,7 +1,8 @@
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Collider)), Obsolete]
 public class Mine : MonoBehaviour
 {
     [Title("Settings")]
