@@ -6,7 +6,7 @@ namespace Game.Traps
     public abstract class BaseExplosive : BaseAudioHandler
     {
         [Title("Settings")]
-        [SerializeField, Tooltip("Prefab of the explosion VFX effect")] protected GameObject _explosionPrefab;
+        [SerializeField, Tooltip("Prefab of the explosion VFX effect")] protected string _explosionPrefab;
         [SerializeField, Tooltip("Force of the explosion"), Min(0)] protected float _explosionForce = 10f;
         [SerializeField, Tooltip("Damage of the explosion"), Min(0)] protected float _explosionDamage = 10f;
         [SerializeField, Tooltip("Radius of the explosion"), Range(0, 10)] protected float _explosionRadius = 5f;
