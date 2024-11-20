@@ -187,9 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a6134a293579c4faf0c28517297ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 8300000, guid: 5e5a44e832671c344846a9930d53611c, type: 3}
-  _audioSourcePrefab: {fileID: 7381059219509625358, guid: eb73b6e8498c1254b863db3774d9c4dc,
-    type: 3}
+  _audioClipName: 
   _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 500
@@ -5351,9 +5349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3475349be5c03c04a8efe4a15121e677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 8300000, guid: 91822912ed4aa7a4d832c1f9713c6fd7, type: 3}
-  _audioSourcePrefab: {fileID: 7381059219509625358, guid: eb73b6e8498c1254b863db3774d9c4dc,
-    type: 3}
+  _audioClipName: shoot
   _maxAmmo: 10
   _fireRate: 0.5
   _reloadTime: 0
@@ -5795,9 +5791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a6134a293579c4faf0c28517297ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 8300000, guid: 5e5a44e832671c344846a9930d53611c, type: 3}
-  _audioSourcePrefab: {fileID: 7381059219509625358, guid: eb73b6e8498c1254b863db3774d9c4dc,
-    type: 3}
+  _audioClipName: 
   _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 500
@@ -6171,9 +6165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a6134a293579c4faf0c28517297ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 8300000, guid: 5e5a44e832671c344846a9930d53611c, type: 3}
-  _audioSourcePrefab: {fileID: 7381059219509625358, guid: eb73b6e8498c1254b863db3774d9c4dc,
-    type: 3}
+  _audioClipName: 
   _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 500
@@ -6896,9 +6888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a6134a293579c4faf0c28517297ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 8300000, guid: 5e5a44e832671c344846a9930d53611c, type: 3}
-  _audioSourcePrefab: {fileID: 7381059219509625358, guid: eb73b6e8498c1254b863db3774d9c4dc,
-    type: 3}
+  _audioClipName: 
   _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 500
@@ -7338,9 +7328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a6134a293579c4faf0c28517297ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 8300000, guid: 5e5a44e832671c344846a9930d53611c, type: 3}
-  _audioSourcePrefab: {fileID: 7381059219509625358, guid: eb73b6e8498c1254b863db3774d9c4dc,
-    type: 3}
+  _audioClipName: explosion
   _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 500
@@ -14551,8 +14539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a6134a293579c4faf0c28517297ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 0}
-  _audioSourcePrefab: {fileID: 0}
+  _audioClipName: 
   _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 10
@@ -14838,9 +14825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5477210f93c93c844b30ee7da24a855f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 8300000, guid: 5e5a44e832671c344846a9930d53611c, type: 3}
-  _audioSourcePrefab: {fileID: 7381059219509625358, guid: eb73b6e8498c1254b863db3774d9c4dc,
-    type: 3}
+  _audioClipName: 
   _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 10
@@ -15509,9 +15494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5477210f93c93c844b30ee7da24a855f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 8300000, guid: 5e5a44e832671c344846a9930d53611c, type: 3}
-  _audioSourcePrefab: {fileID: 7381059219509625358, guid: eb73b6e8498c1254b863db3774d9c4dc,
-    type: 3}
+  _audioClipName: 
   _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 10
@@ -16281,9 +16264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a6134a293579c4faf0c28517297ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClip: {fileID: 8300000, guid: 5e5a44e832671c344846a9930d53611c, type: 3}
-  _audioSourcePrefab: {fileID: 7381059219509625358, guid: eb73b6e8498c1254b863db3774d9c4dc,
-    type: 3}
+  _audioClipName: 
   _explosionPrefab: {fileID: 5174272382517532564, guid: 556d7c92bdadf5c46857c155dae70dd2,
     type: 3}
   _explosionForce: 500
