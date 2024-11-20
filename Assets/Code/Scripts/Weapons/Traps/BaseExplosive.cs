@@ -32,7 +32,7 @@ namespace Game.Traps
                     explosionAffected.TakeDamage(_explosionDamage, AttackType.Explosive);
             }
 
-            if (_explosionPrefab != null)
+            if (_explosionPrefab != null && _explosionPrefab.Length > 0)
             {
                 GameObject obj =  ObjectPooler.Instance.Get(_explosionPrefab, 5f);
                 obj.transform.position = transform.position;
