@@ -34,13 +34,14 @@ namespace Game.Traps
 
             if (_explosionPrefab != null)
             {
-                GameObject obj =  ObjectPooler.Instance.Get(_explosionPrefab);
+                GameObject obj =  ObjectPooler.Instance.Get(_explosionPrefab, 5f);
                 obj.transform.position = transform.position;
             }
 
             Play();
 
-            Destroy(gameObject); // to change
+            //Destroy(gameObject); // to change
+            gameObject.SetActive(false);
         }
 
         /// <summary>

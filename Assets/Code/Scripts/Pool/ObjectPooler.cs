@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix;
 using Sirenix.OdinInspector;
+using System.Collections;
 
 public class ObjectPooler : MonoBehaviour
 {
@@ -50,6 +51,29 @@ public class ObjectPooler : MonoBehaviour
 
         // If pool is empty, create a new object
         return CreateObject(prefab);
+    }
+
+    /// <summary>
+    /// Get an object from the pool, or create a new one if the pool is empty.
+    /// </summary>
+    public GameObject Get(GameObject prefab, float delay)
+    {
+        GameObject obj;
+        if (poolDictionary.ContainsKey(prefab) && poolDictionary[prefab].Count > 0)
+        {
+            obj = poolDictionary[prefab].Dequeue();
+            obj.SetActive(true);
+
+            StartCoroutine(DisableObject(obj, delay));
+
+            return obj;
+        }
+
+        // If pool is empty, create a new object
+        obj = CreateObject(prefab);
+        StartCoroutine(DisableObject(obj, delay));
+
+        return obj;
     }
 
     /// <summary>
@@ -122,5 +146,14 @@ public class ObjectPooler : MonoBehaviour
         var newObject = Instantiate(prefab);
         newObject.name = prefab.name + "_Pooled";
         return newObject;
+    }
+
+    /// <summary>
+    /// Returns the AudioSource GameObject to the pool after playback.
+    /// </summary>
+    private IEnumerator DisableObject(GameObject source, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        ReturnToPool(source);
     }
 }
