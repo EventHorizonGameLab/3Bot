@@ -10,6 +10,7 @@ public class QTE_MiniGame : MonoBehaviour
 {
     public static Action<Camera, Transform, IMiniGame> OnBarMiniGame;
     public static Action<string, IMiniGame> OnPasswordMiniGame;
+    public static Action OnPlayerStateChanged;
 
     [SerializeField] GameObject barHolder;
     [SerializeField] Image fillBar;
@@ -41,6 +42,7 @@ public class QTE_MiniGame : MonoBehaviour
     {
         OnBarMiniGame += StartBarMiniGame;
         OnPasswordMiniGame += StartPasswordMiniGame;
+        OnPlayerStateChanged += ForceCloseMiniGames;
     }
 
 
@@ -49,6 +51,7 @@ public class QTE_MiniGame : MonoBehaviour
     {
         OnBarMiniGame -= StartBarMiniGame;
         OnPasswordMiniGame -= StartPasswordMiniGame;
+        OnPlayerStateChanged -= ForceCloseMiniGames;
     }
 
     void FixedUpdate()
@@ -99,7 +102,7 @@ public class QTE_MiniGame : MonoBehaviour
                 barHolder.SetActive(false);
                 miniGameObject.MinigameWon();
                 miniGameObject = null;
-                ShootingState.OnHackingEnded?.Invoke();
+                ShootingState.OnMiniGameEnded?.Invoke();
             }
             else
             {
@@ -128,7 +131,8 @@ public class QTE_MiniGame : MonoBehaviour
     void StartPasswordMiniGame(string password, IMiniGame door)
     {
         miniGameObject ??= door;
-        pswHolder.gameObject.SetActive(true);
+        ResetPasswordField();
+        pswHolder.SetActive(true);
     }
 
     bool CheckPassword()
@@ -136,7 +140,7 @@ public class QTE_MiniGame : MonoBehaviour
         if (currentCombination == miniGameObject.Password) return true;
         return false;
     }
-        
+
 
     void TryOpenDoor()
     {
@@ -145,6 +149,7 @@ public class QTE_MiniGame : MonoBehaviour
             miniGameObject.MinigameWon();
             miniGameObject = null;
             pswHolder.SetActive(false);
+            ShootingState.OnMiniGameEnded?.Invoke();
         }
     }
 
@@ -169,6 +174,20 @@ public class QTE_MiniGame : MonoBehaviour
         {
             text.text = "0";
         }
+    }
+
+    public void ClosePasswordPanel()
+    {
+        miniGameObject = null;
+        pswHolder.SetActive(false);
+        ShootingState.OnMiniGameEnded?.Invoke();
+    }
+
+    void ForceCloseMiniGames()
+    {
+        miniGameObject = null;
+        pswHolder.SetActive(false);
+        barHolder.SetActive(false);
     }
 
 

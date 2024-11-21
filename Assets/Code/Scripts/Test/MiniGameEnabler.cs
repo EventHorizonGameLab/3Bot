@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class TestEnemy : MonoBehaviour, IMiniGame
+public class MiniGameEnabler : MonoBehaviour, IMiniGame
 {
     [SerializeField] bool isEnemy;
     [SerializeField] bool isDoor;

@@ -5,7 +5,7 @@ namespace PlayerSM
 {
     public class ShootingState : IPlayerState
     {
-        public static Action OnHackingEnded = () => { };
+        public static Action OnMiniGameEnded = () => { };
 
         private PlayerController _player;
         private GunSettings _gun;
@@ -14,6 +14,7 @@ namespace PlayerSM
         RaycastHit hit;
         Ray detectionRay;
         bool isHacking;
+        bool isTryingPassword;
 
         public ShootingState(PlayerController player)
         {
@@ -27,23 +28,25 @@ namespace PlayerSM
 
             isHacking = false;
             cam = Camera.main;
-            
-            OnHackingEnded += EndHacking;
+
+            OnMiniGameEnded += EndHacking;
         }
 
-            
+
 
         public void Exit()
         {
             isHacking = false;
-            OnHackingEnded -= EndHacking;
+            isTryingPassword = false;
+            OnMiniGameEnded -= EndHacking;
+            QTE_MiniGame.OnPlayerStateChanged?.Invoke();
         }
 
         public void HandleInput()
         {
             detectionRay = cam.ScreenPointToRay(Input.mousePosition);
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !isTryingPassword)
             {
                 if (Physics.Raycast(detectionRay, out RaycastHit hit))
                 {
@@ -59,15 +62,21 @@ namespace PlayerSM
 
                 if (Physics.Raycast(detectionRay, out hit))
                 {
-                    if (hit.transform.gameObject.TryGetComponent(out IMiniGame enemy) && enemy.IsEnemy)
+                    if (hit.transform.gameObject.TryGetComponent(out IMiniGame clickedObj) && clickedObj.IsEnemy && !isHacking && !isTryingPassword)
                     {
                         isHacking = true;
-                        QTE_MiniGame.OnBarMiniGame?.Invoke(cam, hit.transform, enemy);
+                        QTE_MiniGame.OnBarMiniGame?.Invoke(cam, hit.transform, clickedObj);
+                    }
+                    if (hit.transform.gameObject.TryGetComponent(out IMiniGame clickedObj2) && clickedObj2.IsDoor && !isHacking && !isTryingPassword)
+                    {
+
+                        isTryingPassword = true;
+                        QTE_MiniGame.OnPasswordMiniGame?.Invoke(clickedObj.Password, clickedObj);
                     }
                 }
             }
 
-            Debug.Log(isHacking);
+
         }
 
         public void Update()
@@ -78,6 +87,8 @@ namespace PlayerSM
         void EndHacking()
         {
             isHacking = false;
+            isTryingPassword = false;
+
         }
 
 
