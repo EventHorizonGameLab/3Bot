@@ -4,11 +4,15 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using static GunSettings;
+using System.Runtime;
 
 [RequireComponent(typeof(Collider))]
 public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
 {
-    [SerializeField] private int _maxHealth = 100;
+
+    [Title("Settings")]
+    [SerializeField, Min(0)] private int _maxHealth = 100;
+    [SerializeField, Min(0)] private float _triggerForce = 5f;
 
     [Title("Flags")]
     [SerializeField] private bool _isPlayer = false;
@@ -33,17 +37,23 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
     {
         _currentHealth = _maxHealth;
         gameObject.SetActive(true);
+        OnHealthChange?.Invoke(_currentHealth);
+    }
+    [Button("Take Damage")]
+    private void Damage()
+    {
+        ApplyDamage(10, AttackType.Null);
     }
 
     /// <summary>
     /// Event triggered when health changes.
     /// </summary>
-    public event Action<int> OnHealthChange;
+    public static event Action<int> OnHealthChange;
 
     /// <summary>
     /// Event triggered when the entity dies.
     /// </summary>
-    public event Action OnDeath;
+    public static event Action OnDeath;
 
     private void Start()
     {
@@ -79,6 +89,16 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
 
         // Apply damage based on the attack type
         ApplyDamage(damage, gunSettings.AttackType);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (_debug) Debug.Log($"Collision Impulse: {collision.impulse.magnitude}.");
+
+        if (collision.impulse.magnitude >= _triggerForce)
+        {
+            ApplyDamage((int)collision.impulse.magnitude, AttackType.Physical);
+        }
     }
 
     /// <summary>

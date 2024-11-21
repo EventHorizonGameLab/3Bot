@@ -1,40 +1,34 @@
+using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class PauseManager : MonoBehaviour
 {
-    public static bool isGameInPaused = false;
+    [Title("Setting")]
+    [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
+    [SerializeField] private bool _isGameInPaused = false;
 
-    public PauseState currentState = PauseState.PAUSEABLE;
+    [Title("Flags")]
+    [SerializeField] private bool _isCursorHiddenAndLocked = false;
 
-    [Header("Debug")]
-    public bool isDebug = false;
+    [Title("Debug")]
+    public bool _debug = false;
 
-    public enum PauseState
-    {
-        PAUSEABLE,
-        NOTPAUSEABLE
-    }
-
-    public delegate void Pause(bool value);
-    public static event Pause IsPaused;
+    public static event Action<bool> IsPaused;
 
     private void Awake()
     {
         Time.timeScale = 1;
 
-        if (isDebug) return;
+        if (_debug) return;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        SetCursorState(_isCursorHiddenAndLocked && !_debug);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && currentState == PauseState.PAUSEABLE)
-        {
-            PauseGame();
-        }
+        if (Input.GetKeyDown(pauseKey)) PauseGame();
     }
 
     private void OnEnable()
@@ -52,15 +46,19 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     public void PauseGame()
     {
-        isGameInPaused = !isGameInPaused;
-        Time.timeScale = isGameInPaused ? 0 : 1;
+        if(_debug) Debug.Log($"Pause Game: {_isGameInPaused}");
 
-        if (!isDebug)
-        {
-            Cursor.lockState = isGameInPaused ? CursorLockMode.None : CursorLockMode.Locked;
-            Cursor.visible = isGameInPaused;
-        }
+        _isGameInPaused = !_isGameInPaused;
+        Time.timeScale = _isGameInPaused ? 0 : 1;
 
-        IsPaused?.Invoke(isGameInPaused);
+        SetCursorState(_isCursorHiddenAndLocked && !_debug);
+
+        IsPaused?.Invoke(_isGameInPaused);
+    }
+
+    private void SetCursorState(bool isHiddenAndLocked)
+    {
+        Cursor.lockState = isHiddenAndLocked ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !isHiddenAndLocked;
     }
 }

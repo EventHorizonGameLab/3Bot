@@ -34,7 +34,8 @@ namespace Game.Traps
 
             if (_explosionPrefab != null && _explosionPrefab.Length > 0)
             {
-                GameObject obj =  ObjectPooler.Instance.Get(_explosionPrefab, 5f);
+                if (ObjectPooler.Instance == null) return;
+                GameObject obj = ObjectPooler.Instance.Get(_explosionPrefab, 5f);
                 obj.transform.position = transform.position;
             }
 
