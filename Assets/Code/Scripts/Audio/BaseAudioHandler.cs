@@ -1,11 +1,17 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Audio;
 
 public class BaseAudioHandler : MonoBehaviour
 {
     [Title("Audio Settings")]
-    [SerializeField, PropertyOrder(1)] private AudioClip _audioClip;
-    [SerializeField, PropertyOrder(1)] private GameObject _audioSourcePrefab;
+    [SerializeField, PropertyOrder(1)] private string _audioClipName;
 
-    // scrivere logica di prendere dal pooler il prefab e settargli la clip e rilevare la fine dell'aduio per riportare il prefab nel pooler
+    /// <summary>
+    /// Plays the audio clip and returns the prefab to the pool after completion.
+    /// </summary>
+    protected virtual void Play()
+    {
+        AudioManager.Instance.PlaySFX(_audioClipName, transform);
+    }
 }
