@@ -49,11 +49,11 @@ public class GunSettings : BaseAudioHandler, IReloadable
     {
         if (_hasInfiniteAmmo)
         {
-            _currentAmmo = _maxAmmo;
+            _currentAmmo += _maxAmmo;
         }
         else
         {
-            _totalAmmo = amount;
+            _totalAmmo += amount;
             if (_currentAmmo <= 1) Reload();
 
             if (_debug) Debug.Log($"Current Ammo: {_currentAmmo} and Total Ammo: {_totalAmmo}");
