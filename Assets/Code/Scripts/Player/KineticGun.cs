@@ -10,9 +10,7 @@ public class KineticGun : MonoBehaviour
     [SerializeField, Tooltip("LayerMask to identify interactable objects")] private LayerMask _interactableLayer;
     [SerializeField, Tooltip("LayerMask to identify obstacle objects")] private LayerMask _obstacleLayer;
     [SerializeField, MinValue(0f), Tooltip("Maximum distance for the raycast")] private float _maxDistance = 10f;
-
-    [Title("Momentum Settings")]
-    [SerializeField, MinValue(0f), Tooltip("Multiplier for momentum when the object is released")] private float _momentumMultiplier = 50f;
+    [SerializeField, MinValue(0f), Tooltip("Multiplier for momentum on release")] private float _momentumMultiplier = 1.5f;
 
     [Title("Debug")]
     [SerializeField] private bool _debug = false;
@@ -22,9 +20,8 @@ public class KineticGun : MonoBehaviour
     [ShowInInspector, ReadOnly] private bool _isHolding = false;
     [ShowInInspector, ReadOnly] private Rigidbody _heldObject = null;
 
-    private Vector3 _targetPosition; // Target position for the object's movement
-    private Vector3 _lastMousePosition; // To track the last mouse position for momentum calculation
-    private Vector3 _releaseVelocity; // Velocity of the object when released
+    private Vector3 _targetPosition;
+    private Vector3 _releaseVelocity;
     private Camera _mainCamera;
 
     private void Awake()
@@ -42,11 +39,15 @@ public class KineticGun : MonoBehaviour
 
         if (_isHolding)
         {
-            // Continuous raycast from the player to the object
-            if (!HasLineOfSight())
+            if (!HasLineOfSightToPlayer())
             {
-                if (_debug) Debug.Log("Line of sight lost. Forced release.");
-                ReleaseObject();
+                if (_debug) Debug.Log("Line of sight with player lost. Checking LoS to mouse.");
+
+                if (!HasLineOfSightToMouse())
+                {
+                    if (_debug) Debug.Log("Line of sight with both player and mouse lost. Forced release.");
+                    ReleaseObject();
+                }
             }
         }
     }
@@ -70,7 +71,7 @@ public class KineticGun : MonoBehaviour
     {
         if (_isHolding) return;
 
-        if (_debug) Debug.Log("Object picked up");
+        if (_debug) Debug.Log("Attempting to pick up an object.");
 
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         if (_onDrawGizmos) Debug.DrawRay(ray.origin, ray.direction * _maxDistance, Color.green, 1f);
@@ -81,13 +82,20 @@ public class KineticGun : MonoBehaviour
 
             if (hit.collider.TryGetComponent(out Rigidbody rb))
             {
+                // Check LoS between player and the object
+                if (!HasLineOfSightToGameObject(hit.collider.gameObject))
+                {
+                    if (_debug) Debug.Log("Cannot pick up object. Line of sight blocked.");
+                    return;
+                }
+
+                // Object can be picked up
                 _heldObject = rb;
                 _heldObject.useGravity = false;
                 _heldObject.angularVelocity = Vector3.zero;
                 _heldObject.freezeRotation = true;
 
                 _isHolding = true;
-                _lastMousePosition = Input.mousePosition; // Track the initial position
             }
         }
     }
@@ -96,28 +104,16 @@ public class KineticGun : MonoBehaviour
     {
         if (!_isHolding || _heldObject == null) return;
 
-        // Raycast to calculate the target position on the XZ plane
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit planeHit, Mathf.Infinity, _obstacleLayer))
         {
-            // Position the object while maintaining a fixed height
             _targetPosition = planeHit.point;
             _targetPosition.y = _fixedHeight;
 
             Vector3 smoothedPosition = Vector3.Lerp(_heldObject.position, _targetPosition, _moveSpeed * Time.deltaTime);
             _heldObject.MovePosition(smoothedPosition);
 
-            // Calculate the velocity (momentum) based on mouse movement in the XZ plane
-            Vector3 mouseDelta = Input.mousePosition - _lastMousePosition;
-
-            // If there's movement, update the release velocity
-            if (mouseDelta.magnitude > 0f)
-            {
-                _releaseVelocity = mouseDelta * _moveSpeed * Time.deltaTime;
-                if (_debug) Debug.Log("Mouse delta (momentum direction, XZ only): " + mouseDelta);
-            }
-
-            _lastMousePosition = Input.mousePosition;
+            _releaseVelocity = (_targetPosition - _heldObject.position) * _moveSpeed;
         }
     }
 
@@ -125,39 +121,64 @@ public class KineticGun : MonoBehaviour
     {
         if (!_isHolding) return;
 
-        // Apply the release velocity to the object
         if (_heldObject != null)
         {
+            Vector3 releaseMomentum = _releaseVelocity * _momentumMultiplier;
+            releaseMomentum.y = 0f;
             _heldObject.useGravity = true;
             _heldObject.freezeRotation = false;
-
-            // Apply the momentum (velocity) to the object when released
-            // We apply velocity in the X and Z directions only
-            Vector3 releaseMomentum = _releaseVelocity * _momentumMultiplier;
-            releaseMomentum = new(releaseMomentum.y, _heldObject.velocity.y, -releaseMomentum.x);
-
-            // Set the velocity to the release momentum
             _heldObject.velocity = releaseMomentum;
 
-            if (_debug)
-            {
-                Debug.Log("Object released with momentum in XZ plane: " + releaseMomentum);
-            }
-
-            ReleaseObject();
+            if (_debug) Debug.Log($"Object released with momentum: {releaseMomentum}");
         }
+
+        ReleaseObject();
     }
 
-    private bool HasLineOfSight()
+    private bool HasLineOfSightToPlayer()
     {
         if (_heldObject == null) return false;
 
-        // Raycast from the player to the object
         Vector3 direction = _heldObject.position - transform.position;
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, direction.magnitude))
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, direction.magnitude, _obstacleLayer))
         {
-            // If the hit object is not the selected one, the line of sight is blocked
-            return hit.collider.attachedRigidbody == _heldObject;
+            if (_debug) Debug.Log($"LoS to player blocked by: {hit.collider.name}");
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool HasLineOfSightToMouse()
+    {
+        if (_heldObject == null) return false;
+
+        Plane plane = new Plane(Vector3.up, new Vector3(0, _heldObject.position.y, 0));
+        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (plane.Raycast(ray, out float enter))
+        {
+            Vector3 intersectionPoint = ray.GetPoint(enter);
+            Vector3 direction = intersectionPoint - _heldObject.position;
+
+            if (Physics.Raycast(_heldObject.position, direction, out RaycastHit hit, direction.magnitude, _obstacleLayer))
+            {
+                if (_debug) Debug.Log($"LoS to mouse blocked by: {hit.collider.name}");
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool HasLineOfSightToGameObject(GameObject target)
+    {
+        Vector3 direction = target.transform.position - transform.position;
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, direction.magnitude, _obstacleLayer))
+        {
+            if (_debug) Debug.Log($"LoS to object blocked by: {hit.collider.name}");
+            return false;
         }
 
         return true;
@@ -167,7 +188,6 @@ public class KineticGun : MonoBehaviour
     {
         if (_heldObject == null) return;
 
-        // Restore the object's physics settings
         _heldObject.useGravity = true;
         _heldObject.freezeRotation = false;
         _heldObject = null;
@@ -180,7 +200,6 @@ public class KineticGun : MonoBehaviour
     {
         if (!_onDrawGizmos || !_isHolding || _heldObject == null) return;
 
-        // Draw a line from the player's position to the held object
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, _heldObject.position);
     }
