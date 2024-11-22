@@ -38,7 +38,11 @@ public class MagnetSystem : MonoBehaviour
     {
         if (!_isEnabled) return;
 
-        if (Input.GetMouseButtonDown(1)) HandleMagnetAction();
+        if (Input.GetMouseButtonDown(1))
+        {
+            HandleMagnetAction();
+            if (_slot != null) UseObjectStored(); // need to change this behavior 
+        }
         HandleFloatingObject();
     }
 
@@ -143,6 +147,16 @@ public class MagnetSystem : MonoBehaviour
             // Stop floating the current object
             StopFloatingObject();
         }
+    }
+
+    private void UseObjectStored()
+    {
+        if (_slot == null) return;
+
+        if (_slot.TryGetComponent(out IInteractable obj)) obj.Interact();
+        _slot = null;
+
+        if (_debug) Debug.Log("Used stored object.");
     }
 
     private void DropStoredObject()

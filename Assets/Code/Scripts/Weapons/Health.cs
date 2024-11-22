@@ -100,6 +100,16 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
         }
     }
 
+    private void OnEnable()
+    {
+        MedKit.OnHeal += TakeDamage;
+    }
+
+    private void OnDisable()
+    {
+        MedKit.OnHeal -= TakeDamage;
+    }
+
     /// <summary>
     /// Applies damage to the entity considering vulnerability multipliers.
     /// If health reaches zero, calls Die() to trigger death behavior.
