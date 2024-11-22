@@ -14,14 +14,15 @@ namespace PlayerSM
         private List<IPlayerState> _states;
         private int _currentStateIndex;
 
-        public static event Action<string> OnChangeState;
+        public static event Action<string> OnChangeStateDebug;
+        public static event Action<int> OnChangeState;
 
         private void Start()
         {
             // Inizializza gli stati e parte dallo stato di movimento
             _states = new List<IPlayerState>
         {
-            new MovementState(this),
+            //new MovementState(this),
             new MovementState2(this),
             new ShootingState(this),
             new HeadState(this)
@@ -50,7 +51,8 @@ namespace PlayerSM
 
         private void SwitchState(IPlayerState newState)
         {
-            OnChangeState?.Invoke(newState.ToString());
+            if (_debug) OnChangeStateDebug?.Invoke(newState.ToString());
+            OnChangeState?.Invoke(_currentStateIndex);
 
             _currentState?.Exit(); // Esci dallo stato precedente
             _currentState = newState; // Passa al nuovo stato

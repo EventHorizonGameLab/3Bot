@@ -28,12 +28,12 @@ public class GunAimingLine : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerController.OnChangeState += CheckState;
+        ShootingState.OnBodyState += CheckState;
     }
 
     private void OnDisable()
     {
-        PlayerController.OnChangeState -= CheckState;
+        ShootingState.OnBodyState -= CheckState;
     }
 
     private void Update()
@@ -110,8 +110,8 @@ public class GunAimingLine : MonoBehaviour
     }
 
     // Handle state change to enable/disable the LineRenderer
-    private void CheckState(string state)
+    private void CheckState(bool state)
     {
-        lineRenderer.enabled = state.ToLower().Contains("shoot");
+        lineRenderer.enabled = state;
     }
 }

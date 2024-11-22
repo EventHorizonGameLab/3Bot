@@ -10,11 +10,13 @@ public class AudioData : SerializedScriptableObject
     [Title("Music Clips")]
     [SerializeField] private AudioMixerGroup musicMixerGroup;
     [OdinSerialize, Tooltip("Dictionary of music clips, accessible by unique string keys.")]
+    [DictionaryDrawerSettings(KeyLabel = "Name", ValueLabel = "Audio Clip")]
     private Dictionary<string, AudioClip> musicClips = new();
 
     [Title("SFX Clips")]
     [SerializeField] private AudioMixerGroup sfxMixerGroup;
     [OdinSerialize, Tooltip("Dictionary of sound effects clips, accessible by unique string keys.")]
+    [DictionaryDrawerSettings(KeyLabel = "Name", ValueLabel = "Audio Clip")]
     private Dictionary<string, AudioClip> sfxClips = new();
 
     /// <summary>

@@ -10,8 +10,8 @@ namespace Audio
         public static AudioManager Instance { get; private set; }
 
         [Title("Settings")]
-        [SerializeField, InlineEditor] private AudioData audioData; // ScriptableObject reference
-        [SerializeField] private GameObject audioSourcePrefab; // Prefab for AudioSource pooling
+        [SerializeField, InlineEditor, Required] private AudioData audioData; // ScriptableObject reference
+        [SerializeField, Required] private GameObject audioSourcePrefab; // Prefab for AudioSource pooling
 
         [Title("Debug")]
         [Button]
@@ -43,6 +43,8 @@ namespace Audio
         /// </summary>
         public void PlayMusic(string key)
         {
+            if (key == null) return;
+
             var clip = audioData.GetMusicClip(key);
             if (clip == null)
             {
@@ -58,6 +60,8 @@ namespace Audio
         /// </summary>
         public void PlaySFX(string key, Transform parent = null)
         {
+            if (key == null) return;
+
             var clip = audioData.GetSFXClip(key);
             if (clip == null)
             {

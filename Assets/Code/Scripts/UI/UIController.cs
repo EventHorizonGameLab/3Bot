@@ -35,20 +35,20 @@ public class UIController : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerController.OnChangeState += SetText;
+        PlayerController.OnChangeStateDebug += SetText;
         Health.OnHealthChange += SetHP;
         PauseManager.IsPaused += SetMenuInGame;
+        PlayerController.OnChangeState += SetFSM;
         //slot
-        //fsm
     }
 
     private void OnDisable()
     {
-        PlayerController.OnChangeState -= SetText;
+        PlayerController.OnChangeStateDebug -= SetText;
         Health.OnHealthChange -= SetHP;
         PauseManager.IsPaused -= SetMenuInGame;
+        PlayerController.OnChangeState -= SetFSM;
         //slot
-        //fsm
     }
 
     private void SetText(string text)

@@ -16,6 +16,8 @@ namespace PlayerSM
         bool isHacking;
         bool isTryingPassword;
 
+        public static Action<bool> OnBodyState;
+
         public ShootingState(PlayerController player)
         {
             _player = player;
@@ -25,6 +27,7 @@ namespace PlayerSM
         public void Enter()
         {
             Debug.Log("Shooting State");
+            OnBodyState?.Invoke(true);
 
             isHacking = false;
             cam = Camera.main;
@@ -36,6 +39,8 @@ namespace PlayerSM
 
         public void Exit()
         {
+            OnBodyState?.Invoke(false);
+
             isHacking = false;
             isTryingPassword = false;
             OnMiniGameEnded -= EndHacking;
