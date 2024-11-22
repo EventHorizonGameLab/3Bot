@@ -133,7 +133,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
     {
         if (_debug) Debug.Log("Reload Command Received");
 
-        Debug.Log($"_timeSinceReloadStarted: {_timeSinceReloadStarted} >= _reloadTime: {_reloadTime}");
+        if (_inRealod) return;
 
         StartCoroutine(ReloadCoroutine());
     }
