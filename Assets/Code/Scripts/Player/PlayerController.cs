@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,9 @@ namespace PlayerSM
 {
     public class PlayerController : MonoBehaviour
     {
+        [Title("Debug")]
+        [SerializeField] private bool _debug;
+
         private IPlayerState _currentState;
         private List<IPlayerState> _states;
         private int _currentStateIndex;
@@ -20,7 +24,7 @@ namespace PlayerSM
             new MovementState(this),
             new MovementState2(this),
             new ShootingState(this),
-            new TrackingState(this)
+            new HeadState(this)
         };
 
             _currentStateIndex = 0; // Imposta lo stato iniziale (MovementState)

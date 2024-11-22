@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class SegwayPitchControl : MonoBehaviour
 {
     [Title("Settings")]
-    [SerializeField, Tooltip("The amplitude of the pitch rotation"), Min(0)] private float rotationAmplitude = 10f;
+    [SerializeField, Tooltip("The amplitude of the pitch rotation"), MinValue(0)] private float rotationAmplitude = 10f;
     [SerializeField, Required, Tooltip("The Mesh of the Player")] private Transform body;
     [SerializeField, Tooltip("The smoothing factor of the pitch rotation"), Range(0, 30)] private float smoothingFactor = 5f;
     [SerializeField] private bool invertPitchEffect = false;

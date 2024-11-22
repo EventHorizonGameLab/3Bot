@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class DetectionArea : MonoBehaviour
 {
     [Title("Settings")]
-    [SerializeField, Min(0), Tooltip("Radius of the detection area.")] private float _detectionRadius = 5f;
+    [SerializeField, MinValue(0), Tooltip("Radius of the detection area.")] private float _detectionRadius = 5f;
     [SerializeField, Tooltip("Layer of the detection area.")] private LayerMask _detectionLayer;
 
     [Title("Debug")]

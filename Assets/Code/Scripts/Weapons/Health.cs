@@ -4,15 +4,14 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using static GunSettings;
-using System.Runtime;
 
 [RequireComponent(typeof(Collider))]
 public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
 {
 
     [Title("Settings")]
-    [SerializeField, Min(0)] private int _maxHealth = 100;
-    [SerializeField, Min(0)] private float _triggerForce = 5f;
+    [SerializeField, MinValue(0)] private int _maxHealth = 100;
+    [SerializeField, MinValue(0)] private float _triggerForce = 5f;
 
     [Title("Flags")]
     [SerializeField] private bool _isPlayer = false;
