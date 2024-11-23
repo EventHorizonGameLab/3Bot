@@ -218,7 +218,7 @@ public class MagnetSystem : MonoBehaviour
         set
         {
             _slot = value;
-            StoreObject();
+            if (_slot != null) StoreObject();
         }
     }
 }
