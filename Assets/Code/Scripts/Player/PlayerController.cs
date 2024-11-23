@@ -69,17 +69,15 @@ namespace PlayerSM
             return _states[_currentStateIndex];
         }
 
-        private void SetState(int index)
-        {
-            _states[0].Reset();
-            _currentStateIndex = index;
-            SwitchState(_states[index]);
-        }
-
         public int CurrentState
         {
             get => _currentStateIndex;
-            set => SetState(value);
+            set
+            {
+                _states[0].Reset();
+                _currentStateIndex = value;
+                SwitchState(_states[value]);
+            }
         }
     }
 }

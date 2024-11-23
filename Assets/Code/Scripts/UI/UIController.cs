@@ -48,7 +48,7 @@ public class UIController : MonoBehaviour
         GunSettings.OnAmmoChanged += SetCurrentAmmo;
         GunSettings.HasInfiniteAmmo += SetAmmoInStorageActive;
         GunSettings.OnReload += SetReloadingLed;
-        //slot
+        //Slot
     }
 
     private void OnDisable()
@@ -61,7 +61,7 @@ public class UIController : MonoBehaviour
         GunSettings.OnAmmoChanged -= SetCurrentAmmo;
         GunSettings.HasInfiniteAmmo -= SetAmmoInStorageActive;
         GunSettings.OnReload -= SetReloadingLed;
-        //slot
+        //Slot
     }
 
     private void SetText(string text)

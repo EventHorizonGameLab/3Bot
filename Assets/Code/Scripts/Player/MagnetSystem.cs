@@ -133,12 +133,13 @@ public class MagnetSystem : MonoBehaviour
     {
         if (_slot == null)
         {
-            // Store the object in the slot
+            // Store the object in the Slot
             _slot = _currentFloatingObject;
             //_slot.SetActive(false);
-            _slot.transform.position = transform.position + storageOffset;
+            _slot.transform.SetParent(transform.GetChild(0).GetChild(0));
+            _slot.transform.localPosition = Vector3.zero;
+            _slot.transform.localRotation = Quaternion.identity;
             _slot.transform.localScale = Vector3.one * 0.5f;
-            _slot.transform.SetParent(transform);
 
             _currentFloatingObject = null;
 
@@ -201,9 +202,13 @@ public class MagnetSystem : MonoBehaviour
         Gizmos.DrawSphere(transform.position + storageOffset, 0.2f);
     }
 
-    public GameObject slot
+    public GameObject Slot
     {
         get => _slot;
-        set => _slot = value;
+        set
+        {
+            _slot = value;
+            StoreObject();
+        }
     }
 }
