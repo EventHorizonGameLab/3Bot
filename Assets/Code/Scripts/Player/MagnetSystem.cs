@@ -158,9 +158,19 @@ public class MagnetSystem : MonoBehaviour
     {
         if (_slot == null) return;
 
-        if (_slot.TryGetComponent(out IInteractable obj)) obj.Interact();
+        if (_slot.TryGetComponent(out IInteractable obj))
+        {
+            obj.Interact();
+            _slot.SetActive(false);
+        }
+        else
+        {
+            _slot.transform.SetParent(null);
+            _slot.transform.localScale = Vector3.one;
+            _slot.GetComponent<Rigidbody>().useGravity = true;
+        }
+
         _slot = null;
-        _slot.transform.SetParent(null);
 
         if (_debug) Debug.Log("Used stored object.");
     }
