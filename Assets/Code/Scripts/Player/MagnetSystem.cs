@@ -191,4 +191,10 @@ public class MagnetSystem : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position + headOffset, sphereCastRadius);
     }
+
+    public GameObject slot
+    {
+        get => _slot;
+        set => _slot = value;
+    }
 }

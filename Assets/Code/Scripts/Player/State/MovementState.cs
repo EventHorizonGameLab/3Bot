@@ -45,6 +45,8 @@ namespace PlayerSM
             // Gestisci eventuali input durante lo stato di movimento (se necessario)
         }
 
+        public void Reset() { }
+
         public void Update()
         {
             Move();

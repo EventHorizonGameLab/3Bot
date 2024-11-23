@@ -21,14 +21,13 @@ namespace PlayerSM
         {
             // Inizializza gli stati e parte dallo stato di movimento
             _states = new List<IPlayerState>
-        {
-            //new MovementState(this),
-            new MovementState2(this),
-            new ShootingState(this),
-            new HeadState(this)
-        };
+            {
+                new MovementState2(this),
+                new ShootingState(this),
+                new HeadState(this)
+            };
 
-            _currentStateIndex = 0; // Imposta lo stato iniziale (MovementState)
+            _currentStateIndex = 0;
             SwitchState(_states[_currentStateIndex]);
         }
 
@@ -44,7 +43,6 @@ namespace PlayerSM
                 SwitchState(GetPreviousState());
             }
 
-            // Esegui aggiornamenti dello stato attivo
             _currentState.Update();
             _currentState.HandleInput();
         }
@@ -54,21 +52,34 @@ namespace PlayerSM
             if (_debug) OnChangeStateDebug?.Invoke(newState.ToString());
             OnChangeState?.Invoke(_currentStateIndex);
 
-            _currentState?.Exit(); // Esci dallo stato precedente
-            _currentState = newState; // Passa al nuovo stato
-            _currentState.Enter();    // Entra nel nuovo stato
+            _currentState?.Exit();
+            _currentState = newState;
+            _currentState.Enter();
         }
 
         private IPlayerState GetNextState()
         {
-            _currentStateIndex = (_currentStateIndex + 1) % _states.Count; // Torna all'inizio quando arrivi alla fine
+            _currentStateIndex = (_currentStateIndex + 1) % _states.Count;
             return _states[_currentStateIndex];
         }
 
         private IPlayerState GetPreviousState()
         {
-            _currentStateIndex = (_currentStateIndex - 1 + _states.Count) % _states.Count; // Torna all'ultimo stato se si va indietro
+            _currentStateIndex = (_currentStateIndex - 1 + _states.Count) % _states.Count;
             return _states[_currentStateIndex];
+        }
+
+        private void SetState(int index)
+        {
+            _states[0].Reset();
+            _currentStateIndex = index;
+            SwitchState(_states[index]);
+        }
+
+        public int CurrentState
+        {
+            get => _currentStateIndex;
+            set => SetState(value);
         }
     }
 }

@@ -23,6 +23,11 @@ namespace PlayerSM
             // Logica di input
         }
 
+        public void Reset()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void Update()
         {
             // Logica di tracking

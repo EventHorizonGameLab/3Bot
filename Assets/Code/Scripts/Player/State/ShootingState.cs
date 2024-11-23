@@ -88,5 +88,7 @@ namespace PlayerSM
             isHacking = false;
             isTryingPassword = false;
         }
+
+        public void Reset() { }
     }
 }

@@ -26,5 +26,7 @@ namespace PlayerSM
         public void HandleInput() { }
 
         public void Update() { }
+
+        public void Reset() { }
     }
 }

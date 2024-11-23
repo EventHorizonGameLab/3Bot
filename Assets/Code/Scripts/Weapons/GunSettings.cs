@@ -198,6 +198,18 @@ public class GunSettings : BaseAudioHandler, IReloadable
     public DamageOverTime GetDamageOverTime() => _damageOverTime;
 
     public bool Is2D => _is2D;
+
+    public int currentAmmo
+    {
+        get => _currentAmmo;
+        set => _currentAmmo = Mathf.Clamp(value, 0, _maxAmmo);
+    }
+
+    public int storageAmmo
+    {
+        get => _totalAmmo;
+        set => _totalAmmo = value;
+    }
 }
 
 public enum AttackType

@@ -44,7 +44,7 @@ namespace PlayerSM
                 }
             }
 
-            if (Input.GetMouseButtonUp(1) && _waypoints.Count > 0 && !_isFollowingPath)
+            if (Input.GetMouseButtonDown(1) && _waypoints.Count > 0 && !_isFollowingPath)
             {
                 _isFollowingPath = true;
                 MoveToNextWaypoint();
@@ -75,7 +75,7 @@ namespace PlayerSM
                 MoveToNextWaypoint();
             }
 
-            if (Input.GetMouseButtonUp(1) && _isFollowingPath)
+            if (Input.GetMouseButtonDown(1) && _isFollowingPath)
             {
                 _agent.isStopped = !_agent.isStopped;
             }
@@ -125,6 +125,15 @@ namespace PlayerSM
         private void ClearLineRenderer()
         {
             _lineRenderer.positionCount = 0;
+        }
+
+        public void Reset()
+        {
+            ClearLineRenderer();
+            _isFollowingPath = false;
+            _waypoints.Clear();
+            _agent.destination = _player.transform.position;
+            _agent.ResetPath();
         }
     }
 }

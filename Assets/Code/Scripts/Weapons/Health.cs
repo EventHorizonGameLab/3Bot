@@ -188,4 +188,10 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
     {
         ApplyDamage((int)damage, type);
     }
+
+    public float health
+    {
+        get => _currentHealth;
+        set => _currentHealth = (int)Mathf.Clamp(value, 0, _maxHealth);
+    }
 }
