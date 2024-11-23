@@ -57,7 +57,7 @@ namespace PlayerSM
                 {
                     if (_gun.Is2D) hit.point = new Vector3(hit.point.x, _gun.transform.position.y, hit.point.z);
 
-                    _gun.transform.LookAt(hit.point);
+                    //_gun.transform.LookAt(hit.point);
                     _gun.Shoot();
                 }
             }

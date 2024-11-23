@@ -112,7 +112,7 @@ namespace PlayerSM
         {
             _lineRenderer.positionCount = _waypoints.Count + 1;
 
-            _lineRenderer.SetPosition(0, _player.transform.position);
+            _lineRenderer.SetPosition(0, new(_player.transform.position.x, _offset, _player.transform.position.z));
 
             int index = 1;
             foreach (var point in _waypoints)

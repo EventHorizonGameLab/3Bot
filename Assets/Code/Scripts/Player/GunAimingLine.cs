@@ -1,5 +1,6 @@
 using PlayerSM;
 using Sirenix.OdinInspector;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -71,6 +72,8 @@ public class GunAimingLine : MonoBehaviour
         }
 
         if (_drawGizmo) Debug.DrawRay(endPoint, new Vector3(endPoint.x, -_maxDistance, endPoint.z), Color.green);
+
+        _gunTip.LookAt(endPoint);
 
         lineRenderer.SetPosition(0, startPoint);
         lineRenderer.SetPosition(1, endPoint);
