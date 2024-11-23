@@ -7,7 +7,9 @@ public class BulletMagazine : MonoBehaviour, IInteractable
     [Title("Settings")]
     [SerializeField, MinValue(0), Tooltip("Number of bullets in the magazine")] private int bulletCount;
 
-    public static Action<int> OnReload;
+    public static event Action<int> OnReload;
+
+    private void Start() { }
 
     public void Interact()
     {

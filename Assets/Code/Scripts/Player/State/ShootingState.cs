@@ -16,7 +16,7 @@ namespace PlayerSM
         bool isHacking;
         bool isTryingPassword;
 
-        public static Action<bool> OnBodyState;
+        public static event Action<bool> OnBodyState;
 
         public ShootingState(PlayerController player)
         {
@@ -34,8 +34,6 @@ namespace PlayerSM
 
             OnMiniGameEnded += EndHacking;
         }
-
-
 
         public void Exit()
         {
@@ -61,6 +59,7 @@ namespace PlayerSM
                     _gun.Shoot();
                 }
             }
+
             if (Input.GetMouseButtonDown(1))
             {
                 if (isHacking) return;
@@ -80,22 +79,14 @@ namespace PlayerSM
                     }
                 }
             }
-
-
         }
 
-        public void Update()
-        {
-
-        }
+        public void Update() { }
 
         void EndHacking()
         {
             isHacking = false;
             isTryingPassword = false;
-
         }
-
-
     }
 }

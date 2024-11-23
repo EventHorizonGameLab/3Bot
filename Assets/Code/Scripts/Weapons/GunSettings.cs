@@ -57,13 +57,16 @@ public class GunSettings : BaseAudioHandler, IReloadable
             if (_currentAmmo <= 1) Reload();
 
             if (_debug) Debug.Log($"Current Ammo: {_currentAmmo} and Total Ammo: {_totalAmmo}");
+            OnMagazineChanged?.Invoke(_totalAmmo);
         }
     }
 
     private int _currentAmmo;
 
-    public event Action<int> OnAmmoChanged;
-    public static Action<bool> OnReload;
+    public static event Action<int> OnAmmoChanged;
+    public static event Action<int> OnMagazineChanged;
+    public static event Action<bool> HasInfiniteAmmo;
+    public static event Action<bool> OnReload;
 
     private ParticleSystem _gun;
     private float _timeSinceLastShot = 0f;
@@ -87,6 +90,11 @@ public class GunSettings : BaseAudioHandler, IReloadable
         }
 
         _timeSinceLastShot = _fireRate;
+
+        if (_hasInfiniteAmmo) HasInfiniteAmmo?.Invoke(!_hasInfiniteAmmo);
+        else OnMagazineChanged?.Invoke(_totalAmmo);
+
+        OnAmmoChanged?.Invoke(_currentAmmo);
     }
 
     private void OnEnable()
@@ -163,6 +171,8 @@ public class GunSettings : BaseAudioHandler, IReloadable
             int ammoToLoad = Mathf.Min(_magazineSize, _totalAmmo);
             _currentAmmo = ammoToLoad;
             _totalAmmo -= ammoToLoad;
+
+            OnMagazineChanged?.Invoke(_totalAmmo);
         }
 
         OnAmmoChanged?.Invoke(_currentAmmo);

@@ -10,12 +10,17 @@ public class UIController : MonoBehaviour
     [Title("References")]
     [SerializeField, Required] private Slider _HPBar;
     [SerializeField, Required] private UI_FSM _robot;
-    [SerializeField] private Image _slot;
-    [SerializeField] private Canvas _menuInGame;
+    [SerializeField] private Color _colorRobots = Color.yellow;
+    [SerializeField, Required] private Image _slot;
+    [SerializeField, Required] private Canvas _menuInGame;
+    [SerializeField, Required] private TMP_Text _currentAmmo;
+    [SerializeField, Required] private TMP_Text _ammoInStorage;
+    [SerializeField, Required] private Image _reloadLed;
+    [SerializeField] private Color _color = Color.white;
 
     [Title("Debug")]
     [SerializeField] private bool _debug;
-    [SerializeField] private TMP_Text _text;
+    [ShowIf("_debug"), SerializeField, Required] private TMP_Text _text;
 
     [Serializable]
     struct UI_FSM
@@ -29,7 +34,7 @@ public class UIController : MonoBehaviour
     {
         if (!_debug)
         {
-            if(_text != null) _text.text = "";
+            if (_text != null) _text.text = "";
         }
     }
 
@@ -39,6 +44,10 @@ public class UIController : MonoBehaviour
         Health.OnHealthChange += SetHP;
         PauseManager.IsPaused += SetMenuInGame;
         PlayerController.OnChangeState += SetFSM;
+        GunSettings.OnMagazineChanged += SetAmmoInStorage;
+        GunSettings.OnAmmoChanged += SetCurrentAmmo;
+        GunSettings.HasInfiniteAmmo += SetAmmoInStorageActive;
+        GunSettings.OnReload += SetReloadingLed;
         //slot
     }
 
@@ -48,6 +57,10 @@ public class UIController : MonoBehaviour
         Health.OnHealthChange -= SetHP;
         PauseManager.IsPaused -= SetMenuInGame;
         PlayerController.OnChangeState -= SetFSM;
+        GunSettings.OnMagazineChanged -= SetAmmoInStorage;
+        GunSettings.OnAmmoChanged -= SetCurrentAmmo;
+        GunSettings.HasInfiniteAmmo -= SetAmmoInStorageActive;
+        GunSettings.OnReload -= SetReloadingLed;
         //slot
     }
 
@@ -71,19 +84,19 @@ public class UIController : MonoBehaviour
         switch (fsm)
         {
             case 0:
-                _robot.legs.color = Color.yellow;
+                _robot.legs.color = _colorRobots;
                 _robot.body.color = Color.white;
                 _robot.head.color = Color.white;
                 break;
             case 1:
                 _robot.legs.color = Color.white;
-                _robot.body.color = Color.yellow;
+                _robot.body.color = _colorRobots;
                 _robot.head.color = Color.white;
                 break;
             case 2:
                 _robot.legs.color = Color.white;
                 _robot.body.color = Color.white;
-                _robot.head.color = Color.yellow;
+                _robot.head.color = _colorRobots;
                 break;
             default:
                 break;
@@ -93,5 +106,25 @@ public class UIController : MonoBehaviour
     private void SetMenuInGame(bool state)
     {
         _menuInGame.gameObject.SetActive(state);
+    }
+
+    private void SetCurrentAmmo(int value)
+    {
+        _currentAmmo.text = value.ToString();
+    }
+
+    private void SetAmmoInStorage(int value)
+    {
+        _ammoInStorage.text = value.ToString();
+    }
+
+    private void SetAmmoInStorageActive(bool state)
+    {
+        _ammoInStorage.gameObject.SetActive(state);
+    }
+
+    private void SetReloadingLed(bool state)
+    {
+        _reloadLed.color = state ? _color : Color.white;
     }
 }
