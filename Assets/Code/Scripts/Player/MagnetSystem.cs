@@ -10,7 +10,8 @@ public class MagnetSystem : MonoBehaviour
     [SerializeField, MinValue(0f), Tooltip("Speed at which the object floats to the player")] private float floatSpeed = 5f;
     [SerializeField, MinValue(0f), Tooltip("Distance to check for storing objects (SphereCast radius)")] private float sphereCastRadius = 1f;
     [SerializeField, Tooltip("LayerMask for obstacles")] private LayerMask obstacleLayer;
-    [SerializeField, Tooltip("Position offset for storing the object on the head")] private Vector3 headOffset;
+    [SerializeField, Tooltip("Offset from the player's head")] private Vector3 headOffset;
+    [SerializeField, Tooltip("Offset from the player's head when storing an object")] private Vector3 storageOffset;
 
     [Title("Offsets")]
     [SerializeField, MinValue(0f), Tooltip("Vertical offset to lift the floating object")]
@@ -134,7 +135,10 @@ public class MagnetSystem : MonoBehaviour
         {
             // Store the object in the slot
             _slot = _currentFloatingObject;
-            _slot.SetActive(false);
+            //_slot.SetActive(false);
+            _slot.transform.position = transform.position + storageOffset;
+            _slot.transform.localScale = Vector3.one * 0.5f;
+            _slot.transform.SetParent(transform);
 
             _currentFloatingObject = null;
 
@@ -155,6 +159,7 @@ public class MagnetSystem : MonoBehaviour
 
         if (_slot.TryGetComponent(out IInteractable obj)) obj.Interact();
         _slot = null;
+        _slot.transform.SetParent(null);
 
         if (_debug) Debug.Log("Used stored object.");
     }
@@ -163,7 +168,8 @@ public class MagnetSystem : MonoBehaviour
     {
         if (_slot != null)
         {
-            _slot.SetActive(true);
+            //_slot.SetActive(true);
+            _slot.transform.SetParent(null);
             _slot = null;
 
             if (_debug) Debug.Log("Dropped stored object.");
@@ -190,6 +196,9 @@ public class MagnetSystem : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position + headOffset, sphereCastRadius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(transform.position + storageOffset, 0.2f);
     }
 
     public GameObject slot

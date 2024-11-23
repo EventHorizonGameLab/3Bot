@@ -68,7 +68,8 @@ public class CheckPointManager : MonoBehaviour
                 ItemID = item.objectID,
                 IsActive = item.gameObject.activeSelf,
                 Position = item.transform.position,
-                Rotation = item.transform.rotation
+                Rotation = item.transform.rotation,
+                Parent = item.transform.parent
             });
             itemsInfoDictiornary.Add(item.objectID, item.gameObject);
         }
@@ -135,9 +136,9 @@ public class CheckPointManager : MonoBehaviour
         {
             GameObject item = itemsInfoDictiornary[itemInfo.ItemID];
             item.SetActive(itemInfo.IsActive);
-            item.transform.position = itemInfo.Position;
-            item.transform.rotation = itemInfo.Rotation;
-
+            item.transform.SetPositionAndRotation(itemInfo.Position, itemInfo.Rotation);
+            item.transform.localScale = Vector3.one;
+            item.transform.SetParent(itemInfo.Parent);
         }
 
         if (_debug) Debug.Log("Checkpoint Loaded!");
@@ -179,6 +180,7 @@ public class CheckPointManager : MonoBehaviour
         public bool IsActive { get; set; }
         public Vector3 Position { get; set; }
         public Quaternion Rotation { get; set; }
+        public Transform Parent { get; set; }
     }
 
     #endregion

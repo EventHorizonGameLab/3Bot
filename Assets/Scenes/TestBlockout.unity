@@ -8256,6 +8256,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   headOffset: {x: 0, y: 1, z: 0}
+  storageOffset: {x: 0, y: 1.7, z: 0}
   floatingHeightOffset: 2
   _debug: 1
   _drawGizmos: 0
