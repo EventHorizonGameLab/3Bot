@@ -22,6 +22,9 @@ public class GunSettings : BaseAudioHandler, IReloadable
     [Title("2D Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun is 2D")] private bool _is2D = false;
 
+    [Title("Player Settings")]
+    [SerializeField, Tooltip("Flag indicating if the gun is for player")] private bool _isPlayer = false;
+
     [Title("Damage Over Time Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun causes damage over time.")] private bool causesDamageOverTime;
     [SerializeField, ShowIf("causesDamageOverTime")] private DamageOverTime _damageOverTime;
@@ -67,6 +70,8 @@ public class GunSettings : BaseAudioHandler, IReloadable
     public static event Action<int> OnMagazineChanged;
     public static event Action<bool> HasInfiniteAmmo;
     public static event Action<bool> OnReload;
+
+    public static event Action Shooted;
 
     private ParticleSystem _gun;
     private float _timeSinceLastShot = 0f;
@@ -123,7 +128,11 @@ public class GunSettings : BaseAudioHandler, IReloadable
         {
             _timeSinceLastShot = 0f;
             _gun.Emit(1);
+
+            if (_isPlayer) Shooted?.Invoke();
+
             Play();
+
             _currentAmmo--;
 
             if (_debug) Debug.Log("Shooting");

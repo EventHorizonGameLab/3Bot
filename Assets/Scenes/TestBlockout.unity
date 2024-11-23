@@ -838,6 +838,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2320150678275648801, guid: 33badb002b6fc6d45b9fb82e3f332313,
+        type: 3}
+      propertyPath: _showGizmos
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320150678275648801, guid: 33badb002b6fc6d45b9fb82e3f332313,
+        type: 3}
+      propertyPath: _explosionRadius
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3415410121973146678, guid: 33badb002b6fc6d45b9fb82e3f332313,
         type: 3}
       propertyPath: m_Name
@@ -5734,6 +5744,7 @@ MonoBehaviour:
   _hasInfiniteAmmo: 0
   _magazineSize: 10
   _is2D: 1
+  _isPlayer: 1
   causesDamageOverTime: 1
   _damageOverTime:
     damagePerInterval: 2
@@ -6702,6 +6713,7 @@ GameObject:
   - component: {fileID: 510159434}
   - component: {fileID: 510159433}
   - component: {fileID: 510159432}
+  - component: {fileID: 510159435}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -6785,6 +6797,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &510159435
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510159430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: a3dacaec0287d7444b4bd276816e1666, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0.7
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1001 &542824754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6857,6 +6886,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _showGizmos
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331735197775103596, guid: 7699d268d6c5c7b45b822add840bc34a,
+        type: 3}
+      propertyPath: _explosionForce
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7846,6 +7880,7 @@ GameObject:
   - component: {fileID: 849806988}
   - component: {fileID: 849806986}
   - component: {fileID: 849806989}
+  - component: {fileID: 849806990}
   m_Layer: 8
   m_Name: '- Player'
   m_TagString: Player
@@ -7900,7 +7935,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &849806979
 CapsuleCollider:
@@ -7972,7 +8007,7 @@ MonoBehaviour:
   _friendlyFire: 0
   _isInvincible: 0
   vulnerabilities: []
-  _debug: 1
+  _debug: 0
 --- !u!114 &849806984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8165,6 +8200,20 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &849806990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849806976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089206cd7b839674991617ac57c0a8c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: 10
+  angularVelocity: 10
 --- !u!1 &854495053
 GameObject:
   m_ObjectHideFlags: 0
@@ -14444,7 +14493,7 @@ PrefabInstance:
     - target: {fileID: 8489780967054369744, guid: 9557038fb7ca8244784cd97da41d3ceb,
         type: 3}
       propertyPath: _debug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15308,8 +15357,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1949233716}
   - component: {fileID: 1949233715}
+  - component: {fileID: 1949233717}
   m_Layer: 0
-  m_Name: Virtual Camera (3)
+  m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15370,6 +15420,170 @@ Transform:
   - {fileID: 510159431}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 82.705, y: 88.813, z: -0.685}
+--- !u!114 &1949233717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949233714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78e6e0658041da4d8582ccaf1756473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultAmplitude: 0.7
+  damageNoise: {fileID: 11400000, guid: 20a705aea2d80e0478fb89b6f43d8530, type: 2}
+  damageDuration: 0.3
+  damageInCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  damageOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  explosionNoise: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  explosionDuration: 0.7
+  explosionInCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  explosionOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  shootNoise: {fileID: 11400000, guid: e9ce97b7a206dc64d90931ea044e0c72, type: 2}
+  shootDuration: 0.2
+  shootInCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  shootOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _debug: 0
 --- !u!1 &1954725952
 GameObject:
   m_ObjectHideFlags: 0

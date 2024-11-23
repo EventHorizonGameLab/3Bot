@@ -4,6 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using static GunSettings;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
 public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
@@ -48,6 +49,8 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
     /// Event triggered when health changes.
     /// </summary>
     public static event Action<int> OnHealthChange;
+
+    public static event Action<AttackType> OnTakeDamage;
 
     /// <summary>
     /// Event triggered when the entity dies.
@@ -127,7 +130,11 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
 
         _currentHealth -= (int)(damage * damageMultiplier);
 
-        if (_isPlayer) OnHealthChange?.Invoke(_currentHealth);
+        if (_isPlayer)
+        {
+            OnHealthChange?.Invoke(_currentHealth);
+            if (damage > 0) OnTakeDamage?.Invoke(type);
+        }
 
         if (_currentHealth <= 0) Die();
     }
