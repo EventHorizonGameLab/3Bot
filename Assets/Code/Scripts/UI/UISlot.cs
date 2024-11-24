@@ -87,7 +87,7 @@ public class UISlot : MonoBehaviour
 
     private void FindReference(GameObject targetObject)
     {
-        if (_debug) Debug.Log($"FindReference Requested for {targetObject.name}");
+        if (_debug) Debug.Log($"FindReference Requested for {(targetObject != null ? targetObject.name : "null")}");
 
         if (targetObject != null)
         {

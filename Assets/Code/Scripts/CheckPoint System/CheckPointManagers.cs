@@ -81,7 +81,8 @@ public class CheckPointManager : MonoBehaviour
                 Position = item.transform.position,
                 Rotation = item.transform.rotation,
                 Parent = item.transform.parent,
-                Scale = item.transform.lossyScale
+                Scale = item.transform.lossyScale,
+                Gravity = item.GetComponent<Rigidbody>().useGravity
             });
             itemsInfoDictiornary.Add(item.objectID, item.gameObject);
         }
@@ -110,21 +111,17 @@ public class CheckPointManager : MonoBehaviour
         if (player != null && _currentCheckpoint.PlayerInfo != null)
         {
             var playerInfo = _currentCheckpoint.PlayerInfo;
-            player.transform.SetPositionAndRotation(playerInfo.Position, playerInfo.Rotation);
-
             PlayerController playerState = player.GetComponent<PlayerController>();
             GunSettings gun = player.GetComponentInChildren<GunSettings>();
             Health health = player.GetComponent<Health>();
             MagnetSystem magneticGun = player.GetComponentInChildren<MagnetSystem>();
 
-            if (playerState != null)
-            {
-                gun.currentAmmo = playerInfo.CurrentAmmo;
-                gun.storageAmmo = playerInfo.StorageAmmo;
-                playerState.CurrentState = playerInfo.State;
-                health.health = playerInfo.CurrentHealth;
-                magneticGun.Slot = playerInfo.Slot;
-            }
+            player.transform.SetPositionAndRotation(playerInfo.Position, playerInfo.Rotation);
+            gun.currentAmmo = playerInfo.CurrentAmmo;
+            gun.storageAmmo = playerInfo.StorageAmmo;
+            playerState.CurrentState = playerInfo.State;
+            health.health = playerInfo.CurrentHealth;
+            magneticGun.Slot = playerInfo.Slot;
         }
 
         //// Ripristina stato dei nemici
@@ -153,6 +150,7 @@ public class CheckPointManager : MonoBehaviour
             item.transform.SetPositionAndRotation(itemInfo.Position, itemInfo.Rotation);
             item.transform.localScale = itemInfo.Scale;
             item.transform.SetParent(itemInfo.Parent);
+            item.GetComponent<Rigidbody>().useGravity = itemInfo.Gravity;
         }
 
         if (_debug) Debug.Log("Checkpoint Loaded!");
@@ -196,6 +194,7 @@ public class CheckPointManager : MonoBehaviour
         public Quaternion Rotation { get; set; }
         public Transform Parent { get; set; }
         public Vector3 Scale { get; set; }
+        public bool Gravity { get; set; }
     }
 
     #endregion

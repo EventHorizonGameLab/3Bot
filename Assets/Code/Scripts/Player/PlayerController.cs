@@ -10,12 +10,20 @@ namespace PlayerSM
         [Title("Debug")]
         [SerializeField] private bool _debug;
 
+        [Button]
+        public void Reset()
+        {
+            _states[0].Reset();
+        }
+
         private IPlayerState _currentState;
         private List<IPlayerState> _states;
         private int _currentStateIndex;
 
         public static event Action<string> OnChangeStateDebug;
         public static event Action<int> OnChangeState;
+
+        private bool _isEnable = true;
 
         private void Start()
         {
@@ -31,8 +39,25 @@ namespace PlayerSM
             SwitchState(_states[_currentStateIndex]);
         }
 
+        private void OnEnable()
+        {
+            PauseManager.IsPaused += IsEnable;
+        }
+
+        private void OnDisable()
+        {
+            PauseManager.IsPaused -= IsEnable;
+        }
+
+        private void IsEnable(bool value)
+        {
+            _isEnable = !value;
+        }
+
         private void Update()
         {
+            if (!_isEnable) return;
+
             // Gestisce l'input per passare tra gli stati
             if (Input.GetKeyDown(KeyCode.UpArrow)) // Tasto freccia destra
             {
@@ -74,9 +99,9 @@ namespace PlayerSM
             get => _currentStateIndex;
             set
             {
-                _states[0].Reset();
                 _currentStateIndex = value;
                 SwitchState(_states[value]);
+                _states[0].Reset();
             }
         }
     }

@@ -15,6 +15,8 @@ namespace PlayerSM
         //settings
         private float _offset = 0.5f;
 
+        private bool isResetted = true;
+
         public MovementState2(PlayerController player)
         {
             _player = player;
@@ -97,6 +99,12 @@ namespace PlayerSM
                     ClearLineRenderer();
                 }
             }
+
+            if (!isResetted)
+            {
+                Reset();
+                isResetted = true;
+            }
         }
 
         private void MoveToNextWaypoint()
@@ -134,6 +142,8 @@ namespace PlayerSM
             _waypoints.Clear();
             _agent.destination = _player.transform.position;
             _agent.ResetPath();
+
+            if (isResetted) isResetted = false;
         }
     }
 }

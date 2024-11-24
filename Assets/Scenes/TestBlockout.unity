@@ -1018,6 +1018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _loseCanvas: {fileID: 1981109783}
+  _debug: 0
 --- !u!1 &221085974
 GameObject:
   m_ObjectHideFlags: 0
@@ -6220,7 +6221,7 @@ MonoBehaviour:
   spriteBindings:
   - Sprite: {fileID: 21300000, guid: 96f23c518841b3b44bd2516180b6e9dd, type: 3}
     ComponentTypeName: MedKit
-  _debug: 1
+  _debug: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -6299,7 +6300,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6463749, y: -0.000000013128814, z: 0.000000011121775, w: 0.76302}
+  m_LocalRotation: {x: 0.6463749, y: 0.000000013128814, z: -0.000000011121775, w: 0.76302}
   m_LocalPosition: {x: 0, y: 12, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6994,7 +6995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0.7
   m_FrequencyGain: 1
@@ -8201,7 +8202,7 @@ MonoBehaviour:
   headOffset: {x: 0, y: 1, z: 0}
   storageOffset: {x: 0, y: 1.7, z: 0}
   floatingHeightOffset: 2
-  _debug: 1
+  _debug: 0
   _drawGizmos: 0
 --- !u!120 &849806989
 LineRenderer:
@@ -16039,7 +16040,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1949233714}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6463749, y: -0.000000013128814, z: 0.000000011121775, w: 0.76302}
+  m_LocalRotation: {x: 0.6463749, y: 0.000000013128814, z: -0.000000011121775, w: 0.76302}
   m_LocalPosition: {x: 0, y: 12, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

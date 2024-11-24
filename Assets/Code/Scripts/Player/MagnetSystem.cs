@@ -135,10 +135,8 @@ public class MagnetSystem : MonoBehaviour
         {
             // Store the object in the Slot
             _slot = _currentFloatingObject;
-            //_slot.SetActive(false);
             _slot.transform.SetParent(transform.GetChild(0).GetChild(0));
-            _slot.transform.localPosition = Vector3.zero;
-            _slot.transform.localRotation = Quaternion.identity;
+            _slot.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             _slot.transform.localScale = Vector3.one * 0.5f;
 
             _currentFloatingObject = null;
@@ -149,7 +147,6 @@ public class MagnetSystem : MonoBehaviour
         }
         else if (_currentFloatingObject != null)
         {
-            // Stop floating the current object
             StopFloatingObject();
         }
     }
@@ -219,7 +216,12 @@ public class MagnetSystem : MonoBehaviour
         set
         {
             _slot = value;
-            if (_slot != null) StoreObject();
+            if (_slot != null)
+            {
+                StoreObject();
+                return;
+            }
+            OnObjectStored?.Invoke(_slot);
         }
     }
 }
