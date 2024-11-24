@@ -25,6 +25,8 @@ public class GunSettings : BaseAudioHandler, IReloadable
     [Title("Player Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun is for player")] private bool _isPlayer = false;
 
+    [SerializeField, PropertyOrder(1)] private string _audioClipNameReloading;
+
     [Title("Damage Over Time Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun causes damage over time.")] private bool causesDamageOverTime;
     [SerializeField, ShowIf("causesDamageOverTime")] private DamageOverTime _damageOverTime;
@@ -131,7 +133,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
 
             if (_isPlayer) Shooted?.Invoke();
 
-            Play();
+            Play(_audioClipName);
 
             _currentAmmo--;
 
@@ -151,6 +153,8 @@ public class GunSettings : BaseAudioHandler, IReloadable
         if (_debug) Debug.Log("Reload Command Received");
 
         if (_inRealod) return;
+
+        Play(_audioClipNameReloading);
 
         StartCoroutine(ReloadCoroutine());
     }

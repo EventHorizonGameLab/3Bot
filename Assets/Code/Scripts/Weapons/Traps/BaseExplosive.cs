@@ -39,7 +39,7 @@ namespace Game.Traps
                 obj.transform.position = transform.position;
             }
 
-            Play();
+            Play(_audioClipName);
 
             //Destroy(gameObject); // to change
             gameObject.SetActive(false);
