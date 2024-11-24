@@ -45,31 +45,26 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
         ApplyDamage(10, AttackType.Null);
     }
 
-    /// <summary>
-    /// Event triggered when health changes.
-    /// </summary>
     public static event Action<int> OnHealthChange;
-
     public static event Action<AttackType> OnTakeDamage;
-
-    /// <summary>
-    /// Event triggered when the entity dies.
-    /// </summary>
     public static event Action OnDeath;
 
     private void Start()
     {
-        // Initialize current health to max health at the start
         _currentHealth = _maxHealth;
 
         if (_isPlayer) OnHealthChange?.Invoke(_currentHealth);
     }
+    private void OnEnable()
+    {
+        MedKit.OnHeal += TakeDamage;
+    }
 
-    /// <summary>
-    /// Handles particle collision. Applies damage based on collision with gun settings.
-    /// Starts damage-over-time if applicable.
-    /// </summary>
-    /// <param name="other">The other game object involved in the collision</param>
+    private void OnDisable()
+    {
+        MedKit.OnHeal -= TakeDamage;
+    }
+
     private void OnParticleCollision(GameObject other)
     {
         if (_debug) Debug.Log($"OnParticleCollision: {other.name}");
@@ -103,22 +98,6 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
         }
     }
 
-    private void OnEnable()
-    {
-        MedKit.OnHeal += TakeDamage;
-    }
-
-    private void OnDisable()
-    {
-        MedKit.OnHeal -= TakeDamage;
-    }
-
-    /// <summary>
-    /// Applies damage to the entity considering vulnerability multipliers.
-    /// If health reaches zero, calls Die() to trigger death behavior.
-    /// </summary>
-    /// <param name="damage">Amount of damage to apply</param>
-    /// <param name="type">Attack type associated with the damage</param>
     private void ApplyDamage(int damage, AttackType type)
     {
         if (_debug) Debug.Log($"ApplyDamage: {damage}, {type}");
@@ -139,9 +118,6 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
         if (_currentHealth <= 0) Die();
     }
 
-    /// <summary>
-    /// Handles the entity's death behavior. Calls OnDeath event for player or disables the object for others.
-    /// </summary>
     private void Die()
     {
         if (_isPlayer)
@@ -154,11 +130,6 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
         }
     }
 
-    /// <summary>
-    /// Coroutine to handle damage over time. Applies damage periodically based on the defined interval.
-    /// </summary>
-    /// <param name="data">Damage over time settings</param>
-    /// <param name="type">Attack type associated with the damage</param>
     private IEnumerator DamageOverTime(DamageOverTime data, AttackType type)
     {
         float elapsedTime = 0f;
@@ -192,6 +163,10 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
     public float health
     {
         get => _currentHealth;
-        set => ApplyDamage(-(int)value, AttackType.Null);
+        set
+        {
+            _currentHealth = (int)value;
+            if (_isPlayer) OnHealthChange?.Invoke(_currentHealth);
+        }
     }
 }

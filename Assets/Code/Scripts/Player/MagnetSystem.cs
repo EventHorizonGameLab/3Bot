@@ -37,6 +37,8 @@ public class MagnetSystem : MonoBehaviour
 
     private void Update()
     {
+        HandleFloatingObject();
+
         if (!_isEnabled) return;
 
         if (Input.GetMouseButtonDown(1))
@@ -44,7 +46,6 @@ public class MagnetSystem : MonoBehaviour
             HandleMagnetAction();
             if (_slot != null) UseObjectStored(); // need to change this behavior 
         }
-        HandleFloatingObject();
     }
 
     private void OnEnable()
