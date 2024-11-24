@@ -16,27 +16,21 @@ public class CameraShaker : MonoBehaviour
     [BoxGroup("Damage Shake", false)]
     [SerializeField, MinValue(0f)] private float damageDuration = 0.3f;
     [BoxGroup("Damage Shake", false)]
-    [SerializeField, Tooltip("Curve for fade-in effect")] private AnimationCurve damageInCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-    [BoxGroup("Damage Shake", false)]
-    [SerializeField, Tooltip("Curve for fade-out effect")] private AnimationCurve damageOutCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
+    [SerializeField, Tooltip("Curve for the entire shake effect")] private AnimationCurve damageCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     [BoxGroup("Explosion Shake", false)]
     [SerializeField, Required, NoiseSettingsProperty] private NoiseSettings explosionNoise;
     [BoxGroup("Explosion Shake", false)]
     [SerializeField, MinValue(0f)] private float explosionDuration = 0.7f;
     [BoxGroup("Explosion Shake", false)]
-    [SerializeField, Tooltip("Curve for fade-in effect")] private AnimationCurve explosionInCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-    [BoxGroup("Explosion Shake", false)]
-    [SerializeField, Tooltip("Curve for fade-out effect")] private AnimationCurve explosionOutCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
+    [SerializeField, Tooltip("Curve for the entire shake effect")] private AnimationCurve explosionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     [BoxGroup("Shoot Shake", false)]
     [SerializeField, Required, NoiseSettingsProperty] private NoiseSettings shootNoise;
     [BoxGroup("Shoot Shake", false)]
     [SerializeField, MinValue(0f)] private float shootDuration = 0.2f;
     [BoxGroup("Shoot Shake", false)]
-    [SerializeField, Tooltip("Curve for fade-in effect")] private AnimationCurve shootInCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-    [BoxGroup("Shoot Shake", false)]
-    [SerializeField, Tooltip("Curve for fade-out effect")] private AnimationCurve shootOutCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
+    [SerializeField, Tooltip("Curve for the entire shake effect")] private AnimationCurve shootCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     [Title("Debug")]
     [SerializeField] private bool _debug;
@@ -62,7 +56,7 @@ public class CameraShaker : MonoBehaviour
     }
 
     [Button("Trigger Damage Shake")]
-    public void TriggerDamageShake(AttackType attackType)
+    public void TriggerDamageShake(AttackType attackType = AttackType.Null)
     {
         if (_debug) Debug.Log($"Damage Shake: {attackType}");
 
@@ -72,7 +66,7 @@ public class CameraShaker : MonoBehaviour
         }
         else
         {
-            StartCoroutine(Shake(damageNoise, damageDuration, damageInCurve, damageOutCurve));
+            StartCoroutine(Shake(damageNoise, damageDuration, damageCurve));
         }
     }
 
@@ -81,7 +75,7 @@ public class CameraShaker : MonoBehaviour
     {
         if (_debug) Debug.Log("Explosion Shake");
 
-        StartCoroutine(Shake(explosionNoise, explosionDuration, explosionInCurve, explosionOutCurve));
+        StartCoroutine(Shake(explosionNoise, explosionDuration, explosionCurve));
     }
 
     [Button("Trigger Shoot Shake")]
@@ -89,48 +83,28 @@ public class CameraShaker : MonoBehaviour
     {
         if (_debug) Debug.Log("Shoot Shake");
 
-        StartCoroutine(Shake(shootNoise, shootDuration, shootInCurve, shootOutCurve));
+        StartCoroutine(Shake(shootNoise, shootDuration, shootCurve));
     }
 
-    private IEnumerator Shake(NoiseSettings preset, float duration, AnimationCurve inCurve, AnimationCurve outCurve)
+    private IEnumerator Shake(NoiseSettings preset, float duration, AnimationCurve shakeCurve)
     {
         if (noise == null) yield break;
 
         noise.m_NoiseProfile = preset;
 
-        // Apply fade-in
         float elapsedTime = 0f;
-        while (elapsedTime < duration / 2)
+
+        // Applicazione dell'effetto di shake seguendo la curva unica
+        while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            float progress = elapsedTime / (duration / 2);
-            float intensity = inCurve.Evaluate(progress);
-            noise.m_AmplitudeGain = intensity * defaultAmplitude;
+            float progress = Mathf.Clamp01(elapsedTime / duration); // Progresso normalizzato [0, 1]
+            float intensity = shakeCurve.Evaluate(progress) + defaultAmplitude; // Calcolo intensità in base alla curva e defaultAmplitude
+            noise.m_AmplitudeGain = intensity;
             yield return null;
         }
 
-        // Apply constant intensity
-        float halfDuration = duration / 2;
-        elapsedTime = 0f;
-        while (elapsedTime < halfDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            noise.m_AmplitudeGain = defaultAmplitude;
-            yield return null;
-        }
-
-        // Apply fade-out
-        elapsedTime = 0f;
-        while (elapsedTime < duration / 2)
-        {
-            elapsedTime += Time.deltaTime;
-            float progress = elapsedTime / (duration / 2);
-            float intensity = outCurve.Evaluate(progress);
-            noise.m_AmplitudeGain = intensity * defaultAmplitude;
-            yield return null;
-        }
-
-        // Reset to default
+        // Ritorno ai valori predefiniti
         noise.m_AmplitudeGain = defaultAmplitude;
         noise.m_NoiseProfile = _default;
     }

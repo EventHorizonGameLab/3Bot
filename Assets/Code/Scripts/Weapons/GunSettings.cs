@@ -70,6 +70,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
 
     public static event Action<int> OnAmmoChanged;
     public static event Action<int> OnMagazineChanged;
+    public static event Action<float> OnCoolDown;
     public static event Action<bool> HasInfiniteAmmo;
     public static event Action<bool> OnReload;
 
@@ -78,8 +79,6 @@ public class GunSettings : BaseAudioHandler, IReloadable
     private ParticleSystem _gun;
     private float _timeSinceLastShot = 0f;
     private float _timeSinceReloadStarted = 0f;
-
-    private float _offset = 100f;
 
     private bool _inRealod = false;
 
@@ -114,6 +113,18 @@ public class GunSettings : BaseAudioHandler, IReloadable
         BulletMagazine.OnReload -= ReloadButton;
     }
 
+    private void Update()
+    {
+        if (!_isPlayer) return;
+
+        _timeSinceLastShot += Time.deltaTime;
+
+        if (_timeSinceLastShot < _fireRate)
+        {
+            OnCoolDown?.Invoke(_timeSinceLastShot / _fireRate);
+        }
+    }
+
     public void Shoot()
     {
         if (_debug) Debug.Log("Shoot Command Received");
@@ -122,9 +133,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
 
         if (_inRealod) return;
 
-        _timeSinceLastShot += Time.deltaTime * _offset;
-
-        //if (_debug) Debug.Log($" _timeSinceLastShot: {_timeSinceLastShot} >= _fireRate: {_fireRate}");
+        if (_debug) Debug.Log($" _timeSinceLastShot: {_timeSinceLastShot} >= _fireRate: {_fireRate}");
 
         if (_timeSinceLastShot >= _fireRate)
         {
