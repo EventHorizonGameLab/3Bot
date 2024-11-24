@@ -3,10 +3,19 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static CheckPointManager;
+using UnityEngine.Events;
 
 public class CheckPointManager : MonoBehaviour
 {
+    [Serializable]
+    public class Trigger : UnityEvent { }
+
+    [BoxGroup("Saving")]
+    [SerializeField] private Trigger OnSaveStart = new();
+
+    [BoxGroup("Saving")]
+    [SerializeField] private Trigger OnSaveEnd = new();
+
     [Title("Debug")]
     [SerializeField] private bool _debug = false;
 
@@ -19,6 +28,8 @@ public class CheckPointManager : MonoBehaviour
     public void SaveCheckpoint()
     {
         if (_debug) Debug.Log("Saving Checkpoint");
+
+        OnSaveStart?.Invoke();
 
         itemsInfoDictiornary.Clear();
 
@@ -76,6 +87,8 @@ public class CheckPointManager : MonoBehaviour
         }
 
         if (_debug) Debug.Log("Checkpoint Saved!");
+
+        OnSaveEnd?.Invoke();
     }
 
     // Ripristina lo stato del checkpoint salvato
