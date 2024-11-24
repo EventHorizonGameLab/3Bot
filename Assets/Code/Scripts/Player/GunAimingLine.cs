@@ -1,6 +1,5 @@
 using PlayerSM;
 using Sirenix.OdinInspector;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -79,7 +78,6 @@ public class GunAimingLine : MonoBehaviour
         lineRenderer.SetPosition(1, endPoint);
     }
 
-    // Calculate impact point from the first detectionRay
     private Vector3 CalculateImpactPoint(Vector3 startPoint, Vector3 firstHitPoint)
     {
         Vector3 direction = (firstHitPoint - startPoint).normalized;
@@ -87,7 +85,6 @@ public class GunAimingLine : MonoBehaviour
         return NoImpact(startPoint, direction);
     }
 
-    // If no impact, calculate the end point
     private Vector3 NoImpact(Vector3 startPoint, Vector3 direction)
     {
         Ray secondRay = new(startPoint, direction);
@@ -112,9 +109,41 @@ public class GunAimingLine : MonoBehaviour
         return ray.origin + t * ray.direction;
     }
 
-    // Handle state change to enable/disable the LineRenderer
     private void CheckState(bool state)
     {
         lineRenderer.enabled = state;
     }
+
+    #region Gizmos
+
+    private void OnDrawGizmos()
+    {
+        if (_drawGizmo)
+        {
+            DrawPlane(_gunTip.position.y);
+        }
+
+        if (_debug)
+        {
+            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(Camera.main.transform.position, _maxDistance * 2 * mouseRay.direction);
+        }
+    }
+
+    private void DrawPlane(float planeHeight)
+    {
+        float size = 10f;
+
+        Gizmos.color = Color.green;
+
+        for (float i = -size; i <= size; i += 1f)
+        {
+            Gizmos.DrawLine(new Vector3(i, planeHeight, -size), new Vector3(i, planeHeight, size));
+            Gizmos.DrawLine(new Vector3(-size, planeHeight, i), new Vector3(size, planeHeight, i));
+        }
+    }
+
+    #endregion
+
 }

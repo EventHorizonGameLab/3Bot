@@ -74,6 +74,7 @@ public class KineticGun : MonoBehaviour
         if (_debug) Debug.Log("Attempting to pick up an object.");
 
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+
         if (_onDrawGizmos) Debug.DrawRay(ray.origin, ray.direction * _maxDistance, Color.green, 1f);
 
         if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _interactableLayer))
@@ -104,17 +105,43 @@ public class KineticGun : MonoBehaviour
     {
         if (!_isHolding || _heldObject == null) return;
 
+        Plane plane = new(Vector3.up, new Vector3(0, _heldObject.position.y, 0));
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit planeHit, Mathf.Infinity, _obstacleLayer))
+
+        if (_onDrawGizmos) Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red);
+
+        if (plane.Raycast(ray, out float enter))
         {
-            _targetPosition = planeHit.point;
+            _targetPosition = ray.GetPoint(enter);
             _targetPosition.y = _fixedHeight;
 
-            Vector3 smoothedPosition = Vector3.Lerp(_heldObject.position, _targetPosition, _moveSpeed * Time.deltaTime);
-            _heldObject.MovePosition(smoothedPosition);
-
-            _releaseVelocity = (_targetPosition - _heldObject.position) * _moveSpeed;
+            if (IsPathClear(_heldObject.position, _targetPosition))
+            {
+                Vector3 smoothedPosition = Vector3.Lerp(_heldObject.position, _targetPosition, _moveSpeed * Time.deltaTime);
+                _heldObject.MovePosition(smoothedPosition);
+                _releaseVelocity = (_targetPosition - _heldObject.position) * _moveSpeed;
+            }
+            else
+            {
+                if (_debug) Debug.Log("Path blocked by an obstacle. Object not moved.");
+            }
         }
+    }
+
+    private bool IsPathClear(Vector3 start, Vector3 target)
+    {
+        Vector3 direction = target - start;
+        float distance = direction.magnitude;
+
+        if (_onDrawGizmos) Debug.DrawRay(start, direction, Color.yellow);
+
+        if (Physics.Raycast(start, direction.normalized, out RaycastHit hit, distance, _obstacleLayer))
+        {
+            if (_debug) Debug.Log($"Path blocked by: {hit.collider.name}");
+            return false;
+        }
+
+        return true;
     }
 
     private void OnMouseReleased()
@@ -140,6 +167,9 @@ public class KineticGun : MonoBehaviour
         if (_heldObject == null) return false;
 
         Vector3 direction = _heldObject.position - transform.position;
+
+        if (_onDrawGizmos) Debug.DrawRay(transform.position, direction, Color.blue);
+
         if (Physics.Raycast(transform.position, direction, out RaycastHit hit, direction.magnitude, _obstacleLayer))
         {
             if (_debug) Debug.Log($"LoS to player blocked by: {hit.collider.name}");
@@ -153,8 +183,14 @@ public class KineticGun : MonoBehaviour
     {
         if (_heldObject == null) return false;
 
-        Plane plane = new Plane(Vector3.up, new Vector3(0, _heldObject.position.y, 0));
+        Plane plane = new(Vector3.up, new Vector3(0, _heldObject.position.y, 0));
+
+        if (_onDrawGizmos) Debug.DrawRay(_mainCamera.transform.position, Input.mousePosition, Color.blue);
+
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+
+        if (_onDrawGizmos) Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.blue);
+
         if (plane.Raycast(ray, out float enter))
         {
             Vector3 intersectionPoint = ray.GetPoint(enter);
@@ -175,7 +211,12 @@ public class KineticGun : MonoBehaviour
     private bool HasLineOfSightToGameObject(GameObject target)
     {
         Vector3 direction = target.transform.position - transform.position;
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, direction.magnitude, _obstacleLayer))
+
+        Vector3 position = transform.position;
+        position.y = _fixedHeight;
+        if (_onDrawGizmos) Debug.DrawLine(position, direction, Color.blue, 1f);
+
+        if (Physics.Raycast(position, direction, out RaycastHit hit, direction.magnitude, _obstacleLayer))
         {
             if (_debug) Debug.Log($"LoS to object blocked by: {hit.collider.name}");
             return false;
@@ -196,11 +237,33 @@ public class KineticGun : MonoBehaviour
         if (_debug) Debug.Log("Object released.");
     }
 
+    #region Gizmos
+
     private void OnDrawGizmos()
     {
         if (!_onDrawGizmos || !_isHolding || _heldObject == null) return;
 
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, _heldObject.position);
+
+        if (_onDrawGizmos)
+        {
+            DrawPlane(_fixedHeight);
+        }
     }
+
+    private void DrawPlane(float planeHeight)
+    {
+        float size = 10f;
+
+        Gizmos.color = Color.green;
+
+        for (float i = -size; i <= size; i += 1f)
+        {
+            Gizmos.DrawLine(new Vector3(i, planeHeight, -size), new Vector3(i, planeHeight, size));
+            Gizmos.DrawLine(new Vector3(-size, planeHeight, i), new Vector3(size, planeHeight, i));
+        }
+    }
+
+    #endregion
 }
