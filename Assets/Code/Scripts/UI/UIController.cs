@@ -44,6 +44,8 @@ public class UIController : MonoBehaviour
         public Image legs;
     }
 
+    private float _maxhealth = 0f;
+
     private void Start()
     {
         if (!_debug)
@@ -97,7 +99,8 @@ public class UIController : MonoBehaviour
 
     private void SetHP(int hp)
     {
-        _HPBar.value = hp / 100f;
+        if (_maxhealth == 0f) _maxhealth = hp;
+        _HPBar.value = hp / _maxhealth;
     }
 
     private void SetSlot(Sprite sprite)

@@ -14,17 +14,24 @@ public class UIFeedback : MonoBehaviour
 
     private void OnEnable()
     {
-        Health.OnTakeDamage += Takedamage;
+        Health.OnTakeDamage += Feed;
+        Health.OnDeath += KillCoroutine;
     }
 
     private void OnDisable()
     {
-        Health.OnTakeDamage -= Takedamage;
+        Health.OnTakeDamage -= Feed;
+        Health.OnDeath -= KillCoroutine;
     }
 
-    private void Takedamage(AttackType type)
+    private void Feed(AttackType type)
     {
         StartCoroutine(FadeInOut());
+    }
+
+    private void KillCoroutine()
+    {
+        StopAllCoroutines();
     }
 
     private IEnumerator FadeInOut()
