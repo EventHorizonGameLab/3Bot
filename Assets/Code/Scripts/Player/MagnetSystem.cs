@@ -23,7 +23,7 @@ public class MagnetSystem : MonoBehaviour
     [ShowInInspector, ReadOnly] private bool _isEnabled = false;
     [ShowInInspector, ReadOnly] private GameObject _slot;
 
-    public Action<GameObject> OnObjectStored; // Action triggered when an object is stored
+    public static event Action<GameObject> OnObjectStored; // Action triggered when an object is stored
 
     private Camera _mainCamera;
     private Transform _playerHeadTransform;
@@ -171,6 +171,7 @@ public class MagnetSystem : MonoBehaviour
         }
 
         _slot = null;
+        OnObjectStored?.Invoke(_slot);
 
         if (_debug) Debug.Log("Used stored object.");
     }

@@ -34,11 +34,13 @@ public class PauseManager : MonoBehaviour
     private void OnEnable()
     {
         MenuController.Resume += PauseGame;
+        LevelManager.OnLose += PauseGame;
     }
 
     private void OnDisable()
     {
         MenuController.Resume -= PauseGame;
+        LevelManager.OnLose -= PauseGame;
     }
 
     /// <summary>

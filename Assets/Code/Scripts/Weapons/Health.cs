@@ -192,6 +192,6 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
     public float health
     {
         get => _currentHealth;
-        set => _currentHealth = (int)Mathf.Clamp(value, 0, _maxHealth);
+        set => ApplyDamage(-(int)value, AttackType.Null);
     }
 }

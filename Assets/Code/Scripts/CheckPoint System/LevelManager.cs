@@ -1,23 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Title("References")]
+    [SerializeField] private GameObject _loseCanvas;
+
+    public static event Action OnLose;
+
+    void Start() { }
+
+    private void OnEnable()
     {
-        
+        Health.OnDeath += LoseCondition;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        Health.OnDeath += LoseCondition;
     }
 
     public void WinCondition()
     {
         Debug.Log("You won!");
+    }
+
+    public void LoseCondition()
+    {
+        Debug.Log("You lost!");
+        _loseCanvas.SetActive(true);
+        OnLose?.Invoke();
     }
 }
