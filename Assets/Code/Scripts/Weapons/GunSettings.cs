@@ -96,6 +96,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
         }
 
         _timeSinceLastShot = _fireRate;
+        if (!_isPlayer) return;
 
         if (_hasInfiniteAmmo) HasInfiniteAmmo?.Invoke(!_hasInfiniteAmmo);
         else OnMagazineChanged?.Invoke(_totalAmmo);
