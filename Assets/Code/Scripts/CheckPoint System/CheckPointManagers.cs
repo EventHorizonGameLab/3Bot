@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static CheckPointManager;
 
 public class CheckPointManager : MonoBehaviour
 {
@@ -56,7 +57,7 @@ public class CheckPointManager : MonoBehaviour
             };
         }
 
-        if(GameObject.Find("Timer").TryGetComponent<Timer>(out var timer))
+        if (GameObject.Find("Timer").TryGetComponent<Timer>(out var timer))
         {
             _currentCheckpoint.TimerInfo = new TimerInfo
             {
@@ -82,6 +83,7 @@ public class CheckPointManager : MonoBehaviour
         ObjectID[] items = FindObjectsOfType<ObjectID>();
         foreach (var item in items)
         {
+            var rb = item.GetComponent<Rigidbody>();
             _currentCheckpoint.ItemsInfo.Add(new ItemInfo
             {
                 ItemID = item.objectID,
@@ -90,7 +92,8 @@ public class CheckPointManager : MonoBehaviour
                 Rotation = item.transform.rotation,
                 Parent = item.transform.parent,
                 Scale = item.transform.lossyScale,
-                Gravity = item.GetComponent<Rigidbody>().useGravity
+                Gravity = rb != null && rb.useGravity,
+                RbConstraints = rb != null ? rb.constraints : RigidbodyConstraints.None
             });
             itemsInfoDictiornary.Add(item.objectID, item.gameObject);
         }
@@ -164,7 +167,11 @@ public class CheckPointManager : MonoBehaviour
             item.transform.SetPositionAndRotation(itemInfo.Position, itemInfo.Rotation);
             item.transform.localScale = itemInfo.Scale;
             item.transform.SetParent(itemInfo.Parent);
-            item.GetComponent<Rigidbody>().useGravity = itemInfo.Gravity;
+            if (item.TryGetComponent<Rigidbody>(out var rb))
+            {
+                rb.useGravity = itemInfo.Gravity;
+                rb.constraints = itemInfo.RbConstraints;
+            }
         }
 
         if (_debug) Debug.Log("Checkpoint Loaded!");
@@ -210,6 +217,7 @@ public class CheckPointManager : MonoBehaviour
         public Transform Parent { get; set; }
         public Vector3 Scale { get; set; }
         public bool Gravity { get; set; }
+        public RigidbodyConstraints RbConstraints { get; set; }
     }
 
     public class TimerInfo

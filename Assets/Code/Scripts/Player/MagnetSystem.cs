@@ -28,7 +28,7 @@ public class MagnetSystem : MonoBehaviour
 
     private Camera _mainCamera;
     private Transform _playerHeadTransform;
-    private GameObject _currentFloatingObject;
+    [ShowInInspector, ReadOnly, ShowIf("_debug")] private GameObject _currentFloatingObject;
 
     private void Awake()
     {
@@ -140,6 +140,11 @@ public class MagnetSystem : MonoBehaviour
             _slot.transform.SetParent(transform.GetChild(0).GetChild(0));
             _slot.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             _slot.transform.localScale = Vector3.one * 0.5f;
+
+            if (_slot.TryGetComponent<Rigidbody>(out var rb))
+            {
+                rb.constraints = RigidbodyConstraints.FreezePosition;
+            }
 
             _currentFloatingObject = null;
 

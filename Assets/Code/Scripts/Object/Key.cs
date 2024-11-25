@@ -45,4 +45,6 @@ public class Key : MonoBehaviour, IInteractable
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
     }
+
+    public GameObject DoorPrefab => _door;
 }

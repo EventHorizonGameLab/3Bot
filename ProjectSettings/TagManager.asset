@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - NoRaycastCollision
   - Timer
+  - Door
   layers:
   - Default
   - TransparentFX
