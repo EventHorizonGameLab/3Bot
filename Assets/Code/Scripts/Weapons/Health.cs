@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using static GunSettings;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Collider)), DisallowMultipleComponent]
 public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
 {
 

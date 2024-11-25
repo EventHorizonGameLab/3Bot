@@ -3,6 +3,7 @@ using System;
 using Sirenix.OdinInspector;
 using PlayerSM;
 
+[DisallowMultipleComponent]
 public class MagnetSystem : MonoBehaviour
 {
     [Title("Settings")]

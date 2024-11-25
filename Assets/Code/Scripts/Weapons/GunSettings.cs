@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-[RequireComponent(typeof(ParticleSystem))]
+[RequireComponent(typeof(ParticleSystem)), DisallowMultipleComponent]
 public class GunSettings : BaseAudioHandler, IReloadable
 {
     [Title("Settings")]

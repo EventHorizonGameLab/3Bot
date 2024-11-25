@@ -2,6 +2,7 @@ using PlayerSM;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class KineticGun : MonoBehaviour
 {
     [Title("Settings")]

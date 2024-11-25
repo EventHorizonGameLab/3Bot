@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
+[DisallowMultipleComponent]
 public class SegwayPitchControl : MonoBehaviour
 {
     [Title("Settings")]
