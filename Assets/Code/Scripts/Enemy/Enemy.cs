@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         Collider player = colInRange[0];
         Vector3 playerDirection = (player.transform.position - transform.position).normalized;
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (Physics.Raycast(transform.position, playerDirection, out RaycastHit hit, distance))
+        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, playerDirection, out RaycastHit hit, distance))
         {
             if (hit.collider != player) return false;
         }
@@ -36,12 +36,13 @@ public class Enemy : MonoBehaviour
         return true;
     }
 
-    void RotateTowards(Vector3 targetPos)
+    bool RotateTowards(Vector3 targetPos)
     {
         Vector3 dir = targetPos - transform.position;
         dir.y = 0;
         Quaternion targetRot = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed);
+        if (transform.rotation == targetRot) return true; else return false;
     }
 
 

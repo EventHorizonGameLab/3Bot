@@ -117,9 +117,9 @@ public class GunSettings : BaseAudioHandler, IReloadable
 
     private void Update()
     {
-        if (!_isPlayer) return;
 
         _timeSinceLastShot += Time.deltaTime;
+        if (!_isPlayer) return;
 
         if (_timeSinceLastShot < _fireRate)
         {
@@ -176,7 +176,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
     {
         if (_debug) Debug.Log("Reloading");
 
-        OnReload?.Invoke(true);
+        if(_isPlayer) OnReload?.Invoke(true);
         _inRealod = true;
 
         if (_timeSinceReloadStarted > 0)
