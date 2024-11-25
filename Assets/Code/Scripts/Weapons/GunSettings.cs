@@ -96,6 +96,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
         }
 
         _timeSinceLastShot = _fireRate;
+
         if (!_isPlayer) return;
 
         if (_hasInfiniteAmmo) HasInfiniteAmmo?.Invoke(!_hasInfiniteAmmo);
@@ -141,15 +142,17 @@ public class GunSettings : BaseAudioHandler, IReloadable
             _timeSinceLastShot = 0f;
             _gun.Emit(1);
 
-            if (_isPlayer) Shooted?.Invoke();
+            if (_isPlayer)
+            {
+                Shooted?.Invoke();
+                OnAmmoChanged?.Invoke(_currentAmmo);
+            }
 
             Play(_audioClipName);
 
             _currentAmmo--;
 
             if (_debug) Debug.Log("Shooting");
-
-            OnAmmoChanged?.Invoke(_currentAmmo);
 
             if (_currentAmmo <= 0)
             {
@@ -198,8 +201,11 @@ public class GunSettings : BaseAudioHandler, IReloadable
             OnMagazineChanged?.Invoke(_totalAmmo);
         }
 
-        OnAmmoChanged?.Invoke(_currentAmmo);
-        OnReload?.Invoke(false);
+        if (_isPlayer)
+        {
+            OnAmmoChanged?.Invoke(_currentAmmo);
+            OnReload?.Invoke(false);
+        }
         _inRealod = false;
     }
 
