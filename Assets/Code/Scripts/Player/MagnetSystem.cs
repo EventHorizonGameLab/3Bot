@@ -157,9 +157,14 @@ public class MagnetSystem : MonoBehaviour
     {
         if (_slot == null) return;
 
+        bool isInteracted = false;
+
         if (_slot.TryGetComponent(out IInteractable obj))
         {
-            obj.Interact();
+            isInteracted=obj.Interact();
+
+            if (!isInteracted) return;
+
             _slot.SetActive(false);
         }
         else
@@ -168,6 +173,8 @@ public class MagnetSystem : MonoBehaviour
             _slot.transform.localScale = Vector3.one;
             _slot.GetComponent<Rigidbody>().useGravity = true;
         }
+
+        if (!isInteracted) return;
 
         _slot = null;
         OnObjectStored?.Invoke(_slot);

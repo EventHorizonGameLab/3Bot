@@ -23,6 +23,7 @@ public class UISlot : MonoBehaviour
         {
             typeof(MedKit).FullName,
             typeof(BulletMagazine).FullName,
+            typeof(Key).FullName,
             typeof(Explosive).FullName
         };
         }
