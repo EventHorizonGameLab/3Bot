@@ -12,6 +12,7 @@ public class BaseAudioHandler : MonoBehaviour
     /// </summary>
     protected virtual void Play(string audioClipName)
     {
-        AudioManager.Instance.PlaySFX(audioClipName, transform);
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySFX(audioClipName, transform);
     }
 }
