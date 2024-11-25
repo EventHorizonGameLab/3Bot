@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -35,7 +34,6 @@ public class SceneSwitch : MonoBehaviour
 
     private void Start()
     {
-        
         blackScreen.color = new Color(0, 0, 0, 0);
     }
         
