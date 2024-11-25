@@ -1,11 +1,12 @@
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
     [Title("References")]
-    [SerializeField, Required] private GameObject _loseCanvas;
+    [SerializeField] private GameObject _loseCanvas;
 
     [Title("Debug")]
     [SerializeField] private bool _debug;
@@ -34,5 +35,15 @@ public class LevelManager : MonoBehaviour
         if (_debug) Debug.Log("You lost!");
         if (_loseCanvas != null) _loseCanvas.SetActive(true);
         OnLose?.Invoke();
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneSwitch.instance.LoadScene(sceneName);
+    }
+
+    public void ReloadScene()
+    {
+        SceneSwitch.instance.ReLoadScene(SceneManager.GetActiveScene().name);
     }
 }

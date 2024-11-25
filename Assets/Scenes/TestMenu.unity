@@ -3485,18 +3485,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de44513d32243d642b62d5f64110b46f, type: 3}
---- !u!114 &520469318 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3769332467624104628, guid: de44513d32243d642b62d5f64110b46f,
-    type: 3}
-  m_PrefabInstance: {fileID: 520469317}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff3c81f37558b714ba3bd667537c259e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &522791495
 GameObject:
   m_ObjectHideFlags: 0
@@ -10899,8 +10887,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 520469318}
-        m_TargetAssemblyTypeName: SceneSwitch, Assembly-CSharp
+      - m_Target: {fileID: 1907769162}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
         m_Arguments:
@@ -12842,6 +12830,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1903841864}
   m_CullTransparentMesh: 1
+--- !u!1 &1907769161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1907769163}
+  - component: {fileID: 1907769162}
+  m_Layer: 0
+  m_Name: '- Game Manager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1907769162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907769161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023cfd725fb9a5e4ab31e86d22e12480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loseCanvas: {fileID: 0}
+  _debug: 0
+--- !u!4 &1907769163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907769161}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.522756, y: 14.267908, z: -2.2832623}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1924782954
 GameObject:
   m_ObjectHideFlags: 0
@@ -14359,6 +14393,7 @@ SceneRoots:
   - {fileID: 197925029}
   - {fileID: 1128790023}
   - {fileID: 608791478}
+  - {fileID: 1907769163}
   - {fileID: 2039241701}
   - {fileID: 731298104}
   - {fileID: 688082837}

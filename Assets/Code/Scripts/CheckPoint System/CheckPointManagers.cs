@@ -113,7 +113,7 @@ public class CheckPointManager : MonoBehaviour
         {
             Debug.LogWarning("No checkpoint saved!");
 
-            SceneSwitch.instance.LoadScene(SceneManager.GetActiveScene().name);
+            SceneSwitch.instance.ReLoadScene(SceneManager.GetActiveScene().name);
 
             return;
         }
