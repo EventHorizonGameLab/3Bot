@@ -52,4 +52,10 @@ public class Timer : MonoBehaviour
             yield return null;
         }
     }
+
+    public float TimeValue
+    {
+        get { return _time; }
+        set { _time = value; }
+    }
 }

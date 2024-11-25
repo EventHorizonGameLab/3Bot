@@ -56,6 +56,14 @@ public class CheckPointManager : MonoBehaviour
             };
         }
 
+        if(GameObject.Find("Timer").TryGetComponent<Timer>(out var timer))
+        {
+            _currentCheckpoint.TimerInfo = new TimerInfo
+            {
+                Time = timer.TimeValue,
+            };
+        }
+
         //// Salva stato dei nemici
         //Enemy[] enemies = FindObjectsOfType<Enemy>();
         //foreach (var enemy in enemies)
@@ -124,6 +132,12 @@ public class CheckPointManager : MonoBehaviour
             magneticGun.Slot = playerInfo.Slot;
         }
 
+        if (GameObject.Find("Timer").TryGetComponent<Timer>(out var timer))
+        {
+            var timerInfo = _currentCheckpoint.TimerInfo;
+            timer.TimeValue = timerInfo.Time;
+        }
+
         //// Ripristina stato dei nemici
         //foreach (var enemyInfo in _currentCheckpoint.EnemiesInfo)
         //{
@@ -161,6 +175,7 @@ public class CheckPointManager : MonoBehaviour
     public class CheckpointInfo
     {
         public PlayerInfo PlayerInfo { get; set; } = new PlayerInfo();
+        public TimerInfo TimerInfo { get; set; } = new TimerInfo();
         public List<EnemyInfo> EnemiesInfo { get; set; } = new List<EnemyInfo>();
         public List<ItemInfo> ItemsInfo { get; set; } = new List<ItemInfo>();
     }
@@ -195,6 +210,11 @@ public class CheckPointManager : MonoBehaviour
         public Transform Parent { get; set; }
         public Vector3 Scale { get; set; }
         public bool Gravity { get; set; }
+    }
+
+    public class TimerInfo
+    {
+        public float Time { get; set; }
     }
 
     #endregion
