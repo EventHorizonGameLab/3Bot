@@ -25,7 +25,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
     [Title("Player Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun is for player")] private bool _isPlayer = false;
 
-    [SerializeField, PropertyOrder(1)] private string _audioClipNameReloading;
+    [SerializeField, PropertyOrder(1), ShowIf("_isPlayer")] private string _audioClipNameReloading;
 
     [Title("Damage Over Time Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun causes damage over time.")] private bool causesDamageOverTime;

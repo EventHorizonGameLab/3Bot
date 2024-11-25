@@ -8731,7 +8731,7 @@ MonoBehaviour:
   _fireRate: 1
   _reloadTime: 2
   _damage: 10
-  _attackType: 4
+  _attackType: 5
   _hasInfiniteAmmo: 0
   _magazineSize: 10
   _is2D: 1

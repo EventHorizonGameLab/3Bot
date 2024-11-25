@@ -337,9 +337,9 @@ MonoBehaviour:
   - attackType: 3
     damageMultiplier: 0
   - attackType: 4
-    damageMultiplier: 1
-  - attackType: 5
     damageMultiplier: 0
+  - attackType: 5
+    damageMultiplier: 1
   - attackType: 6
     damageMultiplier: 0
   - attackType: 7
