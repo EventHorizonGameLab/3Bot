@@ -258,10 +258,14 @@ public class KineticGun : MonoBehaviour
 
         Gizmos.color = Color.green;
 
+        float x, z;
+        x = transform.position.x;
+        z = transform.position.z;
+
         for (float i = -size; i <= size; i += 1f)
         {
-            Gizmos.DrawLine(new Vector3(i, planeHeight, -size), new Vector3(i, planeHeight, size));
-            Gizmos.DrawLine(new Vector3(-size, planeHeight, i), new Vector3(size, planeHeight, i));
+            Gizmos.DrawLine(new Vector3(x + i, planeHeight, z - size), new Vector3(x + i, planeHeight, x + size));
+            Gizmos.DrawLine(new Vector3(x - size, planeHeight, z + i), new Vector3(x + size, planeHeight, z + i));
         }
     }
 
