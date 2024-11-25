@@ -332,11 +332,11 @@ MonoBehaviour:
   _audioClipName: 
   _maxAmmo: 10
   _fireRate: 0.5
-  _reloadTime: 0
+  _reloadTime: 1
   _damage: 10
   _attackType: 3
   _hasInfiniteAmmo: 1
-  _magazineSize: 257
+  _magazineSize: 10
   _is2D: 1
   _isPlayer: 0
   _audioClipNameReloading: 
@@ -11192,7 +11192,7 @@ Transform:
   m_GameObject: {fileID: 459321619}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.25, y: 0, z: 0}
+  m_LocalPosition: {x: 7.07, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11212,11 +11212,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ffbb88e2db73a742890d9c8e897fb97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  losRadius: 5.28
+  losRadius: 5.46
   muzzle: {fileID: 90692858}
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
+  toIgnore:
+    serializedVersion: 2
+    m_Bits: 128
   rotationSpeed: 0.1
 --- !u!1 &467573705
 GameObject:
@@ -12097,7 +12100,7 @@ Transform:
   m_GameObject: {fileID: 734009859}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0.687}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12590,9 +12593,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &849806980
 Transform:
   m_ObjectHideFlags: 0

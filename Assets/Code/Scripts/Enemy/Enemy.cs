@@ -8,16 +8,20 @@ public class Enemy : MonoBehaviour
     [SerializeField] float losRadius;
     [SerializeField] Transform muzzle;
     [SerializeField] LayerMask playerLayer;
+    [SerializeField] LayerMask toIgnore;
     [SerializeField] float rotationSpeed;
+    bool playerIsEngaged;
 
     private void Awake()
     {
         gun = GetComponentInChildren<GunSettings>();
+        playerIsEngaged = false;
     }
 
     private void FixedUpdate()
     {
-        if (PlayerIsInVision()) gun.Shoot();
+        if (PlayerIsInVision() ) gun.Shoot();
+        Debug.Log(PlayerIsInVision());
     }
 
     bool PlayerIsInVision()
@@ -27,13 +31,14 @@ public class Enemy : MonoBehaviour
         Collider player = colInRange[0];
         Vector3 playerDirection = (player.transform.position - transform.position).normalized;
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, playerDirection, out RaycastHit hit, distance))
+        if (Physics.Raycast(transform.position + Vector3.up, playerDirection, out RaycastHit hit, distance, ~toIgnore ))
         {
             if (hit.collider != player) return false;
         }
 
-        RotateTowards(player.transform.position);
-        return true;
+        if (RotateTowards(player.transform.position))
+            return true;
+        return false;
     }
 
     bool RotateTowards(Vector3 targetPos)
@@ -42,7 +47,8 @@ public class Enemy : MonoBehaviour
         dir.y = 0;
         Quaternion targetRot = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed);
-        if (transform.rotation == targetRot) return true; else return false;
+        if (transform.rotation == targetRot) return true;
+        return false;
     }
 
 
@@ -52,6 +58,6 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, losRadius);
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward * 100);
+        Gizmos.DrawRay(transform.position + Vector3.up , transform.forward * 100);
     }
 }
