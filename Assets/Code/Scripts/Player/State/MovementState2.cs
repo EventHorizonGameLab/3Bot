@@ -102,6 +102,8 @@ namespace PlayerSM
 
             if (!isResetted)
             {
+                Debug.Log("Movement State | Reset");
+
                 Reset();
                 isResetted = true;
             }

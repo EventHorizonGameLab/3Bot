@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using static CheckPointManager;
 
 public class CheckPointManager : MonoBehaviour
@@ -112,7 +113,7 @@ public class CheckPointManager : MonoBehaviour
         {
             Debug.LogWarning("No checkpoint saved!");
 
-            // reload scene+
+            SceneSwitch.instance.LoadScene(SceneManager.GetActiveScene().name);
 
             return;
         }

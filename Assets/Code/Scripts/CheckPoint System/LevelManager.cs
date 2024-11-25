@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [Title("References")]
-    [SerializeField] private GameObject _loseCanvas;
+    [SerializeField, Required] private GameObject _loseCanvas;
 
     [Title("Debug")]
     [SerializeField] private bool _debug;
@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour
     public void LoseCondition()
     {
         if (_debug) Debug.Log("You lost!");
-        _loseCanvas.SetActive(true);
+        if (_loseCanvas != null) _loseCanvas.SetActive(true);
         OnLose?.Invoke();
     }
 }

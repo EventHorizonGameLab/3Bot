@@ -40,6 +40,7 @@ public class SceneSwitch : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+
         StartCoroutine(TransitionToScene(sceneName));
     }
 
