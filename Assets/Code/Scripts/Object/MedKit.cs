@@ -13,8 +13,9 @@ public class MedKit : MonoBehaviour, IInteractable
 
     public bool Interact()
     {
-       OnHeal?.Invoke(-_healAmount, AttackType.Heal);
+        OnHeal?.Invoke(-_healAmount, AttackType.Heal);
+        gameObject.SetActive(false);
 
         return true;
-    }  
+    }
 }

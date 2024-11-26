@@ -12,7 +12,7 @@ public class MagnetSystem : MonoBehaviour
     [SerializeField, MinValue(0f), Tooltip("Distance to check for storing objects (SphereCast radius)")] private float sphereCastRadius = 1f;
     [SerializeField, Tooltip("LayerMask for obstacles")] private LayerMask obstacleLayer;
     [SerializeField, Tooltip("Offset from the player's head")] private Vector3 headOffset;
-    [SerializeField, Tooltip("Offset from the player's head when storing an object")] private Vector3 storageOffset;
+    [SerializeField, Tooltip("Offset from the player's head when storing an object"), Required] private Transform storage;
 
     [Title("Offsets")]
     [SerializeField, MinValue(0f), Tooltip("Vertical offset to lift the floating object")]
@@ -137,7 +137,7 @@ public class MagnetSystem : MonoBehaviour
         {
             // Store the object in the Slot
             _slot = _currentFloatingObject;
-            _slot.transform.SetParent(transform.GetChild(0).GetChild(0));
+            _slot.transform.SetParent(storage);
             _slot.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             _slot.transform.localScale = Vector3.one * 0.5f;
 
@@ -166,20 +166,19 @@ public class MagnetSystem : MonoBehaviour
 
         if (_slot.TryGetComponent(out IInteractable obj))
         {
-            isInteracted=obj.Interact();
-
-            if (!isInteracted) return;
-
-            _slot.SetActive(false);
+            isInteracted = obj.Interact();
         }
         else
         {
             _slot.transform.SetParent(null);
             _slot.transform.localScale = Vector3.one;
-            _slot.GetComponent<Rigidbody>().useGravity = true;
-        }
 
-        if (!isInteracted) return;
+            if (_slot.TryGetComponent(out Rigidbody rb))
+            {
+                rb.useGravity = true;
+                rb.constraints = RigidbodyConstraints.None;
+            }
+        }
 
         _slot = null;
         OnObjectStored?.Invoke(_slot);
@@ -221,7 +220,7 @@ public class MagnetSystem : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position + headOffset, sphereCastRadius);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(transform.position + storageOffset, 0.2f);
+        Gizmos.DrawSphere(transform.position + storage.position, 0.2f);
     }
 
     public GameObject Slot

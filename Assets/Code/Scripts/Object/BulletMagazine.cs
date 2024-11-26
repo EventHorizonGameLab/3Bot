@@ -14,6 +14,7 @@ public class BulletMagazine : MonoBehaviour, IInteractable
     public bool Interact()
     {
         OnReload?.Invoke(bulletCount);
+        gameObject.SetActive(false);
 
         return true;
     }

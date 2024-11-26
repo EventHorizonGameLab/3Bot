@@ -1,6 +1,7 @@
 using PlayerSM;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class KineticGun : MonoBehaviour
@@ -12,6 +13,7 @@ public class KineticGun : MonoBehaviour
     [SerializeField, Tooltip("LayerMask to identify obstacle objects")] private LayerMask _obstacleLayer;
     [SerializeField, MinValue(0f), Tooltip("Maximum distance for the raycast")] private float _maxDistance = 10f;
     [SerializeField, MinValue(0f), Tooltip("Multiplier for momentum on release")] private float _momentumMultiplier = 1.5f;
+    [SerializeField] private GameObject _crosshair;
 
     [Title("Debug")]
     [SerializeField] private bool _debug = false;
@@ -121,6 +123,13 @@ public class KineticGun : MonoBehaviour
                 Vector3 smoothedPosition = Vector3.Lerp(_heldObject.position, _targetPosition, _moveSpeed * Time.deltaTime);
                 _heldObject.MovePosition(smoothedPosition);
                 _releaseVelocity = (_targetPosition - _heldObject.position) * _moveSpeed;
+
+                if (_crosshair)
+                {
+                    if (_debug) Debug.Log("Crosshair enabled.");
+
+                    PositionIndicatorBelowHeldObject();
+                }
             }
             else
             {
@@ -156,6 +165,8 @@ public class KineticGun : MonoBehaviour
             _heldObject.useGravity = true;
             _heldObject.freezeRotation = false;
             _heldObject.velocity = releaseMomentum;
+
+            _crosshair.SetActive(false);
 
             if (_debug) Debug.Log($"Object released with momentum: {releaseMomentum}");
         }
@@ -236,6 +247,30 @@ public class KineticGun : MonoBehaviour
         _isHolding = false;
 
         if (_debug) Debug.Log("Object released.");
+    }
+
+    // Function to position the indicator under the held object
+    private void PositionIndicatorBelowHeldObject()
+    {
+        if (_debug) Debug.Log("Positioning crosshair.");
+
+        if (_heldObject == null || _crosshair == null) return;
+
+        Ray ray = new(_heldObject.position, Vector3.down);
+
+        if (_onDrawGizmos) Debug.DrawRay(_heldObject.position, Vector3.down, Color.green);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            if (_debug) Debug.Log($"Crosshair position: {hit.point}");
+
+            _crosshair.transform.position = hit.point;
+            _crosshair.SetActive(true);
+        }
+        else
+        {
+            _crosshair.SetActive(false);
+        }
     }
 
     #region Gizmos

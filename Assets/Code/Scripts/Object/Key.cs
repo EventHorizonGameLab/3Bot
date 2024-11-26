@@ -31,6 +31,8 @@ public class Key : MonoBehaviour, IInteractable
             if (hitCollider.gameObject == _door)
             {
                 _onInteract?.Invoke();
+                gameObject.SetActive(false);
+
                 return true;
             }
         }
