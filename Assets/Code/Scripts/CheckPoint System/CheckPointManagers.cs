@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using static CheckPointManager;
 
 public class CheckPointManager : MonoBehaviour
 {
@@ -24,6 +23,7 @@ public class CheckPointManager : MonoBehaviour
     private CheckpointInfo _currentCheckpoint;
 
     Dictionary<int, GameObject> itemsInfoDictiornary = new();
+    Dictionary<int, GameObject> enemyInfoDictiornary = new();
 
     public void Start() { }
 
@@ -37,7 +37,6 @@ public class CheckPointManager : MonoBehaviour
 
         _currentCheckpoint = new CheckpointInfo();
 
-        // Salva stato del giocatore
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -66,20 +65,22 @@ public class CheckPointManager : MonoBehaviour
             };
         }
 
-        //// Salva stato dei nemici
-        //Enemy[] enemies = FindObjectsOfType<Enemy>();
-        //foreach (var enemy in enemies)
-        //{
-        //    _currentCheckpoint.EnemiesInfo.Add(new EnemyInfo
-        //    {
-        //        Name = enemy.name,
-        //        IsActive = enemy.gameObject.activeSelf,
-        //        Position = enemy.transform.position,
-        //        Rotation = enemy.transform.rotation,
-        //        CurrentHealth = enemy.Health,
-        //        State = enemy.CurrentState // Supponendo che Enemy abbia una FSM
-        //    });
-        //}
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach (var enemy in enemies)
+        {
+            int enemyId = enemy.GetComponent<EnemyID>().enemyID;
+
+            _currentCheckpoint.EnemiesInfo.Add(new EnemyInfo
+            {
+                EnemyID = enemyId,
+                IsActive = enemy.gameObject.activeSelf,
+                Position = enemy.transform.position,
+                Rotation = enemy.transform.rotation,
+                CurrentHealth = enemy.GetComponent<Health>().health,
+                CurrentAmmo = enemy.GetComponentInChildren<GunSettings>().currentAmmo
+            });
+            enemyInfoDictiornary.Add(enemyId, enemy.gameObject);
+        }
 
         ObjectID[] items = FindObjectsOfType<ObjectID>();
         foreach (var item in items)
@@ -104,7 +105,6 @@ public class CheckPointManager : MonoBehaviour
         OnSaveEnd?.Invoke();
     }
 
-    // Ripristina lo stato del checkpoint salvato
     public void LoadCheckpoint()
     {
         if (_debug) Debug.Log("Loading Checkpoint");
@@ -118,7 +118,6 @@ public class CheckPointManager : MonoBehaviour
             return;
         }
 
-        // Ripristina stato del giocatore
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null && _currentCheckpoint.PlayerInfo != null)
         {
@@ -142,24 +141,15 @@ public class CheckPointManager : MonoBehaviour
             timer.TimeValue = timerInfo.Time;
         }
 
-        //// Ripristina stato dei nemici
-        //foreach (var enemyInfo in _currentCheckpoint.EnemiesInfo)
-        //{
-        //    GameObject enemy = GameObject.Find(enemyInfo.Name);
-        //    if (enemy != null)
-        //    {
-        //        enemy.SetActive(enemyInfo.IsActive);
-        //        enemy.transform.position = enemyInfo.Position;
-        //        enemy.transform.rotation = enemyInfo.Rotation;
+        foreach (var enemyInfo in _currentCheckpoint.EnemiesInfo)
+        {
+            GameObject enemy = enemyInfoDictiornary[enemyInfo.EnemyID];
 
-        //        var enemyScript = enemy.GetComponent<Enemy>();
-        //        if (enemyScript != null)
-        //        {
-        //            enemyScript.Health = enemyInfo.CurrentHealth;
-        //            enemyScript.CurrentState = enemyInfo.State;
-        //        }
-        //    }
-        //}
+            enemy.SetActive(enemyInfo.IsActive);
+            enemy.transform.SetPositionAndRotation(enemyInfo.Position, enemyInfo.Rotation);
+            enemy.GetComponent<Health>().health = enemyInfo.CurrentHealth;
+            enemy.GetComponentInChildren<GunSettings>().currentAmmo = enemyInfo.CurrentAmmo;
+        }
 
         foreach (var itemInfo in _currentCheckpoint.ItemsInfo)
         {
@@ -168,6 +158,7 @@ public class CheckPointManager : MonoBehaviour
             item.transform.SetPositionAndRotation(itemInfo.Position, itemInfo.Rotation);
             item.transform.localScale = itemInfo.Scale;
             item.transform.SetParent(itemInfo.Parent);
+
             if (item.TryGetComponent<Rigidbody>(out var rb))
             {
                 rb.useGravity = itemInfo.Gravity;
@@ -201,12 +192,12 @@ public class CheckPointManager : MonoBehaviour
 
     public class EnemyInfo
     {
+        public int EnemyID { get; set; }
         public bool IsActive { get; set; }
         public Vector3 Position { get; set; }
         public Quaternion Rotation { get; set; }
         public float CurrentHealth { get; set; }
-        public float CurrentAmmo { get; set; }
-        //public string State { get; set; } // Identificativo della FSM del nemico
+        public int CurrentAmmo { get; set; }
     }
 
     public class ItemInfo

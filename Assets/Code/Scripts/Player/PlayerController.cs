@@ -31,7 +31,6 @@ namespace PlayerSM
 
         private void Start()
         {
-            // Inizializza gli stati e parte dallo stato di movimento
             _states = new List<IPlayerState>
             {
                 new MovementState2(this),
