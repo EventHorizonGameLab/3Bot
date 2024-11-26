@@ -4,7 +4,6 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using static GunSettings;
-using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider)), DisallowMultipleComponent]
 public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
@@ -168,5 +167,11 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
             _currentHealth = (int)value;
             if (_isPlayer) OnHealthChange?.Invoke(_currentHealth);
         }
+    }
+
+    public bool IsInvincible
+    {
+        get => _isInvincible;
+        set => _isInvincible = value;
     }
 }
