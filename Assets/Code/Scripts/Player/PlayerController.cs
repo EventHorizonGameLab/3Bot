@@ -7,6 +7,10 @@ namespace PlayerSM
 {
     public class PlayerController : MonoBehaviour
     {
+        [Title("Settings")]
+        [SerializeField] private KeyCode _keyToChangeStateUp = KeyCode.UpArrow;
+        [SerializeField] private KeyCode _keyToChangeStateDown = KeyCode.DownArrow;
+
         [Title("Debug")]
         [SerializeField] private bool _debug;
 
@@ -58,12 +62,11 @@ namespace PlayerSM
         {
             if (!_isEnable) return;
 
-            // Gestisce l'input per passare tra gli stati
-            if (Input.GetKeyDown(KeyCode.UpArrow)) // Tasto freccia destra
+            if (Input.GetKeyDown(_keyToChangeStateUp))
             {
                 SwitchState(GetNextState());
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow)) // Tasto freccia sinistra
+            if (Input.GetKeyDown(_keyToChangeStateDown))
             {
                 SwitchState(GetPreviousState());
             }
