@@ -2,6 +2,7 @@ using PlayerSM;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -22,10 +23,8 @@ public class CheckPointManager : MonoBehaviour
 
     private CheckpointInfo _currentCheckpoint;
 
-    Dictionary<int, GameObject> itemsInfoDictiornary = new();
-    Dictionary<int, GameObject> enemyInfoDictiornary = new();
-
-    public void Start() { }
+    Dictionary<int, GameObject> itemsInfoDictionary = new();
+    Dictionary<int, GameObject> enemyInfoDictionary = new();
 
     public void SaveCheckpoint()
     {
@@ -33,10 +32,11 @@ public class CheckPointManager : MonoBehaviour
 
         OnSaveStart?.Invoke();
 
-        itemsInfoDictiornary.Clear();
+        itemsInfoDictionary.Clear();
 
         _currentCheckpoint = new CheckpointInfo();
 
+        // Save Player Info
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -50,6 +50,7 @@ public class CheckPointManager : MonoBehaviour
                 Position = player.transform.position,
                 Rotation = player.transform.rotation,
                 State = playerState.CurrentState,
+                StateStatus = new List<bool>(playerState.GetStateStatus().Values),
                 CurrentAmmo = gun.currentAmmo,
                 StorageAmmo = gun.storageAmmo,
                 CurrentHealth = health.health,
@@ -57,6 +58,7 @@ public class CheckPointManager : MonoBehaviour
             };
         }
 
+        // Save Timer Info
         if (GameObject.Find("Timer").TryGetComponent<Timer>(out var timer))
         {
             _currentCheckpoint.TimerInfo = new TimerInfo
@@ -65,6 +67,7 @@ public class CheckPointManager : MonoBehaviour
             };
         }
 
+        // Save Enemies Info
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach (var enemy in enemies)
         {
@@ -79,9 +82,10 @@ public class CheckPointManager : MonoBehaviour
                 CurrentHealth = enemy.GetComponent<Health>().health,
                 CurrentAmmo = enemy.GetComponentInChildren<GunSettings>().currentAmmo
             });
-            enemyInfoDictiornary.Add(enemyId, enemy.gameObject);
+            enemyInfoDictionary.Add(enemyId, enemy.gameObject);
         }
 
+        // Save Items Info
         ObjectID[] items = FindObjectsOfType<ObjectID>();
         foreach (var item in items)
         {
@@ -97,7 +101,7 @@ public class CheckPointManager : MonoBehaviour
                 Gravity = rb != null && rb.useGravity,
                 RbConstraints = rb != null ? rb.constraints : RigidbodyConstraints.None
             });
-            itemsInfoDictiornary.Add(item.objectID, item.gameObject);
+            itemsInfoDictionary.Add(item.objectID, item.gameObject);
         }
 
         if (_debug) Debug.Log("Checkpoint Saved!");
@@ -112,12 +116,11 @@ public class CheckPointManager : MonoBehaviour
         if (_currentCheckpoint == null)
         {
             Debug.LogWarning("No checkpoint saved!");
-
             SceneSwitch.instance.ReLoadScene(SceneManager.GetActiveScene().name);
-
             return;
         }
 
+        // Load Player Info
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null && _currentCheckpoint.PlayerInfo != null)
         {
@@ -133,17 +136,26 @@ public class CheckPointManager : MonoBehaviour
             playerState.CurrentState = playerInfo.State;
             health.health = playerInfo.CurrentHealth;
             magneticGun.Slot = playerInfo.Slot;
+
+            var stateStatus = new Dictionary<IPlayerState, bool>();
+            for (int i = 0; i < playerState.GetStateStatus().Count; i++)
+            {
+                stateStatus[playerState.GetStateStatus().Keys.ElementAt(i)] = playerInfo.StateStatus[i];
+            }
+            playerState.SetStateStatus(stateStatus);
         }
 
+        // Load Timer Info
         if (GameObject.Find("Timer").TryGetComponent<Timer>(out var timer))
         {
             var timerInfo = _currentCheckpoint.TimerInfo;
             timer.TimeValue = timerInfo.Time;
         }
 
+        // Load Enemies Info
         foreach (var enemyInfo in _currentCheckpoint.EnemiesInfo)
         {
-            GameObject enemy = enemyInfoDictiornary[enemyInfo.EnemyID];
+            if (!enemyInfoDictionary.TryGetValue(enemyInfo.EnemyID, out var enemy)) continue;
 
             enemy.SetActive(enemyInfo.IsActive);
             enemy.transform.SetPositionAndRotation(enemyInfo.Position, enemyInfo.Rotation);
@@ -151,9 +163,11 @@ public class CheckPointManager : MonoBehaviour
             enemy.GetComponentInChildren<GunSettings>().currentAmmo = enemyInfo.CurrentAmmo;
         }
 
+        // Load Items Info
         foreach (var itemInfo in _currentCheckpoint.ItemsInfo)
         {
-            GameObject item = itemsInfoDictiornary[itemInfo.ItemID];
+            if (!itemsInfoDictionary.TryGetValue(itemInfo.ItemID, out var item)) continue;
+
             item.SetActive(itemInfo.IsActive);
             item.transform.SetPositionAndRotation(itemInfo.Position, itemInfo.Rotation);
             item.transform.localScale = itemInfo.Scale;
@@ -184,6 +198,7 @@ public class CheckPointManager : MonoBehaviour
         public Vector3 Position { get; set; }
         public Quaternion Rotation { get; set; }
         public int State { get; set; }
+        public List<bool> StateStatus { get; set; }
         public int CurrentAmmo { get; set; }
         public int StorageAmmo { get; set; }
         public float CurrentHealth { get; set; }
@@ -218,5 +233,4 @@ public class CheckPointManager : MonoBehaviour
     }
 
     #endregion
-
 }

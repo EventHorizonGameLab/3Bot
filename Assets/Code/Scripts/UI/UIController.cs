@@ -45,6 +45,7 @@ public class UIController : MonoBehaviour
     }
 
     private float _maxhealth = 0f;
+    private int _index = 3;
 
     private void Start()
     {
@@ -63,6 +64,7 @@ public class UIController : MonoBehaviour
         PauseManager.IsPaused += SetMenuInGame;
 
         PlayerController.OnChangeState += SetFSM;
+        PlayerController.OnStateStatusChange += SetFSMStatus;
 
         GunSettings.OnMagazineChanged += SetAmmoInStorage;
         GunSettings.OnAmmoChanged += SetCurrentAmmo;
@@ -82,6 +84,7 @@ public class UIController : MonoBehaviour
         PauseManager.IsPaused -= SetMenuInGame;
 
         PlayerController.OnChangeState -= SetFSM;
+        PlayerController.OnStateStatusChange -= SetFSMStatus;
 
         GunSettings.OnMagazineChanged -= SetAmmoInStorage;
         GunSettings.OnAmmoChanged -= SetCurrentAmmo;
@@ -110,22 +113,35 @@ public class UIController : MonoBehaviour
 
     private void SetFSM(int fsm)
     {
-        switch (fsm)
+        if (_index != -1)
+        {
+            SetColorByIndex(_index, Color.white);
+        }
+
+        SetColorByIndex(fsm, _colorRobots);
+
+        _index = fsm;
+    }
+
+    private void SetFSMStatus(int fsm, bool state)
+    {
+        Color newColor = state ? (_index == fsm ? _colorRobots : Color.white) : Color.gray;
+
+        SetColorByIndex(fsm, newColor);
+    }
+
+    private void SetColorByIndex(int index, Color color)
+    {
+        switch (index)
         {
             case 0:
-                _robot.legs.color = _colorRobots;
-                _robot.body.color = Color.white;
-                _robot.head.color = Color.white;
+                _robot.legs.color = color;
                 break;
             case 1:
-                _robot.legs.color = Color.white;
-                _robot.body.color = _colorRobots;
-                _robot.head.color = Color.white;
+                _robot.body.color = color;
                 break;
             case 2:
-                _robot.legs.color = Color.white;
-                _robot.body.color = Color.white;
-                _robot.head.color = _colorRobots;
+                _robot.head.color = color;
                 break;
             default:
                 break;
