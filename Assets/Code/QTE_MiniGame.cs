@@ -93,6 +93,7 @@ public class QTE_MiniGame : MonoBehaviour
 
     private void Update()
     {
+        if (miniGameObject == null) { Awake(); Start(); }
         if (Input.GetMouseButtonDown(1) && barHolder.activeInHierarchy)
         {
             if (isGreen)
