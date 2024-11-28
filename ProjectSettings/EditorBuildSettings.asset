@@ -17,7 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Levels/Scenes/TestMenu.unity
     guid: bb967cb1b08da5b4e927f36d6699b0b2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Levels/Scenes/TestBlockout.unity
     guid: 7a7ed9f34ca585d40ab559ffbec67b80
+  - enabled: 1
+    path: Assets/Levels/Scenes/TestBlockoutButNew - Copy.unity
+    guid: 30b2af4eff83c5546b6815550b4e674e
   m_configObjects: {}
