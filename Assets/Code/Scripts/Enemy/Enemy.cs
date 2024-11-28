@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] LayerMask toIgnore;
     [SerializeField] List<Transform> waypoints;
     int wayPointIndex;
+    bool playerEngaged;
+    Collider[] colInRange;
 
 
     NavMeshAgent agent;
@@ -35,13 +38,16 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         if (PlayerIsInVision())
         {
+            transform.LookAt(playerTransform.position);
             if (Vector3.Distance(playerTransform.position, transform.position) >= stopDistanceToPlayer)
             {
                 agent.speed = chasingSpeed;
                 agent.isStopped = false;
                 agent.SetDestination(playerTransform.position);
+                playerEngaged = true;
             }
             else
             {
@@ -51,39 +57,48 @@ public class Enemy : MonoBehaviour
 
             gun.Shoot();
         }
-        else Patrol();
-        
+        else
+        {
+            playerEngaged = false;
+            Patrol();
+        }
     }
+
 
     bool PlayerIsInVision()
     {
-        Collider[] colInRange = (Physics.OverlapSphere(transform.position, losRadius, playerLayer));
-        if (colInRange.Length <= 0) return false;
-        Collider player = colInRange[0];
-        playerTransform = player.gameObject.transform; 
-        Vector3 playerDirection = (player.transform.position - transform.position).normalized;
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (Physics.Raycast(transform.position + Vector3.up, playerDirection, out RaycastHit hit, distance, ~toIgnore ))
+        colInRange = Physics.OverlapSphere(transform.position, losRadius, playerLayer);
+        Debug.LogWarning(colInRange.Length);
+        if (colInRange.Length <= 0)
         {
-            if (hit.collider != player) return false;
+            playerTransform = null;
+            return false;
         }
 
-        if (RotateTowards(player.transform.position))
-            return true;
-        return false;
+        playerTransform = colInRange[0].transform;
+        Vector3 playerDirection = (playerTransform.position - transform.position).normalized;
+        float distance = Vector3.Distance(transform.position + Vector3.up, playerTransform.position + Vector3.up);
+        Debug.DrawRay(transform.position + Vector3.up, playerDirection * distance, Color.blue);
+        if (Physics.Raycast(transform.position + Vector3.up, playerDirection, out RaycastHit hit, distance, ~toIgnore))
+        {
+            if (hit.collider != playerTransform) return false;
+        }
+
+      return true;
     }
 
-    bool RotateTowards(Vector3 targetPos)
+    void RotateTowards(Vector3 targetPos)
     {
         Vector3 dir = targetPos - transform.position;
         dir.y = 0;
         Quaternion targetRot = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed);
-        return Quaternion.Angle(transform.rotation, targetRot) < 5f;
     }
+        
 
     void Patrol()
     {
+        Array.Clear(colInRange, 0, colInRange.Length);
         if (waypoints.Count < 1)
         {
             agent.speed = patrolSpeed;
@@ -91,7 +106,8 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if(!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+            agent.isStopped = false;
+            if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             {
                 wayPointIndex = (wayPointIndex + 1) % waypoints.Count;
                 agent.SetDestination(waypoints[wayPointIndex].position);
@@ -107,7 +123,7 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, losRadius);
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position + Vector3.up , transform.forward * 100);
+        Gizmos.DrawRay(transform.position + Vector3.up, transform.forward * 100);
     }
 #endif
 }
