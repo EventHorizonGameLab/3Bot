@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using System;
 
 namespace PlayerSM
 {
@@ -16,6 +17,9 @@ namespace PlayerSM
         private float _offset = 0.5f;
 
         private bool isResetted = true;
+        private bool inState = false;
+
+        public static Action<bool> IsFollowingPath;
 
         public MovementState2(PlayerController player)
         {
@@ -30,9 +34,17 @@ namespace PlayerSM
             _lineRenderer = _player.GetComponent<LineRenderer>();
 
             GlobalUpdateManager.Instance.Register(SharedUpdate);
+
+            if (_waypoints.Count < 1) IsFollowingPath?.Invoke(false);
+
+            inState = true;
         }
 
-        public void Exit() { }
+        public void Exit()
+        {
+            IsFollowingPath?.Invoke(true);
+            inState = false;
+        }
 
         public void HandleInput()
         {
@@ -80,6 +92,8 @@ namespace PlayerSM
             {
                 _isFollowingPath = true;
                 MoveToNextWaypoint();
+
+                IsFollowingPath?.Invoke(true);
             }
         }
 
@@ -97,6 +111,8 @@ namespace PlayerSM
                 {
                     _isFollowingPath = false;
                     ClearLineRenderer();
+
+                    if (inState) IsFollowingPath?.Invoke(false);
                 }
             }
 
@@ -144,6 +160,8 @@ namespace PlayerSM
             _waypoints.Clear();
             _agent.destination = _player.transform.position;
             _agent.ResetPath();
+
+            IsFollowingPath?.Invoke(false);
 
             if (isResetted) isResetted = false;
         }
