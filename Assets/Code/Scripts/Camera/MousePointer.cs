@@ -6,7 +6,7 @@ public class MousePointer : MonoBehaviour
     [Title("Settings")]
     [SerializeField, MinValue(0f)] private float _fixedHeight = 2f;
     [SerializeField, Required] private Transform _referenceObject;
-    [SerializeField, MinValue(0f)] private float _maxDistance = 100f;
+    [SerializeField] private Vector2 _rectSize = new Vector2(10f, 10f); // Dimensioni del rettangolo
 
     [Title("Debug")]
     [SerializeField] private bool _onDrawGizmos = false;
@@ -24,15 +24,21 @@ public class MousePointer : MonoBehaviour
     {
         if (!_isEnabled) return;
 
-        Plane plane = new (Vector3.up, _referenceObject.position + Vector3.up * _fixedHeight);
+        // Calcola il piano in altezza fissa
+        Plane plane = new(Vector3.up, _referenceObject.position + Vector3.up * _fixedHeight);
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (plane.Raycast(ray, out float distance))
         {
             _targetPosition = ray.GetPoint(distance);
 
-            Vector3 clampedPosition = _referenceObject.position + Vector3.ClampMagnitude(_targetPosition - _referenceObject.position, _maxDistance);
-            transform.position = clampedPosition;
+            // Clampa la posizione al rettangolo definito
+            Vector3 localPoint = _targetPosition - _referenceObject.position;
+            localPoint.x = Mathf.Clamp(localPoint.x, -_rectSize.x / 2, _rectSize.x / 2);
+            localPoint.z = Mathf.Clamp(localPoint.z, -_rectSize.y / 2, _rectSize.y / 2);
+            _targetPosition = _referenceObject.position + localPoint;
+
+            transform.position = _targetPosition;
         }
     }
 
@@ -55,7 +61,10 @@ public class MousePointer : MonoBehaviour
     {
         if (!_onDrawGizmos || _referenceObject == null) return;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_referenceObject.position, _maxDistance);
+        // Disegna il rettangolo
+        Gizmos.color = Color.green;
+        Vector3 center = _referenceObject.position;
+        Vector3 size = new Vector3(_rectSize.x, 0, _rectSize.y);
+        Gizmos.DrawWireCube(center + Vector3.up * _fixedHeight, size);
     }
 }
