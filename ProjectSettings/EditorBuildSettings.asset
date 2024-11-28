@@ -6,18 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SceneSwitchTest.unity
+    path: Assets/Levels/Scenes/SceneSwitchTest.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
-    path: Assets/Scenes/Scene2.unity
+    path: Assets/Levels/Scenes/Scene2.unity
     guid: 791e3a86b85a9e943a73c29bf97e3cd2
   - enabled: 0
     path: Assets/Scenes/UI_Game.unity
     guid: 5df1a58b6cd47004ba10a48c0449940a
   - enabled: 1
-    path: Assets/Scenes/TestMenu.unity
+    path: Assets/Levels/Scenes/TestMenu.unity
     guid: bb967cb1b08da5b4e927f36d6699b0b2
   - enabled: 1
-    path: Assets/Scenes/TestBlockout.unity
+    path: Assets/Levels/Scenes/TestBlockout.unity
     guid: 7a7ed9f34ca585d40ab559ffbec67b80
   m_configObjects: {}
