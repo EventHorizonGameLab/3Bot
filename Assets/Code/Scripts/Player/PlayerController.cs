@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     private void IsPaused(bool isPaused)
     {
-        _isEnable = isPaused;
+        _isEnable = !isPaused;
     }
 
     private void SwitchState(IPlayerState newState)
