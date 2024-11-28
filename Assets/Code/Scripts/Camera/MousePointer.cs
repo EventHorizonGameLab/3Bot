@@ -6,7 +6,7 @@ public class MousePointer : MonoBehaviour
     [Title("Settings")]
     [SerializeField, MinValue(0f)] private float _fixedHeight = 2f;
     [SerializeField, Required] private Transform _referenceObject;
-    [SerializeField] private Vector2 _rectSize = new Vector2(10f, 10f); // Dimensioni del rettangolo
+    [SerializeField, MinValue(0f)] private Vector2 _rectSize = new(10f, 10f); // Dimensioni del rettangolo
 
     [Title("Debug")]
     [SerializeField] private bool _onDrawGizmos = false;

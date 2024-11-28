@@ -76373,7 +76373,7 @@ MonoBehaviour:
   _fixedHeight: 2
   _referenceObject: {fileID: 849806980}
   _rectSize: {x: 50, y: 20}
-  _onDrawGizmos: 1
+  _onDrawGizmos: 0
 --- !u!224 &126871102818723388
 RectTransform:
   m_ObjectHideFlags: 0
