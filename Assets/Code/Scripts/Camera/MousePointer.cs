@@ -13,6 +13,7 @@ public class MousePointer : MonoBehaviour
 
     private Camera _mainCamera;
     private Vector3 _targetPosition;
+    private bool _isEnabled = true;
 
     private void Awake()
     {
@@ -21,6 +22,8 @@ public class MousePointer : MonoBehaviour
 
     private void Update()
     {
+        if (!_isEnabled) return;
+
         Plane plane = new (Vector3.up, _referenceObject.position + Vector3.up * _fixedHeight);
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -31,6 +34,21 @@ public class MousePointer : MonoBehaviour
             Vector3 clampedPosition = _referenceObject.position + Vector3.ClampMagnitude(_targetPosition - _referenceObject.position, _maxDistance);
             transform.position = clampedPosition;
         }
+    }
+
+    private void OnEnable()
+    {
+        PauseManager.IsPaused += IsPaused;
+    }
+
+    private void OnDisable()
+    {
+        PauseManager.IsPaused -= IsPaused;
+    }
+
+    private void IsPaused(bool isPaused)
+    {
+        _isEnabled = !isPaused;
     }
 
     private void OnDrawGizmos()
