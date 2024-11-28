@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+
 
 public class CombatState : IEenemyState
 {
@@ -28,15 +28,15 @@ public class CombatState : IEenemyState
 
     public void Process()
     {
-        if (controller.playerTransform != null) { RotateTowards(controller.playerTransform.position); }
-        Collider[] colliders = Physics.OverlapSphere(controller.transform.position, controller.losRadius, controller.playerLayer);
-        if (colliders.Length < 1)
+        if (!controller.PlayerIsInRange() || !controller.PlayerIsInVision())
         {
-            controller.playerTransform = null;
             controller.ChangeState(controller.nonCombatState);
             return;
         }
-        if (Vector3.Distance(controller.playerTransform.position, controller.transform.position) >= controller.stopDistanceToPlayer)
+
+        if (controller.playerTransform != null) { RotateTowards(controller.playerTransform.position); }
+
+        if (Vector3.Distance(controller.playerTransform.position + Vector3.up , controller.transform.position + Vector3.up ) > controller.stopDistanceToPlayer)
         {
             agent.speed = controller.chasingSpeed;
             agent.isStopped = false;

@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] List<Transform> waypoints;
     int wayPointIndex;
     bool playerEngaged;
-    Collider[] colInRange;
+    
 
 
     NavMeshAgent agent;
@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
 
     bool PlayerIsInVision()
     {
-        colInRange = Physics.OverlapSphere(transform.position, losRadius, playerLayer);
+        Collider[] colInRange = Physics.OverlapSphere(transform.position, losRadius, playerLayer);
         Debug.LogWarning(colInRange.Length);
         if (colInRange.Length <= 0)
         {
@@ -98,7 +98,7 @@ public class Enemy : MonoBehaviour
 
     void Patrol()
     {
-        Array.Clear(colInRange, 0, colInRange.Length);
+        
         if (waypoints.Count < 1)
         {
             agent.speed = patrolSpeed;

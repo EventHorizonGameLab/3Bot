@@ -44,12 +44,55 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.LogWarning(currentState.ToString());
+        Debug.Log("IN RANGE" + PlayerIsInRange().ToString());
+        Debug.Log("IN VISION" + PlayerIsInVision().ToString());
         currentState.Process();
         
     }
 
-    
+    public bool PlayerIsInRange()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, losRadius, playerLayer);
+
+        if (colliders.Length > 0)
+        {
+            playerTransform = colliders[0].transform;
+            return true;
+        }
+        
+        playerTransform = null;
+        return false;
+    }
+
+    public bool PlayerIsInVision()
+    {
+        if (playerTransform == null)
+        {
+            Debug.Log("PlayerTransform is null.");
+            return false;
+        }
+
+        Vector3 directionToPlayer = (playerTransform.position - transform.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+        Debug.DrawRay(transform.position + Vector3.up, directionToPlayer, Color.blue);
+
+        if (Physics.Raycast(transform.position + Vector3.up, directionToPlayer, out RaycastHit hit, distanceToPlayer))
+        {
+            if (hit.collider.gameObject == playerTransform.gameObject)
+            {
+                return true;
+            }
+        }
+                
+        return false;
+    }
+            
+           
+        
+
+
+
 
 #if UNITY_EDITOR
 

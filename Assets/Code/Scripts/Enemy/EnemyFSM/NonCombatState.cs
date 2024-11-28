@@ -9,7 +9,7 @@ public class NonCombatState : IEenemyState
     EnemyController controller;
     bool playerDetected;
     public NonCombatState(EnemyController enemyController)
-    { 
+    {
         controller = enemyController;
         agent = enemyController.GetComponent<NavMeshAgent>();
     }
@@ -24,25 +24,29 @@ public class NonCombatState : IEenemyState
     {
         agent.ResetPath();
     }
-        
+
 
     public void Process()
     {
-        Collider[] colliders = Physics.OverlapSphere(controller.transform.position, controller.losRadius, controller.playerLayer);
-        
-        if (colliders.Length > 0)
+        Debug.Log("sto cercando");
+        if (controller.PlayerIsInRange() && controller.PlayerIsInVision())
         {
-            controller.playerTransform = colliders[0].transform;
+            
             controller.ChangeState(controller.combatState);
             return;
         }
-        else Patrol();
-        Debug.LogWarning(colliders.Length);
+
+        Patrol();
+
     }
+
+    
+
+
 
     void Patrol()
     {
-        
+
         if (controller.waypoints.Count < 1)
         {
             agent.speed = controller.patrolSpeed;
