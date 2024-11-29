@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 2084999748378747376}
   - component: {fileID: 5832487889133671548}
   - component: {fileID: 3701273311607463053}
+  - component: {fileID: 2010423549990207625}
   m_Layer: 5
   m_Name: QTE
   m_TagString: Untagged
@@ -181,7 +182,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075051395199507343}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -258,6 +259,18 @@ MonoBehaviour:
   - {fileID: 1460771009961241149}
   - {fileID: 9032550630387433389}
   colorChangeThreshold: 0.8
+--- !u!114 &2010423549990207625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075051395199507343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ecd94df1d89b8e4e9f6cc52537d365c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2317418444251424293
 GameObject:
   m_ObjectHideFlags: 0
