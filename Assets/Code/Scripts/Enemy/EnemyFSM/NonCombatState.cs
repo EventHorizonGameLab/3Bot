@@ -17,11 +17,16 @@ public class NonCombatState : IEenemyState
     public void Enter()
     {
         playerDetected = false;
+
+        if (agent == null || !agent.enabled) return;
+
         agent.speed = controller.patrolSpeed;
     }
 
     public void Exit()
     {
+        if (agent == null || !agent.enabled) return;
+
         agent.ResetPath();
     }
 
