@@ -99,7 +99,8 @@ public class CheckPointManager : MonoBehaviour
                 Parent = item.transform.parent,
                 Scale = item.transform.lossyScale,
                 Gravity = rb != null && rb.useGravity,
-                RbConstraints = rb != null ? rb.constraints : RigidbodyConstraints.None
+                RbConstraints = rb != null ? rb.constraints : RigidbodyConstraints.None,
+                ColliderEnable = item.GetComponent<Collider>() != null && item.GetComponent<Collider>().enabled
             });
             itemsInfoDictionary.Add(item.objectID, item.gameObject);
         }
@@ -178,6 +179,11 @@ public class CheckPointManager : MonoBehaviour
                 rb.useGravity = itemInfo.Gravity;
                 rb.constraints = itemInfo.RbConstraints;
             }
+
+            if (item.TryGetComponent<Collider>(out var collider))
+            {
+                collider.enabled = itemInfo.ColliderEnable;
+            }
         }
 
         if (_debug) Debug.Log("Checkpoint Loaded!");
@@ -225,6 +231,7 @@ public class CheckPointManager : MonoBehaviour
         public Vector3 Scale { get; set; }
         public bool Gravity { get; set; }
         public RigidbodyConstraints RbConstraints { get; set; }
+        public bool ColliderEnable { get; set; }
     }
 
     public class TimerInfo
