@@ -1,0 +1,9 @@
+1. Copy 
+"com.occasoftware.lspp" 
+folders and paste into your "Packages" directory of your project.
+
+========================================
+
+This asset was shared by https://unityassetcollection.com
+
+Enjoy!!!
