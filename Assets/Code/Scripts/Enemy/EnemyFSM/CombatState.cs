@@ -38,6 +38,8 @@ public class CombatState : IEenemyState
 
         if (Vector3.Distance(controller.playerTransform.position + Vector3.up , controller.transform.position + Vector3.up ) > controller.stopDistanceToPlayer)
         {
+            if (agent == null || !agent.enabled) return;
+
             agent.speed = controller.chasingSpeed;
             agent.isStopped = false;
             agent.SetDestination(controller.playerTransform.position);
