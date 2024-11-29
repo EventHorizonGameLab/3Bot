@@ -60,7 +60,7 @@ namespace Audio
         /// </summary>
         public void PlaySFX(string key, Transform parent = null)
         {
-            if (key == null) return;
+            if (key is null or "") return;
 
             var clip = audioData.GetSFXClip(key);
             if (clip == null)
