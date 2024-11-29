@@ -46,6 +46,7 @@ public class NonCombatState : IEenemyState
 
     void Patrol()
     {
+        if (agent == null || !agent.enabled) return;
 
         if (controller.waypoints.Count < 1)
         {
