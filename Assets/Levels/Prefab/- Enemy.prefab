@@ -274,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _triggerForce: 5
-  _isPlayer: 1
+  _isPlayer: 0
   _friendlyFire: 0
   _isInvincible: 0
   vulnerabilities:
@@ -321,9 +321,7 @@ MonoBehaviour:
   toIgnore:
     serializedVersion: 2
     m_Bits: 128
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  waypoints: []
   playerTransform: {fileID: 0}
   wayPointIndex: 0
 --- !u!114 &5569225658217069279
