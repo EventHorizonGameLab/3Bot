@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -32,7 +33,17 @@ public class LevelManager : MonoBehaviour
     public void LoseCondition()
     {
         if (_debug) Debug.Log("You lost!");
-        _loseCanvas.SetActive(true);
+        if (_loseCanvas != null) _loseCanvas.SetActive(true);
         OnLose?.Invoke();
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneSwitch.instance.LoadScene(sceneName);
+    }
+
+    public void ReloadScene()
+    {
+        SceneSwitch.instance.ReLoadScene(SceneManager.GetActiveScene().name);
     }
 }

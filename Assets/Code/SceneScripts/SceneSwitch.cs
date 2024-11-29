@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -35,26 +34,32 @@ public class SceneSwitch : MonoBehaviour
 
     private void Start()
     {
-        
         blackScreen.color = new Color(0, 0, 0, 0);
     }
-        
+
 
     public void LoadScene(string sceneName)
     {
+
         StartCoroutine(TransitionToScene(sceneName));
     }
-
-    private IEnumerator TransitionToScene(string sceneName)
+    public void ReLoadScene(string sceneName)
     {
-        yield return StartCoroutine(FadeIn());
+
+        StartCoroutine(TransitionToScene(sceneName, false));
+    }
+
+    private IEnumerator TransitionToScene(string sceneName, bool isFadeIn = true)
+    {
+        if (isFadeIn) yield return StartCoroutine(FadeIn());
+        else blackScreen.color = new Color(0, 0, 0, 1);
         yield return StartCoroutine(LoadSceneAsync(sceneName));
         yield return StartCoroutine(FadeOut());
     }
 
     private IEnumerator FadeIn()
     {
-       
+
         float timer = 0f;
         while (timer < fadeDuration)
         {
@@ -77,7 +82,7 @@ public class SceneSwitch : MonoBehaviour
             yield return null;
         }
         blackScreen.color = new Color(0, 0, 0, 0);
-        
+
     }
 
     private IEnumerator LoadSceneAsync(string sceneName)

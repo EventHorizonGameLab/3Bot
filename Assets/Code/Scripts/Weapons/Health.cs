@@ -4,9 +4,8 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using static GunSettings;
-using UnityEngine.AI;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Collider)), DisallowMultipleComponent]
 public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
 {
 
@@ -49,11 +48,17 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
     public static event Action<AttackType> OnTakeDamage;
     public static event Action OnDeath;
 
+    private Rigidbody _rigidbody;
+
     private void Start()
     {
         _currentHealth = _maxHealth;
 
-        if (_isPlayer) OnHealthChange?.Invoke(_currentHealth);
+        if (_isPlayer)
+        {
+            OnHealthChange?.Invoke(_currentHealth);
+            _rigidbody = GetComponent<Rigidbody>();
+        }
     }
     private void OnEnable()
     {
@@ -158,6 +163,20 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
     public void TakeDamage(float damage, AttackType type)
     {
         ApplyDamage((int)damage, type);
+
+        if (type == AttackType.Explosive && _isPlayer && _rigidbody.isKinematic == true)
+        {
+            _rigidbody.isKinematic = false;
+            StartCoroutine(ReEnableKinematic());
+        }
+    }
+
+    private IEnumerator ReEnableKinematic()
+    {
+        if (_debug) Debug.Log("Re-enabling kinematic");
+
+        yield return new WaitForSeconds(0.5f);
+        _rigidbody.isKinematic = true;
     }
 
     public float health
@@ -168,5 +187,11 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
             _currentHealth = (int)value;
             if (_isPlayer) OnHealthChange?.Invoke(_currentHealth);
         }
+    }
+
+    public bool IsInvincible
+    {
+        get => _isInvincible;
+        set => _isInvincible = value;
     }
 }

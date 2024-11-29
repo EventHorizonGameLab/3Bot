@@ -1,108 +1,180 @@
+using PlayerSM;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PlayerSM
+public class PlayerController : MonoBehaviour
 {
-    public class PlayerController : MonoBehaviour
+    [Title("Settings")]
+    [SerializeField] private KeyCode _keyToChangeStateUp = KeyCode.UpArrow;
+    [SerializeField] private KeyCode _keyToChangeStateDown = KeyCode.DownArrow;
+
+    [Title("Debug")]
+    [SerializeField] private bool _debug;
+
+    public static event Action<string> OnChangeStateDebug;
+    public static event Action<int> OnChangeState;
+    public static event Action<int, bool> OnStateStatusChange;
+
+    private IPlayerState _currentState;
+    private Dictionary<IPlayerState, bool> _stateStatus;
+    private List<IPlayerState> _stateOrder;
+    private int _currentStateIndex;
+
+    private bool _isEnable = true;
+
+    private void Start()
     {
-        [Title("Debug")]
-        [SerializeField] private bool _debug;
-
-        [Button]
-        public void Reset()
+        _stateOrder = new List<IPlayerState>
         {
-            _states[0].Reset();
+            new MovementState2(this),
+            new ShootingState(this),
+            new HeadState(this)
+        };
+
+        _stateStatus = new Dictionary<IPlayerState, bool>();
+        foreach (var state in _stateOrder)
+        {
+            _stateStatus[state] = true;
         }
 
-        private IPlayerState _currentState;
-        private List<IPlayerState> _states;
-        private int _currentStateIndex;
+        _currentStateIndex = 0;
+        SwitchState(_stateOrder[_currentStateIndex]);
+    }
 
-        public static event Action<string> OnChangeStateDebug;
-        public static event Action<int> OnChangeState;
+    private void Update()
+    {
+        if (!_isEnable) return;
 
-        private bool _isEnable = true;
-
-        private void Start()
+        if (Input.GetKeyDown(_keyToChangeStateUp))
         {
-            // Inizializza gli stati e parte dallo stato di movimento
-            _states = new List<IPlayerState>
+            SwitchState(GetNextState());
+        }
+        if (Input.GetKeyDown(_keyToChangeStateDown))
+        {
+            SwitchState(GetPreviousState());
+        }
+
+        _currentState.Update();
+        _currentState.HandleInput();
+    }
+
+    private void OnEnable()
+    {
+        PauseManager.IsPaused += IsPaused;
+    }
+
+    private void OnDisable()
+    {
+        PauseManager.IsPaused -= IsPaused;
+    }
+
+    private void IsPaused(bool isPaused)
+    {
+        _isEnable = !isPaused;
+    }
+
+    private void SwitchState(IPlayerState newState)
+    {
+        if (_debug) OnChangeStateDebug?.Invoke(newState.ToString());
+        OnChangeState?.Invoke(_currentStateIndex);
+
+        _currentState?.Exit();
+        _currentState = newState;
+        _currentState.Enter();
+    }
+
+    private IPlayerState GetNextState()
+    {
+        for (int i = 1; i <= _stateOrder.Count; i++)
+        {
+            int nextIndex = (_currentStateIndex + i) % _stateOrder.Count;
+            if (_stateStatus[_stateOrder[nextIndex]])
             {
-                new MovementState2(this),
-                new ShootingState(this),
-                new HeadState(this)
-            };
+                _currentStateIndex = nextIndex;
+                return _stateOrder[nextIndex];
+            }
+        }
+        return _stateOrder[_currentStateIndex];
+    }
 
-            _currentStateIndex = 0;
-            SwitchState(_states[_currentStateIndex]);
+    private IPlayerState GetPreviousState()
+    {
+        for (int i = 1; i <= _stateOrder.Count; i++)
+        {
+            int prevIndex = (_currentStateIndex - i + _stateOrder.Count) % _stateOrder.Count;
+            if (_stateStatus[_stateOrder[prevIndex]])
+            {
+                _currentStateIndex = prevIndex;
+                return _stateOrder[prevIndex];
+            }
+        }
+        return _stateOrder[_currentStateIndex];
+    }
+
+    public int CurrentState
+    {
+        get => _currentStateIndex;
+        set
+        {
+            if (_stateStatus[_stateOrder[value]])
+            {
+                _currentStateIndex = value;
+                SwitchState(_stateOrder[value]);
+                _stateOrder[0].Reset();
+            }
+        }
+    }
+
+    public Dictionary<IPlayerState, bool> GetStateStatus()
+    {
+        return new Dictionary<IPlayerState, bool>(_stateStatus);
+    }
+
+    public void SetStateStatus(Dictionary<IPlayerState, bool> newStateStatus)
+    {
+        foreach (var state in _stateOrder)
+        {
+            if (newStateStatus.ContainsKey(state))
+            {
+                _stateStatus[state] = newStateStatus[state];
+            }
         }
 
-        private void OnEnable()
+        if (!_stateStatus[_currentState])
         {
-            PauseManager.IsPaused += IsEnable;
+            SwitchState(GetNextState());
         }
 
-        private void OnDisable()
-        {
-            PauseManager.IsPaused -= IsEnable;
-        }
+        StateStatusChange();
+    }
 
-        private void IsEnable(bool value)
+    public int StateStatus
+    {
+        get => 0;
+        set
         {
-            _isEnable = !value;
-        }
+            if (value < 0 || value >= _stateOrder.Count) return;
 
-        private void Update()
-        {
-            if (!_isEnable) return;
+            IPlayerState state = _stateOrder[value];
 
-            // Gestisce l'input per passare tra gli stati
-            if (Input.GetKeyDown(KeyCode.UpArrow)) // Tasto freccia destra
+            _stateStatus[state] = !_stateStatus[state];
+
+            if (!_stateStatus[_currentState])
             {
                 SwitchState(GetNextState());
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow)) // Tasto freccia sinistra
-            {
-                SwitchState(GetPreviousState());
-            }
 
-            _currentState.Update();
-            _currentState.HandleInput();
+            StateStatusChange();
         }
+    }
 
-        private void SwitchState(IPlayerState newState)
+    private void StateStatusChange()
+    {
+        foreach (var state in _stateOrder)
         {
-            if (_debug) OnChangeStateDebug?.Invoke(newState.ToString());
-            OnChangeState?.Invoke(_currentStateIndex);
-
-            _currentState?.Exit();
-            _currentState = newState;
-            _currentState.Enter();
-        }
-
-        private IPlayerState GetNextState()
-        {
-            _currentStateIndex = (_currentStateIndex + 1) % _states.Count;
-            return _states[_currentStateIndex];
-        }
-
-        private IPlayerState GetPreviousState()
-        {
-            _currentStateIndex = (_currentStateIndex - 1 + _states.Count) % _states.Count;
-            return _states[_currentStateIndex];
-        }
-
-        public int CurrentState
-        {
-            get => _currentStateIndex;
-            set
-            {
-                _currentStateIndex = value;
-                SwitchState(_states[value]);
-                _states[0].Reset();
-            }
+            OnStateStatusChange?.Invoke(_stateOrder.IndexOf(state), _stateStatus[state]);
         }
     }
 }

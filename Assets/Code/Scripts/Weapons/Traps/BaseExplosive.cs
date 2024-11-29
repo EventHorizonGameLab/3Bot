@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Collections;
 
 namespace Game.Traps
 {
@@ -25,11 +26,15 @@ namespace Game.Traps
             {
                 if (!IsVisible(obj)) continue;
 
-                if (obj.TryGetComponent(out Rigidbody rb))
-                    rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+                if (_debug) Debug.Log($"Explosion hit: {obj.name}");
 
                 if (obj.TryGetComponent(out ITakeDamage explosionAffected))
                     explosionAffected.TakeDamage(_explosionDamage, AttackType.Explosive);
+
+                if (obj.TryGetComponent(out Rigidbody rb))
+                {
+                    rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+                }
             }
 
             if (_explosionPrefab != null && _explosionPrefab.Length > 0)

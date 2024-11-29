@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-[RequireComponent(typeof(ParticleSystem))]
+[RequireComponent(typeof(ParticleSystem)), DisallowMultipleComponent]
 public class GunSettings : BaseAudioHandler, IReloadable
 {
     [Title("Settings")]
@@ -25,7 +25,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
     [Title("Player Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun is for player")] private bool _isPlayer = false;
 
-    [SerializeField, PropertyOrder(1)] private string _audioClipNameReloading;
+    [SerializeField, PropertyOrder(1), ShowIf("_isPlayer")] private string _audioClipNameReloading;
 
     [Title("Damage Over Time Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun causes damage over time.")] private bool causesDamageOverTime;
@@ -97,6 +97,8 @@ public class GunSettings : BaseAudioHandler, IReloadable
 
         _timeSinceLastShot = _fireRate;
 
+        if (!_isPlayer) return;
+
         if (_hasInfiniteAmmo) HasInfiniteAmmo?.Invoke(!_hasInfiniteAmmo);
         else OnMagazineChanged?.Invoke(_totalAmmo);
 
@@ -115,9 +117,9 @@ public class GunSettings : BaseAudioHandler, IReloadable
 
     private void Update()
     {
-        if (!_isPlayer) return;
 
         _timeSinceLastShot += Time.deltaTime;
+        if (!_isPlayer) return;
 
         if (_timeSinceLastShot < _fireRate)
         {
@@ -140,15 +142,17 @@ public class GunSettings : BaseAudioHandler, IReloadable
             _timeSinceLastShot = 0f;
             _gun.Emit(1);
 
-            if (_isPlayer) Shooted?.Invoke();
-
             Play(_audioClipName);
 
             _currentAmmo--;
 
-            if (_debug) Debug.Log("Shooting");
+            if (_isPlayer)
+            {
+                Shooted?.Invoke();
+                OnAmmoChanged?.Invoke(_currentAmmo);
+            }
 
-            OnAmmoChanged?.Invoke(_currentAmmo);
+            if (_debug) Debug.Log("Shooting");
 
             if (_currentAmmo <= 0)
             {
@@ -172,7 +176,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
     {
         if (_debug) Debug.Log("Reloading");
 
-        OnReload?.Invoke(true);
+        if(_isPlayer) OnReload?.Invoke(true);
         _inRealod = true;
 
         if (_timeSinceReloadStarted > 0)
@@ -197,8 +201,11 @@ public class GunSettings : BaseAudioHandler, IReloadable
             OnMagazineChanged?.Invoke(_totalAmmo);
         }
 
-        OnAmmoChanged?.Invoke(_currentAmmo);
-        OnReload?.Invoke(false);
+        if (_isPlayer)
+        {
+            OnAmmoChanged?.Invoke(_currentAmmo);
+            OnReload?.Invoke(false);
+        }
         _inRealod = false;
     }
 

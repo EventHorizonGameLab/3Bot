@@ -3,6 +3,7 @@ using System;
 using Sirenix.OdinInspector;
 using PlayerSM;
 
+[DisallowMultipleComponent]
 public class MagnetSystem : MonoBehaviour
 {
     [Title("Settings")]
@@ -11,7 +12,7 @@ public class MagnetSystem : MonoBehaviour
     [SerializeField, MinValue(0f), Tooltip("Distance to check for storing objects (SphereCast radius)")] private float sphereCastRadius = 1f;
     [SerializeField, Tooltip("LayerMask for obstacles")] private LayerMask obstacleLayer;
     [SerializeField, Tooltip("Offset from the player's head")] private Vector3 headOffset;
-    [SerializeField, Tooltip("Offset from the player's head when storing an object")] private Vector3 storageOffset;
+    [SerializeField, Tooltip("Offset from the player's head when storing an object"), Required] private Transform storage;
 
     [Title("Offsets")]
     [SerializeField, MinValue(0f), Tooltip("Vertical offset to lift the floating object")]
@@ -27,7 +28,7 @@ public class MagnetSystem : MonoBehaviour
 
     private Camera _mainCamera;
     private Transform _playerHeadTransform;
-    private GameObject _currentFloatingObject;
+    [ShowInInspector, ReadOnly, ShowIf("_debug")] private GameObject _currentFloatingObject;
 
     private void Awake()
     {
@@ -136,9 +137,14 @@ public class MagnetSystem : MonoBehaviour
         {
             // Store the object in the Slot
             _slot = _currentFloatingObject;
-            _slot.transform.SetParent(transform.GetChild(0).GetChild(0));
+            _slot.transform.SetParent(storage);
             _slot.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             _slot.transform.localScale = Vector3.one * 0.5f;
+
+            if (_slot.TryGetComponent<Rigidbody>(out var rb))
+            {
+                rb.constraints = RigidbodyConstraints.FreezePosition;
+            }
 
             _currentFloatingObject = null;
 
@@ -156,16 +162,22 @@ public class MagnetSystem : MonoBehaviour
     {
         if (_slot == null) return;
 
+        bool isInteracted = false;
+
         if (_slot.TryGetComponent(out IInteractable obj))
         {
-            obj.Interact();
-            _slot.SetActive(false);
+            isInteracted = obj.Interact();
         }
         else
         {
             _slot.transform.SetParent(null);
             _slot.transform.localScale = Vector3.one;
-            _slot.GetComponent<Rigidbody>().useGravity = true;
+
+            if (_slot.TryGetComponent(out Rigidbody rb))
+            {
+                rb.useGravity = true;
+                rb.constraints = RigidbodyConstraints.None;
+            }
         }
 
         _slot = null;
@@ -208,7 +220,7 @@ public class MagnetSystem : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position + headOffset, sphereCastRadius);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(transform.position + storageOffset, 0.2f);
+        Gizmos.DrawSphere(transform.position + storage.position, 0.2f);
     }
 
     public GameObject Slot
