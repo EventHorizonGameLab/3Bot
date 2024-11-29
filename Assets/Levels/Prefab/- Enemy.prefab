@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e531876074fcbcb4dbfdd3ecc274e774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 10
   _triggerForce: 5
   _isPlayer: 1
   _friendlyFire: 0
@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358b9cc606f0a364eae503a2f7aa2713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  losRadius: 4.82
+  losRadius: 14
   rotationSpeed: 0.1
   stopDistanceToPlayer: 4
   patrolSpeed: 1
