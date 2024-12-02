@@ -72,7 +72,7 @@ public class GunAimingLine : MonoBehaviour
             endPoint = startPoint + mouseRay.direction * _maxDistance;
         }
 
-        lineRenderer.SetPosition(0, startPoint);
+        lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, endPoint);
 
         _gunTip.LookAt(endPoint);
