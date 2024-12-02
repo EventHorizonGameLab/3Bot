@@ -140,6 +140,7 @@ public class MagnetSystem : MonoBehaviour
             _slot.transform.SetParent(storage);
             _slot.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             _slot.transform.localScale = Vector3.one * 0.5f;
+            _slot.GetComponent<Collider>().enabled = false;
 
             if (_slot.TryGetComponent<Rigidbody>(out var rb))
             {
@@ -179,6 +180,7 @@ public class MagnetSystem : MonoBehaviour
                 rb.constraints = RigidbodyConstraints.None;
             }
         }
+        _slot.GetComponent<Collider>().enabled = true;
 
         _slot = null;
         OnObjectStored?.Invoke(_slot);

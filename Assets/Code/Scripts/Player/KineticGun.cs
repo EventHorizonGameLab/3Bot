@@ -1,6 +1,7 @@
 using PlayerSM;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
@@ -99,6 +100,13 @@ public class KineticGun : MonoBehaviour
                 _heldObject.angularVelocity = Vector3.zero;
                 _heldObject.freezeRotation = true;
 
+                if (_heldObject.TryGetComponent<NavMeshAgent>(out var agent))
+                {
+                    if (_debug) Debug.Log("Agent disabled.");
+
+                    agent.enabled = false;
+                }
+
                 _isHolding = true;
             }
         }
@@ -165,6 +173,13 @@ public class KineticGun : MonoBehaviour
             _heldObject.useGravity = true;
             _heldObject.freezeRotation = false;
             _heldObject.velocity = releaseMomentum;
+
+            if (_heldObject.TryGetComponent<NavMeshAgent>(out var agent))
+            {
+                if (_debug) Debug.Log("Agent enabled.");
+
+                agent.enabled = true;
+            }
 
             _crosshair.SetActive(false);
 

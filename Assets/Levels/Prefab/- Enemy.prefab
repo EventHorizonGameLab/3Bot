@@ -208,9 +208,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1
+  m_Height: 2.36
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &6622918680630247893
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -272,9 +272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e531876074fcbcb4dbfdd3ecc274e774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
-  _triggerForce: 5
-  _isPlayer: 1
+  _maxHealth: 10
+  _triggerForce: 10
+  _isPlayer: 0
   _friendlyFire: 0
   _isInvincible: 0
   vulnerabilities:
@@ -309,8 +309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358b9cc606f0a364eae503a2f7aa2713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  losRadius: 4.82
-  rotationSpeed: 0.1
+  losRadius: 14
+  rotationSpeed: 0.2
   stopDistanceToPlayer: 4
   patrolSpeed: 1
   chasingSpeed: 2
@@ -321,9 +321,7 @@ MonoBehaviour:
   toIgnore:
     serializedVersion: 2
     m_Bits: 128
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  waypoints: []
   playerTransform: {fileID: 0}
   wayPointIndex: 0
 --- !u!114 &5569225658217069279
@@ -5189,10 +5187,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioClipName: 
   _maxAmmo: 10
-  _fireRate: 0
+  _fireRate: 2
   _reloadTime: 0
-  _damage: 1
-  _attackType: 3
+  _damage: 5
+  _attackType: 9
   _hasInfiniteAmmo: 1
   _magazineSize: 10
   _is2D: 1

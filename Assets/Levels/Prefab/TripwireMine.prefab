@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: -0.05}
-  m_LocalScale: {x: 0.2, y: 0.3, z: 0.1}
+  m_LocalScale: {x: 0.2, y: 1.2381301, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3981291502663819005}
@@ -143,8 +143,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 1, z: 0.1}
-  m_Center: {x: -1.25, y: 0.5, z: 0}
+  m_Size: {x: 2.9218652, y: 1, z: 0.1}
+  m_Center: {x: -1.7109302, y: 0.5, z: 0.0000005387219}
 --- !u!114 &7868080249702591662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,12 +161,12 @@ MonoBehaviour:
   _explosionPrefab: VFX Esplosion V.2
   _explosionForce: 500
   _explosionDamage: 10
-  _explosionRadius: 2
+  _explosionRadius: 3
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 119
   _debug: 0
-  _showGizmos: 0
+  _showGizmos: 1
 --- !u!114 &6990528451378448484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,8 +308,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.3, z: 0.1}
-  m_Center: {x: 0, y: 0.5, z: -0.05}
+  m_Size: {x: 0.5077, y: 1.4776491, z: 0.10000001}
+  m_Center: {x: -0.00234808, y: 0.6251705, z: -0.049999997}
 --- !u!114 &5863982139159796982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e531876074fcbcb4dbfdd3ecc274e774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 50
+  _maxHealth: 10
   _triggerForce: 5
   _isPlayer: 0
   _friendlyFire: 0
@@ -348,6 +348,8 @@ MonoBehaviour:
     damageMultiplier: 0
   - attackType: 9
     damageMultiplier: 0
+  - attackType: 10
+    damageMultiplier: 1
   _debug: 0
 --- !u!54 &5441382426508392947
 Rigidbody:
