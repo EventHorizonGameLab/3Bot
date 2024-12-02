@@ -32,6 +32,8 @@ public class UIController : MonoBehaviour
 
     [TabGroup("", "Magnet Gun", SdfIconType.BroadcastPin, TextColor = "red")]
     [SerializeField, Required] private Image _slot;
+    [TabGroup("", "Magnet Gun")]
+    [SerializeField] private Sprite _trasparent;
 
     [TabGroup("", "EMP Gun", SdfIconType.LightningCharge, TextColor = "blue")]
     [SerializeField, Required] private TMP_Text _currentAmmo;
@@ -134,7 +136,7 @@ public class UIController : MonoBehaviour
 
     private void SetSlot(Sprite sprite)
     {
-        _slot.sprite = sprite;
+        _slot.sprite = sprite ?? _trasparent;
     }
 
     private void SetFSM(int fsm)
