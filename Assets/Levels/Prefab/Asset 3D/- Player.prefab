@@ -10187,6 +10187,7 @@ MonoBehaviour:
   _damage: 10
   _attackType: 10
   _hasInfiniteAmmo: 0
+  _ignoreInventoryAmmo: 1
   _magazineSize: 10
   _is2D: 1
   _isPlayer: 1
@@ -10996,7 +10997,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6165231917014667612}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
