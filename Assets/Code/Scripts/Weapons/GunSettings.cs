@@ -16,8 +16,9 @@ public class GunSettings : BaseAudioHandler, IReloadable
     [SerializeField, Tooltip("Flag indicating if the gun has infinite ammo")] private bool _hasInfiniteAmmo = true;
 
     [Title("Ammo Settings")]
+    [SerializeField, HideIf("_hasInfiniteAmmo"), MinValue(1), Tooltip("Current ammo")] private bool _ignoreInventoryAmmo = false;
     [SerializeField, HideIf("_hasInfiniteAmmo"), MinValue(1), Tooltip("Magazine size")] private int _magazineSize = 10;
-    [ShowInInspector, HideIf("_hasInfiniteAmmo"), Tooltip("Total ammo in the gun"), ReadOnly] private int _totalAmmo;
+    [ShowInInspector, HideIf("_hasInfiniteAmmo"), HideIf("_ignoreInventoryAmmo"), MinValue(1), Tooltip("Total ammo in the gun"), ReadOnly] private int _totalAmmo;
 
     [Title("2D Settings")]
     [SerializeField, Tooltip("Flag indicating if the gun is 2D")] private bool _is2D = false;
@@ -56,6 +57,10 @@ public class GunSettings : BaseAudioHandler, IReloadable
         {
             _currentAmmo += _maxAmmo;
         }
+        else if (_ignoreInventoryAmmo)
+        {
+            Reload();
+        }
         else
         {
             _totalAmmo += amount;
@@ -85,7 +90,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
     private void Start()
     {
         _gun = GetComponentInChildren<ParticleSystem>();
-        if (_hasInfiniteAmmo)
+        if (_hasInfiniteAmmo || _ignoreInventoryAmmo)
         {
             _currentAmmo = _maxAmmo;
         }
@@ -104,7 +109,6 @@ public class GunSettings : BaseAudioHandler, IReloadable
 
         OnAmmoChanged?.Invoke(_currentAmmo);
     }
-
     private void OnEnable()
     {
         BulletMagazine.OnReload += ReloadButton;
@@ -154,7 +158,7 @@ public class GunSettings : BaseAudioHandler, IReloadable
 
             if (_debug) Debug.Log("Shooting");
 
-            if (_currentAmmo <= 0)
+            if (_currentAmmo <= 0 && !_ignoreInventoryAmmo)
             {
                 Reload();
             }
@@ -163,6 +167,8 @@ public class GunSettings : BaseAudioHandler, IReloadable
 
     public void Reload()
     {
+        if (!_isPlayer) return;
+
         if (_debug) Debug.Log("Reload Command Received");
 
         if (_inRealod) return;
@@ -176,19 +182,23 @@ public class GunSettings : BaseAudioHandler, IReloadable
     {
         if (_debug) Debug.Log("Reloading");
 
-        if(_isPlayer) OnReload?.Invoke(true);
+        if (_isPlayer) OnReload?.Invoke(true);
         _inRealod = true;
 
-        if (_timeSinceReloadStarted > 0)
+        if (!_ignoreInventoryAmmo)
         {
-            yield return new WaitForSeconds(_timeSinceReloadStarted);
+            if (_timeSinceReloadStarted > 0)
+            {
+                yield return new WaitForSeconds(_timeSinceReloadStarted);
+            }
+            _timeSinceReloadStarted = 0f;
+            yield return new WaitForSeconds(_reloadTime);
         }
-        _timeSinceReloadStarted = 0f;
-        yield return new WaitForSeconds(_reloadTime);
+
 
         if (_debug) Debug.Log("Reloaded");
 
-        if (_hasInfiniteAmmo)
+        if (_hasInfiniteAmmo || _ignoreInventoryAmmo)
         {
             _currentAmmo = _maxAmmo;
         }

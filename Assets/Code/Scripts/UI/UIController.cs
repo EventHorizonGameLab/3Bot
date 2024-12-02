@@ -62,8 +62,8 @@ public class UIController : MonoBehaviour
     [Serializable]
     struct Ability
     {
-        public Image M1;
-        public Image M2;
+        public Sprite M1;
+        public Sprite M2;
     }
 
     private float _maxhealth = 0f;
@@ -181,16 +181,16 @@ public class UIController : MonoBehaviour
         switch (index)
         {
             case 0:
-                M1.sprite = _legs.M1.sprite;
-                M2.sprite = _legs.M2.sprite;
+                M1.sprite = _legs.M1;
+                M2.sprite = _legs.M2;
                 break;
             case 1:
-                M1.sprite = _body.M1.sprite;
-                M2.sprite = _body.M2.sprite;
+                M1.sprite = _body.M1;
+                M2.sprite = _body.M2;
                 break;
             case 2:
-                M1.sprite = _head.M1.sprite;
-                M2.sprite = _head.M2.sprite;
+                M1.sprite = _head.M1;
+                M2.sprite = _head.M2;
                 break;
             default:
                 break;
