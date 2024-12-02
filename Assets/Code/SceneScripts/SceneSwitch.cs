@@ -21,6 +21,12 @@ public class SceneSwitch : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(this.gameObject);
+
+#if UNITY_EDITOR
+        Application.targetFrameRate = 120;
+#else
+        Application.targetFrameRate = 60;
+#endif
     }
 
     private void OnEnable()
