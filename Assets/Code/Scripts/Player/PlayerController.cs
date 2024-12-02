@@ -2,7 +2,6 @@ using PlayerSM;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -59,6 +58,21 @@ public class PlayerController : MonoBehaviour
 
         _currentState.Update();
         _currentState.HandleInput();
+    }
+
+    private void OnEnable()
+    {
+        PauseManager.IsPaused += IsPaused;
+    }
+
+    private void OnDisable()
+    {
+        PauseManager.IsPaused -= IsPaused;
+    }
+
+    private void IsPaused(bool isPaused)
+    {
+        _isEnable = !isPaused;
     }
 
     private void SwitchState(IPlayerState newState)
