@@ -141,7 +141,7 @@ public class UIController : MonoBehaviour
     {
         if (_index != -1)
         {
-            SetColorByIndex(_index, Color.white);
+            SetColorByIndex(_index, _colorDefault);
         }
 
         SetColorByIndex(fsm, _colorActivated);
