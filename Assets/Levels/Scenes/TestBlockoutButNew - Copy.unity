@@ -9952,7 +9952,7 @@ GameObject:
   m_Component:
   - component: {fileID: 152847267}
   m_Layer: 5
-  m_Name: --- UI ---(Old)
+  m_Name: --- UI ---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
