@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using PlayerSM;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using System;
@@ -13,7 +12,23 @@ public class UIController : MonoBehaviour
     [TabGroup("", "Player State Machine", SdfIconType.Robot, TextColor = "yellow")]
     [SerializeField, Required] private UI_FSM _robot;
     [TabGroup("", "Player State Machine")]
-    [SerializeField] private Color _colorRobots = Color.yellow;
+    [SerializeField] private Color _colorDefault = Color.white;
+    [TabGroup("", "Player State Machine")]
+    [SerializeField] private Color _colorActivated = Color.yellow;
+    [TabGroup("", "Player State Machine")]
+    [SerializeField] private Color _colorDeactivated = Color.gray;
+
+    [TabGroup("", "Player State Machine")]
+    [SerializeField, Required] private Image M1;
+    [TabGroup("", "Player State Machine")]
+    [SerializeField, Required] private Image M2;
+
+    [TabGroup("", "Player State Machine")]
+    [SerializeField] private Ability _head;
+    [TabGroup("", "Player State Machine")]
+    [SerializeField] private Ability _body;
+    [TabGroup("", "Player State Machine")]
+    [SerializeField] private Ability _legs;
 
     [TabGroup("", "Magnet Gun", SdfIconType.BroadcastPin, TextColor = "red")]
     [SerializeField, Required] private Image _slot;
@@ -44,6 +59,13 @@ public class UIController : MonoBehaviour
         public Image legs;
     }
 
+    [Serializable]
+    struct Ability
+    {
+        public Image M1;
+        public Image M2;
+    }
+
     private float _maxhealth = 0f;
     private int _index = 3;
 
@@ -53,6 +75,10 @@ public class UIController : MonoBehaviour
         {
             if (_text != null) _text.text = "";
         }
+
+        _robot.head.color = _colorDefault;
+        _robot.body.color = _colorDefault;
+        _robot.legs.color = _colorDefault;
     }
 
     private void OnEnable()
@@ -118,14 +144,16 @@ public class UIController : MonoBehaviour
             SetColorByIndex(_index, Color.white);
         }
 
-        SetColorByIndex(fsm, _colorRobots);
+        SetColorByIndex(fsm, _colorActivated);
+
+        SetAbility(fsm);
 
         _index = fsm;
     }
 
     private void SetFSMStatus(int fsm, bool state)
     {
-        Color newColor = state ? (_index == fsm ? _colorRobots : Color.white) : Color.gray;
+        Color newColor = state ? (_index == fsm ? _colorActivated : _colorDefault) : _colorDeactivated;
 
         SetColorByIndex(fsm, newColor);
     }
@@ -142,6 +170,27 @@ public class UIController : MonoBehaviour
                 break;
             case 2:
                 _robot.head.color = color;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void SetAbility(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                M1.sprite = _legs.M1.sprite;
+                M2.sprite = _legs.M2.sprite;
+                break;
+            case 1:
+                M1.sprite = _body.M1.sprite;
+                M2.sprite = _body.M2.sprite;
+                break;
+            case 2:
+                M1.sprite = _head.M1.sprite;
+                M2.sprite = _head.M2.sprite;
                 break;
             default:
                 break;
