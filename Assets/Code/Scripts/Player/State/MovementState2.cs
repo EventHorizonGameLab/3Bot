@@ -101,6 +101,8 @@ namespace PlayerSM
 
         public void SharedUpdate()
         {
+            if (_agent == null) return;
+
             if (_isFollowingPath && !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
             {
                 if (_waypoints.Count > 0)

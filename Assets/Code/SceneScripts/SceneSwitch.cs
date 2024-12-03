@@ -46,12 +46,10 @@ public class SceneSwitch : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-
         StartCoroutine(TransitionToScene(sceneName));
     }
     public void ReLoadScene(string sceneName)
     {
-
         StartCoroutine(TransitionToScene(sceneName, false));
     }
 
@@ -69,7 +67,7 @@ public class SceneSwitch : MonoBehaviour
         float timer = 0f;
         while (timer < fadeDuration)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             float alpha = Mathf.Lerp(0, 1, timer / fadeDuration);
             blackScreen.color = new Color(0, 0, 0, alpha);
             yield return null;
@@ -82,7 +80,7 @@ public class SceneSwitch : MonoBehaviour
         float timerOut = 0f;
         while (timerOut < fadeDuration)
         {
-            timerOut += Time.deltaTime;
+            timerOut += Time.unscaledDeltaTime;
             float alpha = Mathf.Lerp(1, 0, timerOut / fadeDuration);
             blackScreen.color = new Color(0, 0, 0, alpha);
             yield return null;

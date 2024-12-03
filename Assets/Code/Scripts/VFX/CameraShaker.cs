@@ -2,45 +2,47 @@ using UnityEngine;
 using Cinemachine;
 using Sirenix.OdinInspector;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
-[RequireComponent(typeof(CinemachineVirtualCamera))]
 public class CameraShaker : MonoBehaviour
 {
-    [Title("Settings")]
-    [ShowInInspector, ReadOnly, Tooltip("Cinemachine Noise Profile")] private NoiseSettings _default;
-    [SerializeField, MinValue(0f)] private float defaultAmplitude = 1f;
+    [Title("Cameras")]
+    [SerializeField, Tooltip("Virtual Cameras to apply the shake effect.")]
+    private List<CinemachineVirtualCamera> cameras = new();
 
-    // Shake Settings
-    [BoxGroup("Damage Shake", false)]
-    [SerializeField, Required, NoiseSettingsProperty] private NoiseSettings damageNoise;
-    [BoxGroup("Damage Shake", false)]
-    [SerializeField, MinValue(0f)] private float damageDuration = 0.3f;
-    [BoxGroup("Damage Shake", false)]
-    [SerializeField, Tooltip("Curve for the entire shake effect")] private AnimationCurve damageCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [BoxGroup("Default Shake")]
+    [SerializeField, Required, Tooltip("Default noise profile for the shake."), NoiseSettingsProperty]
+    private NoiseSettings defaultNoise;
+    [BoxGroup("Default Shake")]
+    [SerializeField, MinValue(0f), Tooltip("Default amplitude for the shake.")]
+    private float defaultAmplitude = 1f;
 
-    [BoxGroup("Explosion Shake", false)]
-    [SerializeField, Required, NoiseSettingsProperty] private NoiseSettings explosionNoise;
-    [BoxGroup("Explosion Shake", false)]
-    [SerializeField, MinValue(0f)] private float explosionDuration = 0.7f;
-    [BoxGroup("Explosion Shake", false)]
-    [SerializeField, Tooltip("Curve for the entire shake effect")] private AnimationCurve explosionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [BoxGroup("Damage Shake")]
+    [SerializeField, Tooltip("Settings for the damage shake effect.")]
+    private ShakePreset damageShake;
 
-    [BoxGroup("Shoot Shake", false)]
-    [SerializeField, Required, NoiseSettingsProperty] private NoiseSettings shootNoise;
-    [BoxGroup("Shoot Shake", false)]
-    [SerializeField, MinValue(0f)] private float shootDuration = 0.2f;
-    [BoxGroup("Shoot Shake", false)]
-    [SerializeField, Tooltip("Curve for the entire shake effect")] private AnimationCurve shootCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [BoxGroup("Explosion Shake")]
+    [SerializeField, Tooltip("Settings for the explosion shake effect.")]
+    private ShakePreset explosionShake;
+
+    [BoxGroup("Shoot Shake")]
+    [SerializeField, Tooltip("Settings for the shoot shake effect.")]
+    private ShakePreset shootShake;
 
     [Title("Debug")]
-    [SerializeField] private bool _debug;
-    [ShowInInspector, ReadOnly] private CinemachineBasicMultiChannelPerlin noise;
+    [SerializeField, Tooltip("Enable debug logs for shake events.")]
+    private bool debug;
+
+    private List<CinemachineBasicMultiChannelPerlin> perlinComponents = new();
 
     private void Start()
     {
-        noise = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-        _default = noise.m_NoiseProfile;
-        noise.m_AmplitudeGain = defaultAmplitude;
+        perlinComponents = cameras
+            .Select(cam => cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>())
+            .ToList();
+
+        ApplyShakeSettings(defaultNoise, defaultAmplitude);
     }
 
     private void OnEnable()
@@ -55,57 +57,70 @@ public class CameraShaker : MonoBehaviour
         Health.OnTakeDamage -= TriggerDamageShake;
     }
 
-    [Button("Trigger Damage Shake")]
-    public void TriggerDamageShake(AttackType attackType = AttackType.Null)
+    private void ApplyShakeSettings(NoiseSettings noise, float amplitude)
     {
-        if (_debug) Debug.Log($"Damage Shake: {attackType}");
-
-        if (attackType == AttackType.Explosive)
+        foreach (var perlin in perlinComponents)
         {
-            TriggerExplosionShake();
-        }
-        else
-        {
-            StartCoroutine(Shake(damageNoise, damageDuration, damageCurve));
+            perlin.m_NoiseProfile = noise;
+            perlin.m_AmplitudeGain = amplitude;
         }
     }
 
-    [Button("Trigger Explosion Shake")]
-    public void TriggerExplosionShake()
+    [Button("Trigger Damage Shake")]
+    public void TriggerDamageShake(AttackType attackType = AttackType.Null)
     {
-        if (_debug) Debug.Log("Explosion Shake");
-
-        StartCoroutine(Shake(explosionNoise, explosionDuration, explosionCurve));
+        if (debug) Debug.Log($"Damage Shake triggered by: {attackType}");
+        StartShake(attackType == AttackType.Explosive ? explosionShake : damageShake);
     }
 
     [Button("Trigger Shoot Shake")]
     public void TriggerShootShake()
     {
-        if (_debug) Debug.Log("Shoot Shake");
-
-        StartCoroutine(Shake(shootNoise, shootDuration, shootCurve));
+        if (debug) Debug.Log("Shoot Shake triggered");
+        StartShake(shootShake);
     }
 
-    private IEnumerator Shake(NoiseSettings preset, float duration, AnimationCurve shakeCurve)
+    private void StartShake(ShakePreset preset)
     {
-        if (noise == null) yield break;
+        StopAllCoroutines();
+        StartCoroutine(ShakeRoutine(preset));
+    }
 
-        noise.m_NoiseProfile = preset;
+    private IEnumerator ShakeRoutine(ShakePreset preset)
+    {
+        ApplyShakeSettings(preset.noiseSettings, 0);
 
         float elapsedTime = 0f;
-
-        // Applicazione dell'effetto di shake seguendo la curva unica
-        while (elapsedTime < duration)
+        while (elapsedTime < preset.duration)
         {
             elapsedTime += Time.deltaTime;
-            float progress = Mathf.Clamp01(elapsedTime / duration); // Progresso normalizzato [0, 1]
-            float intensity = shakeCurve.Evaluate(progress) + defaultAmplitude; // Calcolo intensità in base alla curva e defaultAmplitude
-            noise.m_AmplitudeGain = intensity;
+            float normalizedTime = Mathf.Clamp01(elapsedTime / preset.duration);
+            float intensity = preset.curve.Evaluate(normalizedTime) + defaultAmplitude;
+
+            foreach (var perlin in perlinComponents)
+            {
+                perlin.m_AmplitudeGain = intensity;
+            }
+
             yield return null;
         }
 
-        // Ritorno ai valori predefiniti
-        noise.m_AmplitudeGain = defaultAmplitude;
-        noise.m_NoiseProfile = _default;
+        ApplyShakeSettings(defaultNoise, defaultAmplitude);
+    }
+
+    [System.Serializable]
+    public class ShakePreset
+    {
+        [HorizontalGroup("Settings", LabelWidth = 100)]
+        [SerializeField, Required, NoiseSettingsProperty]
+        public NoiseSettings noiseSettings;
+
+        [HorizontalGroup("Settings")]
+        [SerializeField, MinValue(0f), Tooltip("Duration of the shake.")]
+        public float duration = 0.5f;
+
+        [BoxGroup("Curve", false)]
+        [SerializeField, Tooltip("Curve for the shake effect over time.")]
+        public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     }
 }

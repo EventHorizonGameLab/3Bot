@@ -1008,7 +1008,7 @@ Transform:
   m_GameObject: {fileID: 57865595}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3655178, y: -0.000000016626792, z: 0.0000000065291794, w: 0.9308044}
-  m_LocalPosition: {x: 2.7878335, y: 7.3238664, z: -8.210318}
+  m_LocalPosition: {x: 2.7909544, y: 7.3238664, z: -8.210318}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8733,6 +8733,7 @@ MonoBehaviour:
   _damage: 10
   _attackType: 5
   _hasInfiniteAmmo: 0
+  _ignoreInventoryAmmo: 0
   _magazineSize: 10
   _is2D: 1
   _isPlayer: 1
@@ -9026,7 +9027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &301829046
 Transform:
   m_ObjectHideFlags: 0
@@ -9059,8 +9060,22 @@ MonoBehaviour:
     head: {fileID: 1196712883}
     body: {fileID: 1713353296}
     legs: {fileID: 390193113}
-  _colorRobots: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _colorDefault: {r: 1, g: 1, b: 1, a: 1}
+  _colorActivated: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _colorDeactivated: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  M1: {fileID: 0}
+  M2: {fileID: 0}
+  _head:
+    M1: {fileID: 0}
+    M2: {fileID: 0}
+  _body:
+    M1: {fileID: 0}
+    M2: {fileID: 0}
+  _legs:
+    M1: {fileID: 0}
+    M2: {fileID: 0}
   _slot: {fileID: 1573276867}
+  _trasparent: {fileID: 0}
   _currentAmmo: {fileID: 547012085}
   _ammoInStorage: {fileID: 1266178915}
   _reloadLed: {fileID: 610735173}
@@ -12567,7 +12582,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 4cb1caebeb555b3418be6c4d58d10566, type: 2}
   m_BuildHeightMesh: 0
@@ -15310,8 +15325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAmplitude: 300
   smoothingFactor: 5
-  maxSpeed: 1000
   vehicleAgent: {fileID: 849806977}
+  rotationAxis: 2
 --- !u!1 &770831669
 GameObject:
   m_ObjectHideFlags: 0
@@ -16007,7 +16022,7 @@ Transform:
   m_GameObject: {fileID: 804661230}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3655178, y: -0.000000016626792, z: 0.0000000065291794, w: 0.9308044}
-  m_LocalPosition: {x: 2.7878335, y: 7.3238664, z: -8.210318}
+  m_LocalPosition: {x: 2.7909544, y: 7.3238664, z: -8.210318}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16481,6 +16496,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67cca3e2148a56b448ba1497608defaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keyToChangeStateUp: 273
+  _keyToChangeStateDown: 274
   _debug: 0
 --- !u!114 &849806983
 MonoBehaviour:
@@ -16565,6 +16582,7 @@ MonoBehaviour:
     m_Bits: 123
   _maxDistance: 100
   _momentumMultiplier: 1
+  _crosshair: {fileID: 0}
   _debug: 0
   _onDrawGizmos: 0
 --- !u!114 &849806988
@@ -16588,7 +16606,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   headOffset: {x: 0, y: 1, z: 0}
-  storageOffset: {x: 0, y: 1.7, z: 0}
+  storage: {fileID: 0}
   floatingHeightOffset: 2
   _debug: 0
   _drawGizmos: 0
@@ -26910,6 +26928,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _debug: 0
+  _showColliderInEditor: 1
 --- !u!65 &1299050163
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35029,6 +35048,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _debug: 0
+  _showColliderInEditor: 1
 --- !u!54 &1990982691
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -36317,7 +36337,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 29eb9353f4bb7fe4e91b2de85f01c7dc, type: 2}
   m_BuildHeightMesh: 0
