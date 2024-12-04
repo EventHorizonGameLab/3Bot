@@ -86,7 +86,7 @@ PrefabInstance:
     - target: {fileID: 9127852295668689377, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
       propertyPath: losRadius
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 9127852295668689377, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
