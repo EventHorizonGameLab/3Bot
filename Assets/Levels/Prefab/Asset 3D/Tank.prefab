@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2172982301363666792
 Transform:
@@ -44,6 +44,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Body_Tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 1804117832055406872, guid: ae68d9444e637b94493fda19856ea9f8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4983605915339038899, guid: ae68d9444e637b94493fda19856ea9f8,
         type: 3}

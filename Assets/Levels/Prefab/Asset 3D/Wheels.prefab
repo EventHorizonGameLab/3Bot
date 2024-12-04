@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1021068658586650897
 Transform:
@@ -44,6 +44,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wheels_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005795340785787126, guid: ef638017cb9123e418201fa314bfac66,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4570786805026863334, guid: ef638017cb9123e418201fa314bfac66,
         type: 3}
@@ -114,6 +119,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5572784520391856306, guid: ef638017cb9123e418201fa314bfac66,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6959243460788506700, guid: ef638017cb9123e418201fa314bfac66,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

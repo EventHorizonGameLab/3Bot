@@ -8,10 +8,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 12981154668187726, guid: f958ea393cea595469f3b462a812be1e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1366037066642124510, guid: f958ea393cea595469f3b462a812be1e,
         type: 3}
       propertyPath: m_Name
       value: Rullo_Curvo (Moving SX) Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1366037066642124510, guid: f958ea393cea595469f3b462a812be1e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 2318452765135891710, guid: f958ea393cea595469f3b462a812be1e,
         type: 3}
@@ -82,6 +92,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3253705194026937926, guid: f958ea393cea595469f3b462a812be1e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5746736690374730880, guid: f958ea393cea595469f3b462a812be1e,
         type: 3}
