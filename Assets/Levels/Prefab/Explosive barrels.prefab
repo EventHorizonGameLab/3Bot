@@ -108,7 +108,7 @@ MonoBehaviour:
     m_Bits: 119
   _debug: 0
   _showGizmos: 0
-  _triggerForce: 3
+  _triggerForce: 4.23
   _haveDetectionArea: 0
   _detectionRadius: 3.45
   _detectionLayer:
