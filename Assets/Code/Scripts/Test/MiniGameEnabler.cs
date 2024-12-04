@@ -9,6 +9,10 @@ public class MiniGameEnabler : MonoBehaviour, IMiniGame
     [ShowIf("isDoor")]
     [InfoBox("Inserire 3 numeri. Se la psw sono meno 3 numeri, rimpiazzare i primi con 0")]
     string password = "000";
+    [SerializeField]
+    
+    [InfoBox("Inserire l'oggetto con animator solo se ne hai bisogno")]
+    Animator doorAnimator;
 
     public bool IsEnemy { get { return isEnemy; } }
     public bool IsDoor { get { return isDoor; } }
@@ -17,14 +21,17 @@ public class MiniGameEnabler : MonoBehaviour, IMiniGame
     public void MinigameWon()
     {
         // Enemy Behavior
-        if (isEnemy)
+        if (isEnemy && doorAnimator != null)
         {
             gameObject.SetActive(false);
+            doorAnimator.SetTrigger("DoorOpen");
         }
+        else { gameObject.SetActive(false); }
 
         // Door Behavior
-        else if (isDoor)
+        if (isDoor && doorAnimator != null)
         {
+            doorAnimator.SetTrigger("DoorOpen");
             gameObject.SetActive(false);
         }
     }
