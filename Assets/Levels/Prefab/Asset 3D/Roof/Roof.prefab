@@ -1754,12 +1754,12 @@ MonoBehaviour:
   - m_Vertices: 260100002b0100002f0100005d0100007b010000
   - m_Vertices: 31010000400100005e0100006d010000
   - m_Vertices: 32010000370100005f010000760100007f010000
-  - m_Vertices: 5a01000070010000780100007d010000
   - m_Vertices: 3a0100003f010000430100006c01000075010000
   - m_Vertices: 3e010000470100006501000074010000
   - m_Vertices: 460100004b0100004f0100006401000069010000
   - m_Vertices: 4e0100005001000068010000
   - m_Vertices: 53010000570100005b0100006101000071010000
+  - m_Vertices: 5a01000070010000780100007d010000
   - m_Vertices: 770100007e010000
   m_SharedTextures: []
   m_Positions:
@@ -2928,11 +2928,17 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3157
+  m_VersionIndex: 3160
   m_IsSelectable: 1
   m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_SelectedEdges:
+  - a: 343
+    b: 340
+  - a: 367
+    b: 369
+  - a: 267
+    b: 264
+  m_SelectedVertices: 57010000540100006f010000710100000b01000008010000
 --- !u!23 &2154677000600191047
 MeshRenderer:
   m_ObjectHideFlags: 0
