@@ -13,6 +13,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rullo_Unico (Static) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2551041605035472595, guid: 94e312abf1d90e047bed743b7e9957f1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301011270269300742, guid: 94e312abf1d90e047bed743b7e9957f1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300515805069293483, guid: 94e312abf1d90e047bed743b7e9957f1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6740889786170836422, guid: 94e312abf1d90e047bed743b7e9957f1,
         type: 3}
       propertyPath: m_LocalScale.x

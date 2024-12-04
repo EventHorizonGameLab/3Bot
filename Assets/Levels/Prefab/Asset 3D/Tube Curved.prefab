@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5049793628625597722
 Transform:
@@ -44,6 +44,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Curved_tube
+      objectReference: {fileID: 0}
+    - target: {fileID: 3621848388249205227, guid: 8766c1a6ffa83574e8a76a51cf7b748a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6197039991982669801, guid: 8766c1a6ffa83574e8a76a51cf7b748a,
         type: 3}
