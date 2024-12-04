@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6019060098134851053, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6733898934373430562, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
       propertyPath: m_Name
@@ -70,8 +75,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6825383865172383555, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
+      propertyPath: _damage
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825383865172383555, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
       propertyPath: _fireRate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9127852295668689377, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: losRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 9127852295668689377, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: stopDistanceToPlayer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
