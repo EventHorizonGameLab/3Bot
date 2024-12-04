@@ -73,7 +73,7 @@ MonoBehaviour:
   _audioClipName: explosion
   _explosionPrefab: VFX Esplosion V.2
   _explosionForce: 500
-  _explosionDamage: 10
+  _explosionDamage: 40
   _explosionRadius: 3
   _obstacleLayer:
     serializedVersion: 2
