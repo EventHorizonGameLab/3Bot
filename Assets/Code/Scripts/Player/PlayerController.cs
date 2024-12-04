@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditorInternal.ReorderableList;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,8 +25,12 @@ public class PlayerController : MonoBehaviour
 
     private bool _isEnable = true;
 
+    private IPlayerState _default;
+
     private void Start()
     {
+        _default = new StopState();
+
         _stateOrder = new List<IPlayerState>
         {
             new MovementState2(this),
@@ -77,6 +82,8 @@ public class PlayerController : MonoBehaviour
 
     private void SwitchState(IPlayerState newState)
     {
+        if (newState == _currentState && newState == _default) return;
+
         if (_debug) OnChangeStateDebug?.Invoke(newState.ToString());
         OnChangeState?.Invoke(_currentStateIndex);
 
@@ -96,7 +103,7 @@ public class PlayerController : MonoBehaviour
                 return _stateOrder[nextIndex];
             }
         }
-        return _stateOrder[_currentStateIndex];
+        return _default;
     }
 
     private IPlayerState GetPreviousState()
@@ -110,7 +117,7 @@ public class PlayerController : MonoBehaviour
                 return _stateOrder[prevIndex];
             }
         }
-        return _stateOrder[_currentStateIndex];
+        return _default;
     }
 
     public int CurrentState
@@ -160,6 +167,11 @@ public class PlayerController : MonoBehaviour
             IPlayerState state = _stateOrder[value];
 
             _stateStatus[state] = !_stateStatus[state];
+
+            if (value == 0 && !_stateStatus[state])
+            {
+                _stateOrder[0].Reset();
+            }
 
             if (!_stateStatus[_currentState])
             {
