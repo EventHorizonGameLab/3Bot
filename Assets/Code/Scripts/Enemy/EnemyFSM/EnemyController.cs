@@ -12,7 +12,8 @@ public class EnemyController : MonoBehaviour
     public NonCombatState nonCombatState;
     public CombatState combatState;
     //--\\
-
+    [Title("Debug")]
+    [SerializeField] bool showGizmo;
     [Title("Parameters")]
     [InfoBox("You can adjust theese values")]
     public float losRadius;
@@ -98,6 +99,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!showGizmo) return;
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, losRadius);
         Gizmos.color = Color.red;
