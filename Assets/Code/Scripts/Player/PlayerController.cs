@@ -3,7 +3,6 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditorInternal.ReorderableList;
 
 public class PlayerController : MonoBehaviour
 {
