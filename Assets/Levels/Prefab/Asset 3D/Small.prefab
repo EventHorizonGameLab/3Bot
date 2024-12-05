@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1355928418354994157
 Transform:
@@ -40,10 +40,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1355928418354994157}
     m_Modifications:
+    - target: {fileID: 60583117023534171, guid: 7c12873bf2be36a4085e0dc57d2010b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2946503653322987587, guid: 7c12873bf2be36a4085e0dc57d2010b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278650332732187504, guid: 7c12873bf2be36a4085e0dc57d2010b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469493053267383620, guid: 7c12873bf2be36a4085e0dc57d2010b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408586965652858766, guid: 7c12873bf2be36a4085e0dc57d2010b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7485373085384673513, guid: 7c12873bf2be36a4085e0dc57d2010b5,
         type: 3}
       propertyPath: m_Name
       value: Small_component
+      objectReference: {fileID: 0}
+    - target: {fileID: 7485373085384673513, guid: 7c12873bf2be36a4085e0dc57d2010b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739686365280672934, guid: 7c12873bf2be36a4085e0dc57d2010b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8332933725217152762, guid: 7c12873bf2be36a4085e0dc57d2010b5,
         type: 3}

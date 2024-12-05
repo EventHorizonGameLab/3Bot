@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2266578077258020939, guid: 7b34a04b15c96aa48a661935cea2d24b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3879855423561739068, guid: 7b34a04b15c96aa48a661935cea2d24b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -83,10 +88,20 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7012600934023759209, guid: 7b34a04b15c96aa48a661935cea2d24b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7281516573292496379, guid: 7b34a04b15c96aa48a661935cea2d24b,
         type: 3}
       propertyPath: m_Name
       value: Rullo_Doppio (Moving SX) Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281516573292496379, guid: 7b34a04b15c96aa48a661935cea2d24b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

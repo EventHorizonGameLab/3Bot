@@ -83,6 +83,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rullo_Finale (Static) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4579667190163631885, guid: 17c317af9fae6af44ab1635066c4b650,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6813964798661273485, guid: 17c317af9fae6af44ab1635066c4b650,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857622478182043233, guid: 17c317af9fae6af44ab1635066c4b650,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
