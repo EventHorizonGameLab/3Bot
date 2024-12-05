@@ -30,6 +30,8 @@ public class BladeRotation : MonoBehaviour
                 axis = Vector3.forward;
                 break;
         }
+
+        transform.Rotate(axis * Random.Range(0f, 360f));
     }
 
     void Update()
