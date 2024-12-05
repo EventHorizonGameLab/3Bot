@@ -43,6 +43,7 @@ public class QTE_MiniGame : MonoBehaviour
         OnBarMiniGame += StartBarMiniGame;
         OnPasswordMiniGame += StartPasswordMiniGame;
         OnPlayerStateChanged += ForceCloseMiniGames;
+        LevelManager.OnLose += ForceCloseMiniGames;
     }
 
 
@@ -52,6 +53,7 @@ public class QTE_MiniGame : MonoBehaviour
         OnBarMiniGame -= StartBarMiniGame;
         OnPasswordMiniGame -= StartPasswordMiniGame;
         OnPlayerStateChanged -= ForceCloseMiniGames;
+        LevelManager.OnLose -= ForceCloseMiniGames;
     }
 
     void FixedUpdate()
