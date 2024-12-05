@@ -63,6 +63,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Explosive barrels Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3497604099081453672, guid: 33badb002b6fc6d45b9fb82e3f332313,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684256417715138860, guid: 33badb002b6fc6d45b9fb82e3f332313,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6514587443448765151, guid: 33badb002b6fc6d45b9fb82e3f332313,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119335761236335431, guid: 33badb002b6fc6d45b9fb82e3f332313,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
