@@ -40,25 +40,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2845092782624822255}
     m_Modifications:
+    - target: {fileID: 3238956419818163528, guid: 383ebf1a5109d8c4e9f2cf254ab3be3d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8138845853587386292, guid: 383ebf1a5109d8c4e9f2cf254ab3be3d,
         type: 3}
       propertyPath: m_Name
       value: Crane
-      objectReference: {fileID: 0}
-    - target: {fileID: 9209961303780282399, guid: 383ebf1a5109d8c4e9f2cf254ab3be3d,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 9209961303780282399, guid: 383ebf1a5109d8c4e9f2cf254ab3be3d,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 9209961303780282399, guid: 383ebf1a5109d8c4e9f2cf254ab3be3d,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 9209961303780282399, guid: 383ebf1a5109d8c4e9f2cf254ab3be3d,
         type: 3}
@@ -109,11 +99,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9209961303780282399, guid: 383ebf1a5109d8c4e9f2cf254ab3be3d,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
