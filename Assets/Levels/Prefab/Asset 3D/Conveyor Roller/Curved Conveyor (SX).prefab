@@ -8,10 +8,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 107237709202331183, guid: 89b58cac9bd959d47b78a0e018e799c5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3563e9df699af644f9d8a903ca1bb378, type: 2}
     - target: {fileID: 6330115082165935643, guid: 89b58cac9bd959d47b78a0e018e799c5,
         type: 3}
       propertyPath: m_Name
-      value: Curved Conveyor (Static)
+      value: Curved Conveyor (SX)
       objectReference: {fileID: 0}
     - target: {fileID: 6700708743219838646, guid: 89b58cac9bd959d47b78a0e018e799c5,
         type: 3}

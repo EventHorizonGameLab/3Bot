@@ -11,22 +11,22 @@ PrefabInstance:
     - target: {fileID: 3633634745243320957, guid: 936ce7304ff50bb41b8991ec572f2783,
         type: 3}
       propertyPath: m_Name
-      value: Final Conveyor (Static)
+      value: Final Conveyor (SX)
       objectReference: {fileID: 0}
     - target: {fileID: 3648181750585108366, guid: 936ce7304ff50bb41b8991ec572f2783,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 12.887817
       objectReference: {fileID: 0}
     - target: {fileID: 3648181750585108366, guid: 936ce7304ff50bb41b8991ec572f2783,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0000009536743
       objectReference: {fileID: 0}
     - target: {fileID: 3648181750585108366, guid: 936ce7304ff50bb41b8991ec572f2783,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -3.9488564
       objectReference: {fileID: 0}
     - target: {fileID: 3648181750585108366, guid: 936ce7304ff50bb41b8991ec572f2783,
         type: 3}
@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5232455679761691689, guid: 936ce7304ff50bb41b8991ec572f2783,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3563e9df699af644f9d8a903ca1bb378, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
