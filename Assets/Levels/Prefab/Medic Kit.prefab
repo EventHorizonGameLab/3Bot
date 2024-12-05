@@ -233,6 +233,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9061991220729431420}
     m_Modifications:
+    - target: {fileID: 3219459855689487200, guid: d971e4c58edd8f54e8bb9c3fd8466619,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713902633029496803, guid: d971e4c58edd8f54e8bb9c3fd8466619,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4798837222960750355, guid: d971e4c58edd8f54e8bb9c3fd8466619,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -283,10 +293,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8227547701834453443, guid: d971e4c58edd8f54e8bb9c3fd8466619,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8436094547616932495, guid: d971e4c58edd8f54e8bb9c3fd8466619,
         type: 3}
       propertyPath: m_Name
       value: Medi Kit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436094547616932495, guid: d971e4c58edd8f54e8bb9c3fd8466619,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
