@@ -60,6 +60,7 @@ namespace PlayerSM
 
             if (Input.GetMouseButtonUp(0) && _isFollowingPath && _agent.isStopped)
             {
+                IsFollowingPath?.Invoke(false);
                 ClearLineRenderer();
                 _waypoints.Clear();
                 _isFollowingPath = false;
