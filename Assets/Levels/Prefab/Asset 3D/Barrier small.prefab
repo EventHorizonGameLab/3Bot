@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9191580517283431535}
+  - component: {fileID: 2329278161181146115}
   m_Layer: 0
   m_Name: Barrier small
   m_TagString: Untagged
@@ -32,6 +33,27 @@ Transform:
   - {fileID: 1792429672575870076}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2329278161181146115
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2278477697232519549}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6831619, y: 1.1234283, z: 0.14174208}
+  m_Center: {x: -0.0028705, y: 0.55829835, z: -0.0014352053}
 --- !u!1001 &4101061255633689723
 PrefabInstance:
   m_ObjectHideFlags: 0

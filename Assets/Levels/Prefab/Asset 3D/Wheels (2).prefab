@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2838723144847051419}
+  - component: {fileID: 4820672777793181660}
   m_Layer: 0
   m_Name: Wheels (2)
   m_TagString: Untagged
@@ -32,6 +33,29 @@ Transform:
   - {fileID: 5920000797282194731}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4820672777793181660
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458446182848590077}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.58073986
+  m_Height: 1.626904
+  m_Direction: 1
+  m_Center: {x: 0.11666559, y: 0.7684901, z: 0.046077013}
 --- !u!1001 &1102968659048288207
 PrefabInstance:
   m_ObjectHideFlags: 0
