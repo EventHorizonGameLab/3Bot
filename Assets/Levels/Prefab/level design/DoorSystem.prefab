@@ -433,7 +433,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1882
+  m_VersionIndex: 1894
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -543,6 +543,7 @@ GameObject:
   - component: {fileID: 3464929461509246130}
   - component: {fileID: 22706525212481443}
   - component: {fileID: 9143063100250591936}
+  - component: {fileID: 2946386924429856013}
   m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
@@ -615,6 +616,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &2946386924429856013
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823853998477847197}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.0050000004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.0050000004, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4083789916094900905
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +643,7 @@ GameObject:
   - component: {fileID: 207076330015114193}
   - component: {fileID: 8019637962210142366}
   - component: {fileID: 7139160761947217051}
+  - component: {fileID: 469170523744390374}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -698,6 +716,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &469170523744390374
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4083789916094900905}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.004, y: 0.004, z: 0.00001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.001}
+  m_TimeToStationary: 0.5
 --- !u!1 &4206183768771545068
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,6 +743,7 @@ GameObject:
   - component: {fileID: 7070465012292220490}
   - component: {fileID: 9146913980008951512}
   - component: {fileID: 8198980618739956283}
+  - component: {fileID: 4462975583513489729}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -781,6 +816,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &4462975583513489729
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4206183768771545068}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.010000001, y: 0.012, z: 0.001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.010000001, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4822987101337026877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,7 +1248,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 503
+  m_VersionIndex: 515
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1543,7 +1594,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 949
+  m_VersionIndex: 961
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
