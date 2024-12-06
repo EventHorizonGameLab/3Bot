@@ -116,6 +116,8 @@ public class Health : MonoBehaviour, IExplosionAffected, ITakeDamage
 
         if (_isPlayer)
         {
+            _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+
             OnHealthChange?.Invoke(_currentHealth);
             if (damage > 0) OnTakeDamage?.Invoke(type);
         }
