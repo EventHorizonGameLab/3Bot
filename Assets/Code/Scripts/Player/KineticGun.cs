@@ -37,6 +37,8 @@ public class KineticGun : MonoBehaviour
     {
         if (!_isEnabled) return;
 
+        if (!_heldObject || _heldObject == null) _crosshair.SetActive(false);
+
         if (Input.GetMouseButtonDown(0)) OnMousePressed();
         if (Input.GetMouseButton(0)) OnMouseHeld();
         if (Input.GetMouseButtonUp(0)) OnMouseReleased();
