@@ -107,6 +107,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4470289166154877857, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5216258692407212530, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -157,6 +162,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6019060098134851053, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6252182660886576201, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 53ed9660beef62a49baabdf50a44793b, type: 2}
     - target: {fileID: 6733898934373430562, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
       propertyPath: m_Name
@@ -164,8 +179,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6825383865172383555, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
+      propertyPath: _damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825383865172383555, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
       propertyPath: _fireRate
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6825383865172383555, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
@@ -185,7 +205,12 @@ PrefabInstance:
     - target: {fileID: 9127852295668689377, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
       propertyPath: losRadius
-      value: 16
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 9127852295668689377, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: chasingSpeed
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
