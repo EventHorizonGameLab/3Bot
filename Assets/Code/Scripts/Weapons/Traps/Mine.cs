@@ -5,7 +5,6 @@ namespace Game.Traps
     [RequireComponent(typeof(Collider))]
     public class Mine : BaseExplosive
     {
-        private void Start() { }
 
         private void OnTriggerEnter(Collider other)
         {
