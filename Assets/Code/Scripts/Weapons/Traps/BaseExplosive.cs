@@ -12,10 +12,16 @@ namespace Game.Traps
         [SerializeField, Tooltip("Damage of the explosion"), MinValue(0)] protected float _explosionDamage = 10f;
         [SerializeField, Tooltip("Radius of the explosion"), Range(0, 10)] protected float _explosionRadius = 5f;
         [SerializeField, Tooltip("LayerMask for detecting obstacles")] protected LayerMask _obstacleLayer;
+        [SerializeField] protected GameObject _mineParent;
 
         [Title("Debug")]
         [SerializeField, Tooltip("Enable debug logs"), PropertyOrder(2)] protected bool _debug = false;
         [SerializeField, Tooltip("Show debug gizmos"), PropertyOrder(2)] protected bool _showGizmos = false;
+
+        private void Start()
+        {
+            if (_mineParent == null) _mineParent = gameObject;
+        }
 
         /// <summary>
         /// Handles the explosion, applying force and triggering effects for nearby objects.
@@ -47,7 +53,7 @@ namespace Game.Traps
             Play(_audioClipName);
 
             //Destroy(gameObject); // to change
-            gameObject.SetActive(false);
+            _mineParent.SetActive(false);
         }
 
         /// <summary>

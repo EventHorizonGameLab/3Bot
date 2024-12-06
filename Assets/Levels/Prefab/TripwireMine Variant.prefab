@@ -74,6 +74,7 @@ MonoBehaviour:
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 119
+  _mineParent: {fileID: 5135681807526692254}
   _debug: 0
   _showGizmos: 0
 --- !u!1001 &764951269076918726
