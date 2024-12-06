@@ -80,7 +80,7 @@ These steps should allow you to copy a Unity project from GitHub, set it up in U
 
 ### Release
 
-[Download](Coming Soon)
+[Download](https://github.com/EventHorizonGameLab/3Bot/releases/tag/0.1.0)
 
 ## Credits
 
