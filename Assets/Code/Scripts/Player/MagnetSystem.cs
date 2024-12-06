@@ -167,11 +167,12 @@ public class MagnetSystem : MonoBehaviour
 
         if (_slot.TryGetComponent(out IInteractable obj))
         {
-            isInteracted = obj.Interact();
+            obj.Interact();
+
+            if(!_slot.activeSelf) isInteracted = true;
         }
         else
         {
-            _slot.transform.SetParent(null);
             _slot.transform.localScale = Vector3.one;
 
             if (_slot.TryGetComponent(out Rigidbody rb))
@@ -180,6 +181,10 @@ public class MagnetSystem : MonoBehaviour
                 rb.constraints = RigidbodyConstraints.None;
             }
         }
+
+        if(!isInteracted) return;
+
+        _slot.transform.SetParent(null);
         _slot.GetComponent<Collider>().enabled = true;
 
         _slot = null;
