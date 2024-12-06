@@ -275,7 +275,7 @@ public class KineticGun : MonoBehaviour
 
         if (_onDrawGizmos) Debug.DrawRay(_heldObject.position, Vector3.down, Color.green);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _obstacleLayer))
         {
             if (_debug) Debug.Log($"Crosshair position: {hit.point}");
 
