@@ -22,6 +22,7 @@ public class UISlot : MonoBehaviour
             return new List<string>
         {
             typeof(MedKit).FullName,
+            typeof(MedKitSmall).FullName,
             typeof(BulletMagazine).FullName,
             typeof(Key).FullName,
             typeof(Explosive).FullName
