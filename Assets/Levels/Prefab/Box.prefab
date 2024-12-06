@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1299369664128465441}
   - component: {fileID: 8068887104774147016}
   - component: {fileID: 8997516212839956059}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,22 +151,22 @@ PrefabInstance:
     - target: {fileID: 4730333635261969834, guid: eeb0cbbd859ecee439b0e2a07ff7a03d,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5150424027304416078, guid: eeb0cbbd859ecee439b0e2a07ff7a03d,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6122869412858956424, guid: eeb0cbbd859ecee439b0e2a07ff7a03d,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7857684097935458414, guid: eeb0cbbd859ecee439b0e2a07ff7a03d,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
