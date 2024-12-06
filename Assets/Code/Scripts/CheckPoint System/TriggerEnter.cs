@@ -11,6 +11,7 @@ public class TriggerEnter : MonoBehaviour
     private LayerMask _layer;
     [SerializeField, Tooltip("Whether to trigger the event only once.")]
     private bool _triggerOnce = true;
+    [SerializeField] Color _gizmoColor = new Color(0, 1, 0, 0.3f);
 
     [Title("Events")]
     [Serializable]
@@ -52,7 +53,7 @@ public class TriggerEnter : MonoBehaviour
         if (collider == null) return;
 
         // Set Gizmos color
-        Gizmos.color = new Color(0, 1, 0, 0.3f); // Green with transparency
+        Gizmos.color = _gizmoColor; // Green with transparency
 
         // Draw the Collider based on its type
         if (collider is BoxCollider boxCollider)
