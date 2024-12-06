@@ -157,6 +157,11 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.42826957
       objectReference: {fileID: 0}
+    - target: {fileID: 7232093913300873600, guid: 5f01166c1a9ca9e4db02a5e37b7ab266,
+        type: 3}
+      propertyPath: _audioClipName
+      value: explosion2
+      objectReference: {fileID: 0}
     - target: {fileID: 7713156317655595159, guid: 5f01166c1a9ca9e4db02a5e37b7ab266,
         type: 3}
       propertyPath: m_Name

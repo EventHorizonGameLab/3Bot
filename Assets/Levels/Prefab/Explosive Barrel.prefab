@@ -78,6 +78,11 @@ PrefabInstance:
       propertyPath: _triggerForce
       value: 4.224
       objectReference: {fileID: 0}
+    - target: {fileID: 2320150678275648801, guid: 33badb002b6fc6d45b9fb82e3f332313,
+        type: 3}
+      propertyPath: _audioClipName
+      value: explosion3
+      objectReference: {fileID: 0}
     - target: {fileID: 3415410121973146678, guid: 33badb002b6fc6d45b9fb82e3f332313,
         type: 3}
       propertyPath: m_Name
