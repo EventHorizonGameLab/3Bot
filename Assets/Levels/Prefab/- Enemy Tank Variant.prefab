@@ -167,6 +167,11 @@ PrefabInstance:
       propertyPath: _fireRate
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6825383865172383555, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: _audioClipName
+      value: shoot_enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 8583830837811192625, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
       propertyPath: m_Enabled
