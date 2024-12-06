@@ -13,6 +13,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tank
       objectReference: {fileID: 0}
+    - target: {fileID: 4445606128468987378, guid: 3a591e797c695aa47835a1fda439e540,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7575547366497959396, guid: 3a591e797c695aa47835a1fda439e540,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -100,7 +105,7 @@ PrefabInstance:
     - target: {fileID: 3797712077416723815, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5216258692407212530, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
