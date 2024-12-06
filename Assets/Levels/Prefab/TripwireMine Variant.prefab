@@ -142,6 +142,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3878149437684335120, guid: 3e5f23d19904f094c90808903afb4be5,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.767781
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878149437684335120, guid: 3e5f23d19904f094c90808903afb4be5,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.8838905
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878149437684335120, guid: 3e5f23d19904f094c90808903afb4be5,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.0000005401671
+      objectReference: {fileID: 0}
     - target: {fileID: 4948133949901640389, guid: 3e5f23d19904f094c90808903afb4be5,
         type: 3}
       propertyPath: m_Size.x
@@ -190,8 +205,36 @@ PrefabInstance:
         type: 3}
       insertIndex: 0
       addedObject: {fileID: 6124197555288955223}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1091540198025783662, guid: 3e5f23d19904f094c90808903afb4be5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1630494302581297295}
   m_SourcePrefab: {fileID: 100100000, guid: 3e5f23d19904f094c90808903afb4be5, type: 3}
+--- !u!1 &5135681807526692254 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1091540198025783662, guid: 3e5f23d19904f094c90808903afb4be5,
+    type: 3}
+  m_PrefabInstance: {fileID: 5215297433209302256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1630494302581297295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5135681807526692254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626076b8bd38a7f4dbb623b7d94202ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collisionLayer:
+    serializedVersion: 2
+    m_Bits: 499
+  _maxDistance: 10
+  _offset: {x: -0.05, y: 1.37, z: 0}
+  _drawGizmos: 1
 --- !u!4 &9160346815344456205 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3981291502663819005, guid: 3e5f23d19904f094c90808903afb4be5,
