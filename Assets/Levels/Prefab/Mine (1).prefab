@@ -79,7 +79,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 119
   _debug: 0
-  _showGizmos: 1
+  _showGizmos: 0
 --- !u!114 &7338768081436058034
 MonoBehaviour:
   m_ObjectHideFlags: 0
