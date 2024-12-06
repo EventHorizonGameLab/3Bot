@@ -142,6 +142,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MedkitSmall
       objectReference: {fileID: 0}
+    - target: {fileID: 7352551569873013926, guid: 5a65e5e14c4cae143bab58a5b3358c4a,
+        type: 3}
+      propertyPath: _healAmount
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 7738289743972074641, guid: 5a65e5e14c4cae143bab58a5b3358c4a,
         type: 3}
       propertyPath: m_LocalPosition.x
