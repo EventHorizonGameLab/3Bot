@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Warning line_yellow
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 165
+        width: 676
+        height: 108
+      alignment: 9
+      pivot: {x: 0.48538974, y: 0.527546}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 224d40065c77070478545f96871dc44c
+      internalID: 1572625564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Warning line_1
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 364
+        width: 92
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46f097b9c5168a04caf3b8f256de6d70
+      internalID: 2067305041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Warning line_red
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 302
+        width: 682
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 123090b6c9a5f944e913f300247efdba
+      internalID: 329236549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Warning line_green
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 18
+        width: 671
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1c61bb7d01d386459bc7bdebab1558b
+      internalID: -771700685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +190,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Warning line_1: 2067305041
+      Warning line_green: -771700685
+      Warning line_red: 329236549
+      Warning line_yellow: 1572625564
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
