@@ -23,6 +23,8 @@ public class CheckPointManager : MonoBehaviour
 
     private CheckpointInfo _currentCheckpoint;
 
+    public static event Action OnLoadCheckpoint;
+
     Dictionary<int, GameObject> itemsInfoDictionary = new();
     Dictionary<int, GameObject> enemyInfoDictionary = new();
 
@@ -112,6 +114,8 @@ public class CheckPointManager : MonoBehaviour
 
     public void LoadCheckpoint()
     {
+        OnLoadCheckpoint?.Invoke();
+
         if (_debug) Debug.Log("Loading Checkpoint");
 
         if (_currentCheckpoint == null)

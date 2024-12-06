@@ -882,7 +882,7 @@ MonoBehaviour:
   _fixedHeight: 1
   _interactableLayer:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 1664
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 123
@@ -4765,7 +4765,7 @@ ParticleSystem:
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
-    multiplyColliderForceByParticleSpeed: 0
+    multiplyColliderForceByParticleSpeed: 1
     multiplyColliderForceByCollisionAngle: 1
     m_Planes: []
     m_Dampen:
@@ -4932,7 +4932,7 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 247
+      m_Bits: 721
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5

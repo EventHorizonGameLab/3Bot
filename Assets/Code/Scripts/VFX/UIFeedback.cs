@@ -16,12 +16,14 @@ public class UIFeedback : MonoBehaviour
     {
         Health.OnTakeDamage += Feed;
         Health.OnDeath += KillCoroutine;
+        CheckPointManager.OnLoadCheckpoint += KillCoroutine;
     }
 
     private void OnDisable()
     {
         Health.OnTakeDamage -= Feed;
         Health.OnDeath -= KillCoroutine;
+        CheckPointManager.OnLoadCheckpoint -= KillCoroutine;
     }
 
     private void Feed(AttackType type)
@@ -32,6 +34,7 @@ public class UIFeedback : MonoBehaviour
     private void KillCoroutine()
     {
         StopAllCoroutines();
+        _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, 0);
     }
 
     private IEnumerator FadeInOut()

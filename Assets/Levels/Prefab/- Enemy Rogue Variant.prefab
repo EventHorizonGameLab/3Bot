@@ -23,6 +23,21 @@ PrefabInstance:
       propertyPath: _triggerForce
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5070394240619091141, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: vulnerabilities.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070394240619091141, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: vulnerabilities.Array.data[1].attackType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070394240619091141, guid: bfba299ee2a7b14449d56ac345d83cc4,
+        type: 3}
+      propertyPath: vulnerabilities.Array.data[1].damageMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5216258692407212530, guid: bfba299ee2a7b14449d56ac345d83cc4,
         type: 3}
       propertyPath: m_LocalPosition.x
